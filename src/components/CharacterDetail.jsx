@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { characters } from '../data/characters.js'
 import { getCombatData } from '../data/combatData.js'
 
-export default function CharacterDetail({ character, onClose }) {
-  const [activeFormIndex, setActiveFormIndex] = useState(0)
+export default function CharacterDetail({ character, onClose, initialFormIndex }) {
+  const [activeFormIndex, setActiveFormIndex] = useState(initialFormIndex || 0)
   const form = character.forms[activeFormIndex]
   const combat = getCombatData(character.name, form.form)
 

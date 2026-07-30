@@ -1,6 +1,10 @@
+import { useState } from 'react'
+
 export default function ActionBar({
   teamName,
   onTeamName,
+  teamNotes,
+  onTeamNotes,
   onRandom,
   onShare,
   onSave,
@@ -9,6 +13,8 @@ export default function ActionBar({
   canSave,
   shareLabel,
 }) {
+  const [showNotes, setShowNotes] = useState(false)
+
   return (
     <div className="actionbar">
       <button
@@ -36,6 +42,16 @@ export default function ActionBar({
       />
 
       <button
+        className={showNotes ? 'iconbtn iconbtn--on' : 'iconbtn'}
+        onClick={() => setShowNotes((v) => !v)}
+        type="button"
+        title="Add strategy notes"
+        aria-label="Toggle notes"
+      >
+        📝
+      </button>
+
+      <button
         className="iconbtn iconbtn--share"
         onClick={onShare}
         type="button"
@@ -49,6 +65,16 @@ export default function ActionBar({
       <button className="btn btn--save" onClick={onSave} type="button" disabled={!canSave}>
         💾 Save Team
       </button>
+
+      {showNotes && (
+        <textarea
+          className="actionbar__notes"
+          placeholder="Strategy notes — e.g. lead with Vegito, swap to Broly for cleanup…"
+          value={teamNotes}
+          onChange={(e) => onTeamNotes(e.target.value)}
+          rows={2}
+        />
+      )}
     </div>
   )
 }

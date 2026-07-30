@@ -54,9 +54,9 @@ export const characters = [
     forms: [
       { form: 'Base', dp: 5, health: 22000, kiBars: 4, skillPoints: 5, traits: [], image: jp(8), tags: ['Saiyans','Son Family','Universal Rep','Future'], episodes: ['Dragon Ball Super','Sagas from the Movies'] },
       { form: 'Super Saiyan', dp: 6, health: 23000, kiBars: 4, skillPoints: 5, traits: [], image: jp(9), tags: ['Saiyans','Son Family','Universal Rep','Future','Super Saiyans'], episodes: ['Dragon Ball Super','Sagas from the Movies'] },
-      { form: 'Super Saiyan God', dp: 7, health: 24000, kiBars: 5, skillPoints: 6, traits: ['Health Regeneration'], image: jp(10), tags: ['Saiyans','Son Family','Universal Rep','Future','God Ki'], episodes: ['Dragon Ball Super','Sagas from the Movies'] },
+      { form: 'Super Saiyan God', dp: 7, health: 24000, kiBars: 5, skillPoints: 6, traits: ['Health Regeneration'], image: jp(10), tags: ['Saiyans','Son Family','Universal Rep','God Ki'], episodes: ['Dragon Ball Super','Sagas from the Movies'] },
       { form: 'Super Saiyan Blue', dp: 8, health: 25000, kiBars: 6, skillPoints: 7, traits: ['Instant Spark'], image: jp(11), tags: ['Saiyans','Son Family','Universal Rep','Future','God Ki'], episodes: ['Dragon Ball Super','Sagas from the Movies'] },
-      { form: 'NEO Base (Corp Rising)', dp: 5, health: 22000, kiBars: 4, skillPoints: 5, traits: ['Corp Rising'], image: neo(17), tags: ['Saiyans','Son Family','Universal Rep','God Ki'], episodes: ['Dragon Ball Super'] },
+      { form: 'NEO Base (Corp Rising)', dp: 5, health: 22000, kiBars: 4, skillPoints: 5, traits: ['Corp Rising'], image: neo(17), tags: ['Saiyans','Son Family','Universal Rep'], episodes: ['Dragon Ball Super'] },
       { form: 'NEO SSGSS (Combined)', dp: 8, health: 25000, kiBars: 6, skillPoints: 7, traits: ['Combined Strike'], image: neo(18), tags: ['Saiyans','Son Family','God Ki'], episodes: ['Dragon Ball Super','Sagas from the Movies'] },
     ],
   },
@@ -142,8 +142,8 @@ export const characters = [
     forms: [
       { form: 'Base', dp: 5, health: 22000, kiBars: 4, skillPoints: 5, traits: [], image: jp(21), tags: ['Future','Saiyans','Vegeta Family','Universal Rep'], episodes: ['Dragon Ball Super','Sagas from the Movies'] },
       { form: 'Super Saiyan', dp: 6, health: 23000, kiBars: 4, skillPoints: 5, traits: [], image: jp(22), tags: ['Future','Saiyans','Vegeta Family','Universal Rep','Super Saiyans'], episodes: ['Dragon Ball Super','Sagas from the Movies'] },
-      { form: 'Super Saiyan God', dp: 7, health: 24000, kiBars: 5, skillPoints: 6, traits: [], image: jp(23), tags: ['Future','Saiyans','Vegeta Family','Universal Rep'], episodes: ['Dragon Ball Super','Sagas from the Movies'] },
-      { form: 'Super Saiyan Blue', dp: 8, health: 25000, kiBars: 6, skillPoints: 7, traits: ['Instant Spark'], image: jp(24), tags: ['Future','Saiyans','Vegeta Family','Universal Rep'], episodes: ['Dragon Ball Super','Sagas from the Movies'] },
+      { form: 'Super Saiyan God', dp: 7, health: 24000, kiBars: 5, skillPoints: 6, traits: [], image: jp(23), tags: ['Saiyans','Vegeta Family','Universal Rep','God Ki'], episodes: ['Dragon Ball Super','Sagas from the Movies'] },
+      { form: 'Super Saiyan Blue', dp: 8, health: 25000, kiBars: 6, skillPoints: 7, traits: ['Instant Spark'], image: jp(24), tags: ['Future','Saiyans','Vegeta Family','Universal Rep','God Ki'], episodes: ['Dragon Ball Super','Sagas from the Movies'] },
       { form: 'NEO SSGSS (Combined)', dp: 8, health: 25000, kiBars: 6, skillPoints: 7, traits: ['Combined Strike'], image: neo(18), tags: ['Saiyans','Vegeta Family','God Ki'], episodes: ['Dragon Ball Super','Sagas from the Movies'] },
     ],
   },
@@ -412,7 +412,7 @@ export const characters = [
     name: 'Super Gogeta (Z)',
     color: '#e05a30',
     forms: [
-      { form: 'Base', dp: 8, health: 26000, kiBars: 6, skillPoints: 7, traits: ['Instant Spark'], image: jp(156), tags: ['Saiyans','Fusion Warrior','Son Family','Vegeta Family','Otherworld Warrior'], episodes: ['Sagas from the Movies'] },
+      { form: 'Base', dp: 8, health: 26000, kiBars: 6, skillPoints: 7, traits: ['Instant Spark'], image: jp(156), tags: ['Saiyans','Super Saiyans','Fusion Warrior','Son Family','Vegeta Family','Otherworld Warrior'], episodes: ['Sagas from the Movies'] },
     ],
   },
   {
@@ -420,9 +420,9 @@ export const characters = [
     name: 'Gogeta (Super)',
     color: '#e05a30',
     forms: [
-      { form: 'Base', dp: 7, health: 24000, kiBars: 5, skillPoints: 6, traits: [], image: jp(68), tags: ['Vegeta Family','Saiyans','Son Family'], episodes: ['Sagas from the Movies','Dragon Ball Super'] },
-      { form: 'Super Saiyan', dp: 8, health: 26000, kiBars: 6, skillPoints: 7, traits: ['Instant Spark'], image: jp(69), tags: ['Vegeta Family','Saiyans','Son Family','Super Saiyans'], episodes: ['Sagas from the Movies','Dragon Ball Super'] },
-      { form: 'Super Saiyan Blue', dp: 10, health: 28000, kiBars: 7, skillPoints: 8, traits: ['Unblockable Ultimate', 'Instant Spark'], image: jp(70), tags: ['Vegeta Family','Saiyans','Son Family','God Ki'], episodes: ['Sagas from the Movies','Dragon Ball Super'] },
+      { form: 'Base', dp: 7, health: 24000, kiBars: 5, skillPoints: 6, traits: [], image: jp(68), tags: ['Vegeta Family','Saiyans','Son Family','Fusion Warrior'], episodes: ['Sagas from the Movies','Dragon Ball Super'] },
+      { form: 'Super Saiyan', dp: 8, health: 26000, kiBars: 6, skillPoints: 7, traits: ['Instant Spark'], image: jp(69), tags: ['Vegeta Family','Saiyans','Son Family','Super Saiyans','Fusion Warrior'], episodes: ['Sagas from the Movies','Dragon Ball Super'] },
+      { form: 'Super Saiyan Blue', dp: 10, health: 28000, kiBars: 7, skillPoints: 8, traits: ['Unblockable Ultimate', 'Instant Spark'], image: jp(70), tags: ['Vegeta Family','Saiyans','Son Family','God Ki','Fusion Warrior'], episodes: ['Sagas from the Movies','Dragon Ball Super'] },
     ],
   },
   {
@@ -430,7 +430,7 @@ export const characters = [
     name: 'Gogeta (GT)',
     color: '#e05a30',
     forms: [
-      { form: 'Super Saiyan 4', dp: 6, health: 24000, kiBars: 5, skillPoints: 6, traits: ['Instant Spark'], image: jp(145), tags: ['GT','Fusion Warrior','Son Family','Vegeta Family','Saiyans'], episodes: [] },
+      { form: 'Super Saiyan 4', dp: 10, health: 24000, kiBars: 5, skillPoints: 6, traits: ['Instant Spark'], image: jp(145), tags: ['GT','Fusion Warrior','Son Family','Vegeta Family','Saiyans'], episodes: [] },
     ],
   },
 
@@ -586,7 +586,7 @@ export const characters = [
     color: '#5ab0d0',
     forms: [
       { form: 'Base', dp: 5, health: 20000, kiBars: 4, skillPoints: 4, traits: ['Health Regeneration'], image: jp(36), tags: ['Android','Universal Rep','Girls','Future'], episodes: ['Cell Saga'] },
-      { form: 'NEO Base', dp: 5, health: 20000, kiBars: 4, skillPoints: 4, traits: ['Health Regeneration'], image: neo(13), tags: ['GT','Android','Girls','Future'], episodes: ['Cell Saga'] },
+      { form: 'NEO Base', dp: 5, health: 20000, kiBars: 4, skillPoints: 4, traits: ['Health Regeneration'], image: neo(13), tags: ['GT','Android','Girls'], episodes: ['Cell Saga'] },
     ],
   },
   {
@@ -1087,7 +1087,7 @@ export const characters = [
     name: 'Super Baby 2 (GT)',
     color: '#6060a0',
     forms: [
-      { form: 'Base', dp: 7, health: 25000, kiBars: 5, skillPoints: 6, traits: ['Unblockable Ultimate'], image: jp(151), tags: ['Saiyans','Powerful Opponent','GT'], episodes: [] },
+      { form: 'Base', dp: 7, health: 25000, kiBars: 5, skillPoints: 6, traits: ['Unblockable Ultimate'], image: jp(151), tags: ['Saiyans','Powerful Opponent','GT','Regeneration'], episodes: [] },
     ],
   },
   {
@@ -1249,7 +1249,7 @@ export const characters = [
     name: 'Champa',
     color: '#7a4ad0',
     forms: [
-      { form: 'Base', dp: 10, health: 25000, kiBars: 6, skillPoints: 7, traits: ['Dodge Skill'], image: dlc(9), tags: ['Powerful Opponent','Universal Rep'], episodes: ['Dragon Ball Super'] },
+      { form: 'Base', dp: 10, health: 25000, kiBars: 6, skillPoints: 7, traits: ['Dodge Skill'], image: dlc(9), tags: ['Powerful Opponent','Universal Rep','God Ki'], episodes: ['Dragon Ball Super'] },
     ],
   },
   {
@@ -1443,7 +1443,7 @@ export const characters = [
     name: 'Goku (DB Tournament)',
     color: '#e88a2a',
     forms: [
-      { form: 'Base', dp: 2, health: 14000, kiBars: 2, skillPoints: 3, traits: [], image: dlc(32), tags: ['Dragon Ball Saga','Saiyans','Son Family'], episodes: [] },
+      { form: 'Base', dp: 3, health: 14000, kiBars: 2, skillPoints: 3, traits: [], image: dlc(32), tags: ['Dragon Ball Saga','Saiyans','Son Family'], episodes: [] },
     ],
   },
   {
