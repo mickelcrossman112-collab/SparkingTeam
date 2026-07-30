@@ -1,10 +1,11 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { characters, DP_LIMIT, MAX_TEAM } from './data/characters.js'
 import { cheapestDp, remainingDp, isTeamFull } from './utils/dp.js'
 import { generateSmartTeam } from './utils/teamBuilder.js'
 import { buildShareUrl } from './utils/share.js'
 import { useLocalStorage } from './hooks/useLocalStorage.js'
 import { useShareableTeam } from './hooks/useShareableTeam.js'
+import { checkAchievements, ACHIEVEMENTS } from './data/achievements.js'
 import CharacterData from './components/CharacterData.jsx'
 import CharacterRankings from './components/CharacterRankings.jsx'
 import TeamBar from './components/TeamBar.jsx'
@@ -16,6 +17,21 @@ import SavedTeams from './components/SavedTeams.jsx'
 import MatchupChart from './components/MatchupChart.jsx'
 import TeamCompare from './components/TeamCompare.jsx'
 import CounterPicks from './components/CounterPicks.jsx'
+import News from './components/News.jsx'
+import MetaDashboard from './components/MetaDashboard.jsx'
+import BadgeNotification from './components/BadgeNotification.jsx'
+
+const VIEW_LABELS = {
+  builder: 'Team Builder',
+  teams: 'My Teams',
+  data: 'Character Data',
+  matchups: 'Matchups',
+  rankings: 'Rankings',
+  counter: 'Counter Picks',
+  compare: 'Compare',
+  news: 'News',
+  meta: 'Meta',
+}
 
 export default function App() {
   const [team, setTeam] = useShareableTeam()
@@ -28,10 +44,39 @@ export default function App() {
   const [maxDp, setMaxDp] = useState('')
   const [fitsOnly, setFitsOnly] = useState(false)
   const [showFilters, setShowFilters] = useState(true)
-  const [picking, setPicking] = useState(null) // character whose forms are open
+  const [picking, setPicking] = useState(null)
   const [teamName, setTeamName] = useState('')
   const [teamNotes, setTeamNotes] = useState('')
   const [shareLabel, setShareLabel] = useState(false)
+  const [favorites, setFavorites] = useLocalStorage('szFavorites', [])
+  const [seenBadges, setSeenBadges] = useLocalStorage('szSeenBadges', [])
+  const [notifQueue, setNotifQueue] = useState([])
+
+  const unlockedIds = useMemo(
+    () => checkAchievements(team, savedTeams, favorites),
+    [team, savedTeams, favorites]
+  )
+
+  const prevUnlockedRef = useRef(seenBadges)
+  useEffect(() => {
+    const prevSeen = new Set(prevUnlockedRef.current)
+    const newBadges = []
+    for (const id of unlockedIds) {
+      if (!prevSeen.has(id)) newBadges.push(id)
+    }
+    if (newBadges.length > 0) {
+      const badgeObjects = newBadges
+        .map((id) => ACHIEVEMENTS.find((a) => a.id === id))
+        .filter(Boolean)
+      setNotifQueue((q) => [...q, ...badgeObjects])
+      setSeenBadges((prev) => [...new Set([...prev, ...newBadges])])
+      prevUnlockedRef.current = [...new Set([...prevUnlockedRef.current, ...newBadges])]
+    }
+  }, [unlockedIds, setSeenBadges])
+
+  const dismissNotif = useCallback(() => {
+    setNotifQueue((q) => q.slice(1))
+  }, [])
 
   const resetFilters = () => {
     setSearch('')
@@ -57,12 +102,9 @@ export default function App() {
     })
   }, [search, tag, episode, maxDp, fitsOnly, remaining])
 
-  // A card is unclickable if the team is full, or even its cheapest form
-  // can't fit the DP still available given who's already on the team.
   const isDisabled = (character) => full || cheapestDp(character) > remaining
 
   const addForm = (character, form) => {
-    // Guard again at add time (form picker may show forms near the limit).
     if (full || form.dp > remaining) return
     setTeam((t) => [...t, { characterId: character.id, formName: form.form }])
     setPicking(null)
@@ -108,11 +150,15 @@ export default function App() {
     const url = buildShareUrl(team)
     try {
       await navigator.clipboard.writeText(url)
-    } catch {
-      // Clipboard blocked — the URL bar already holds the shareable link.
-    }
+    } catch {}
     setShareLabel(true)
     setTimeout(() => setShareLabel(false), 2000)
+  }
+
+  const toggleFavorite = (charId) => {
+    setFavorites((prev) =>
+      prev.includes(charId) ? prev.filter((id) => id !== charId) : [...prev, charId]
+    )
   }
 
   const randomTeam = () => {
@@ -128,58 +174,19 @@ export default function App() {
         <div className="brand">
           <h1>
             Sparking! <span className="accent">Zero</span>{' '}
-            {view === 'builder' ? 'Team Builder' : view === 'teams' ? 'My Teams' : view === 'data' ? 'Character Data' : view === 'matchups' ? 'Matchups' : view === 'rankings' ? 'Rankings' : view === 'counter' ? 'Counter Picks' : 'Compare'}
+            {VIEW_LABELS[view] || view}
           </h1>
           <nav className="view-tabs">
-            <button
-              className={view === 'builder' ? 'view-tab view-tab--active' : 'view-tab'}
-              onClick={() => setView('builder')}
-              type="button"
-            >
-              Team Builder
-            </button>
-            <button
-              className={view === 'teams' ? 'view-tab view-tab--active' : 'view-tab'}
-              onClick={() => setView('teams')}
-              type="button"
-            >
-              My Teams{savedTeams.length > 0 ? ` (${savedTeams.length})` : ''}
-            </button>
-            <button
-              className={view === 'data' ? 'view-tab view-tab--active' : 'view-tab'}
-              onClick={() => setView('data')}
-              type="button"
-            >
-              Character Data
-            </button>
-            <button
-              className={view === 'matchups' ? 'view-tab view-tab--active' : 'view-tab'}
-              onClick={() => setView('matchups')}
-              type="button"
-            >
-              Matchups
-            </button>
-            <button
-              className={view === 'rankings' ? 'view-tab view-tab--active' : 'view-tab'}
-              onClick={() => setView('rankings')}
-              type="button"
-            >
-              Rankings
-            </button>
-            <button
-              className={view === 'counter' ? 'view-tab view-tab--active' : 'view-tab'}
-              onClick={() => setView('counter')}
-              type="button"
-            >
-              Counter Picks
-            </button>
-            <button
-              className={view === 'compare' ? 'view-tab view-tab--active' : 'view-tab'}
-              onClick={() => setView('compare')}
-              type="button"
-            >
-              Compare
-            </button>
+            {Object.entries(VIEW_LABELS).map(([key, label]) => (
+              <button
+                key={key}
+                className={view === key ? 'view-tab view-tab--active' : 'view-tab'}
+                onClick={() => setView(key)}
+                type="button"
+              >
+                {key === 'teams' && savedTeams.length > 0 ? `${label} (${savedTeams.length})` : label}
+              </button>
+            ))}
           </nav>
         </div>
 
@@ -201,8 +208,7 @@ export default function App() {
                 resultCount={filtered.length}
               />
             )}
-
-            <CharacterGrid characters={filtered} isDisabled={isDisabled} onPick={setPicking} />
+            <CharacterGrid characters={filtered} isDisabled={isDisabled} onPick={setPicking} favorites={favorites} onToggleFav={toggleFavorite} />
           </>
         ) : view === 'teams' ? (
           <SavedTeams teams={savedTeams} onLoad={loadSaved} onDelete={deleteSaved} onUpdateNotes={updateSavedNotes} fullPage />
@@ -214,8 +220,12 @@ export default function App() {
           <CharacterRankings />
         ) : view === 'counter' ? (
           <CounterPicks team={team} />
-        ) : (
+        ) : view === 'compare' ? (
           <TeamCompare teams={savedTeams} />
+        ) : view === 'news' ? (
+          <News />
+        ) : (
+          <MetaDashboard savedTeams={savedTeams} unlockedIds={unlockedIds} />
         )}
       </main>
 
@@ -247,6 +257,10 @@ export default function App() {
           onAdd={addForm}
           onClose={() => setPicking(null)}
         />
+      )}
+
+      {notifQueue.length > 0 && (
+        <BadgeNotification key={notifQueue[0].id} badge={notifQueue[0]} onDone={dismissNotif} />
       )}
     </div>
   )

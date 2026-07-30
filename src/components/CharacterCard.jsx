@@ -1,6 +1,6 @@
 import { cheapestDp } from '../utils/dp.js'
 
-export default function CharacterCard({ character, disabled, onClick }) {
+export default function CharacterCard({ character, disabled, onClick, isFav, onToggleFav }) {
   const dp = cheapestDp(character)
   const cardImage = character.forms[0]?.image
   const initials = character.name
@@ -27,6 +27,14 @@ export default function CharacterCard({ character, disabled, onClick }) {
           <span className="card__initials">{initials}</span>
         )}
         <span className="card__dp">{dp}+ DP</span>
+        <span
+          className={'card__fav' + (isFav ? ' card__fav--active' : '')}
+          onClick={(e) => { e.stopPropagation(); onToggleFav(character.id) }}
+          title={isFav ? 'Remove from favorites' : 'Add to favorites'}
+          role="button"
+        >
+          {isFav ? '★' : '☆'}
+        </span>
       </div>
       <div className="card__name">{character.name}</div>
       <div className="card__tags">{(character.forms[0]?.tags || []).slice(0, 2).join(' · ')}</div>
