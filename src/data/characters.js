@@ -8,9 +8,10 @@
 export const DP_LIMIT = 15
 export const MAX_TEAM = 5
 
-const jp = (n) => `/characters/jp/chara${String(n).padStart(3, '0')}.jpg`
-const dlc = (n) => `/characters/jp/dlc${String(n).padStart(2, '0')}.jpg`
-const neo = (n) => `/characters/neo/img_costume_blast_${String(n).padStart(2, '0')}.jpg`
+const base = import.meta.env.BASE_URL
+const jp = (n) => `${base}characters/jp/chara${String(n).padStart(3, '0')}.jpg`
+const dlc = (n) => `${base}characters/jp/dlc${String(n).padStart(2, '0')}.jpg`
+const neo = (n) => `${base}characters/neo/img_costume_blast_${String(n).padStart(2, '0')}.jpg`
 
 export const characters = [
   // ======================= GOKU FORMS =======================
