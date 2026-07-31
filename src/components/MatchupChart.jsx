@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import { characters, charactersById } from '../data/characters.js'
 import { getCombatData } from '../data/combatData.js'
 import { getForm } from '../utils/dp.js'
@@ -9,6 +9,15 @@ import CharacterDetail from './CharacterDetail.jsx'
 const GOOD_TRAITS = ['Instant Spark', 'Dodge Skill', 'Unblockable Ultimate', 'Health Regeneration']
 const GOOD_SKILLS = ['Wild Sense', 'Explosive Wave', 'Afterimage Strike', 'Afterimage', 'Full Power', 'Super Explosive Wave']
 const RUSH_SKILLS = ['Rush Attack', 'Instant Transmission', 'False Courage']
+const RECORD_KEY = 'szMatchRecord'
+
+function loadRecords() {
+  try { return JSON.parse(localStorage.getItem(RECORD_KEY)) || {} } catch { return {} }
+}
+
+function saveRecords(records) {
+  localStorage.setItem(RECORD_KEY, JSON.stringify(records))
+}
 
 function getFormChain(char, selectedForm) {
   const idx = char.forms.findIndex(f => f.form === selectedForm.form)
@@ -117,10 +126,46 @@ function getRating(score) {
   return { label: 'Hard', cls: 'mu-hard', icon: '--' }
 }
 
+function getWinRate(rec) {
+  if (!rec || (rec.w + rec.l) === 0) return null
+  return Math.round((rec.w / (rec.w + rec.l)) * 100)
+}
+
 export default function MatchupChart({ team }) {
   const [listIndex, setListIndex] = useState(0)
   const [detailChar, setDetailChar] = useState(null)
   const [filter, setFilter] = useState('all')
+  const [records, setRecords] = useState(loadRecords)
+
+  const updateRecord = useCallback((enemyId, type) => {
+    setRecords(prev => {
+      const next = { ...prev }
+      if (!next[enemyId]) next[enemyId] = { w: 0, l: 0 }
+      next[enemyId] = { ...next[enemyId], [type]: next[enemyId][type] + 1 }
+      saveRecords(next)
+      return next
+    })
+  }, [])
+
+  const undoRecord = useCallback((enemyId, type) => {
+    setRecords(prev => {
+      const next = { ...prev }
+      if (!next[enemyId] || next[enemyId][type] <= 0) return prev
+      next[enemyId] = { ...next[enemyId], [type]: next[enemyId][type] - 1 }
+      if (next[enemyId].w === 0 && next[enemyId].l === 0) delete next[enemyId]
+      saveRecords(next)
+      return next
+    })
+  }, [])
+
+  const clearRecord = useCallback((enemyId) => {
+    setRecords(prev => {
+      const next = { ...prev }
+      delete next[enemyId]
+      saveRecords(next)
+      return next
+    })
+  }, [])
 
   const teamRows = team
     .map(item => {
@@ -206,11 +251,18 @@ export default function MatchupChart({ team }) {
     return { traits, skills, totalDp, highDpCount, lowDpCount, gaps }
   }, [teamRows])
 
+  const totalRecord = useMemo(() => {
+    let w = 0, l = 0
+    for (const rec of Object.values(records)) { w += rec.w; l += rec.l }
+    return { w, l, total: w + l }
+  }, [records])
+
   const filteredResults = analysis?.results.filter(r => {
     if (filter === 'all') return true
     if (filter === 'struggling') return r.bestScore < 1
     if (filter === 'even') return r.bestScore >= 1 && r.bestScore < 4
     if (filter === 'covered') return r.bestScore >= 4
+    if (filter === 'tracked') return records[r.enemy.id]
     return true
   }) ?? []
 
@@ -230,6 +282,27 @@ export default function MatchupChart({ team }) {
           ))}
         </div>
       </div>
+
+      {totalRecord.total > 0 && (
+        <div className="mu-record-bar">
+          <span className="mu-record-bar__label">Your Record</span>
+          <span className="mu-record-bar__wins">{totalRecord.w}W</span>
+          <span className="mu-record-bar__sep">-</span>
+          <span className="mu-record-bar__losses">{totalRecord.l}L</span>
+          {totalRecord.total > 0 && (
+            <span className={`mu-record-bar__rate ${getWinRate(totalRecord) >= 50 ? 'mu-record-bar__rate--good' : 'mu-record-bar__rate--bad'}`}>
+              {getWinRate(totalRecord)}% WR
+            </span>
+          )}
+          <button
+            type="button"
+            className="mu-record-bar__filter"
+            onClick={() => setFilter(filter === 'tracked' ? 'all' : 'tracked')}
+          >
+            {filter === 'tracked' ? 'Show all' : 'Tracked only'}
+          </button>
+        </div>
+      )}
 
       {teamRows.length === 0 ? (
         <div className="mu-empty">
@@ -310,50 +383,74 @@ export default function MatchupChart({ team }) {
               </div>
 
               <div className="mu-threats">
-                {filteredResults.map(r => (
-                  <div key={r.enemy.id} className={`mu-threat ${r.rating.cls}`}>
-                    <div className="mu-threat__enemy" onClick={() => setDetailChar(r.enemy)}>
-                      {r.bestEnemyForm.image ? (
-                        <img className="mu-threat__img" src={r.bestEnemyForm.image} alt={r.enemy.name} />
-                      ) : (
-                        <div className="mu-threat__ph" style={{ background: r.enemy.color }}>{r.enemy.name[0]}</div>
-                      )}
-                      <div className="mu-threat__info">
-                        <span className="mu-threat__name">{r.enemy.name}</span>
-                        <span className="mu-threat__dp">
-                          {r.enemyData.startDp !== r.enemyData.bestDp
-                            ? `${r.enemyData.startDp}→${r.enemyData.bestDp} DP`
-                            : `${r.enemyData.bestDp} DP`}
-                        </span>
-                        <span className={`mu-threat__tier mu-threat__tier--${r.tier.toLowerCase()}`}>{r.tier}</span>
+                {filteredResults.map(r => {
+                  const rec = records[r.enemy.id]
+                  const wr = getWinRate(rec)
+                  return (
+                    <div key={r.enemy.id} className={`mu-threat ${r.rating.cls}`}>
+                      <div className="mu-threat__enemy" onClick={() => setDetailChar(r.enemy)}>
+                        {r.bestEnemyForm.image ? (
+                          <img className="mu-threat__img" src={r.bestEnemyForm.image} alt={r.enemy.name} />
+                        ) : (
+                          <div className="mu-threat__ph" style={{ background: r.enemy.color }}>{r.enemy.name[0]}</div>
+                        )}
+                        <div className="mu-threat__info">
+                          <span className="mu-threat__name">{r.enemy.name}</span>
+                          <span className="mu-threat__dp">
+                            {r.enemyData.startDp !== r.enemyData.bestDp
+                              ? `${r.enemyData.startDp}→${r.enemyData.bestDp} DP`
+                              : `${r.enemyData.bestDp} DP`}
+                          </span>
+                          <span className={`mu-threat__tier mu-threat__tier--${r.tier.toLowerCase()}`}>{r.tier}</span>
+                        </div>
+                      </div>
+
+                      <div className="mu-threat__traits">
+                        {[...r.enemyData.traits].filter(t => GOOD_TRAITS.includes(t)).map(t => (
+                          <span key={t} className="mu-threat__trait">{t}</span>
+                        ))}
+                        {r.enemyData.bestDp > RANKED_META.superArmourThreshold && (
+                          <span className="mu-threat__trait mu-threat__trait--armour">Super Armour</span>
+                        )}
+                      </div>
+
+                      <div className={`mu-threat__verdict ${r.rating.cls}`}>
+                        <span className="mu-threat__icon">{r.rating.icon}</span>
+                        <span className="mu-threat__label">{r.rating.label}</span>
+                      </div>
+
+                      <div className="mu-threat__answer">
+                        <span className="mu-threat__answer-label">Best answer:</span>
+                        {r.bestForm?.image ? (
+                          <img className="mu-threat__answer-img" src={r.bestForm.image} alt={r.bestChar?.name} />
+                        ) : (
+                          <div className="mu-threat__answer-ph" style={{ background: r.bestChar?.color }}>{r.bestChar?.name[0]}</div>
+                        )}
+                        <span className="mu-threat__answer-name">{r.bestChar?.name}</span>
+                      </div>
+
+                      <div className="mu-threat__record">
+                        <div className="mu-record">
+                          <button type="button" className="mu-record__btn mu-record__btn--win" onClick={() => updateRecord(r.enemy.id, 'w')}>W</button>
+                          <button type="button" className="mu-record__btn mu-record__btn--loss" onClick={() => updateRecord(r.enemy.id, 'l')}>L</button>
+                          {rec && (
+                            <div className="mu-record__display">
+                              <span className="mu-record__score">
+                                <span className="mu-record__w" onContextMenu={e => { e.preventDefault(); undoRecord(r.enemy.id, 'w') }}>{rec.w}</span>
+                                -
+                                <span className="mu-record__l" onContextMenu={e => { e.preventDefault(); undoRecord(r.enemy.id, 'l') }}>{rec.l}</span>
+                              </span>
+                              {wr !== null && (
+                                <span className={`mu-record__wr ${wr >= 50 ? 'mu-record__wr--good' : 'mu-record__wr--bad'}`}>{wr}%</span>
+                              )}
+                              <button type="button" className="mu-record__clear" onClick={() => clearRecord(r.enemy.id)} title="Clear record">x</button>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
-
-                    <div className="mu-threat__traits">
-                      {[...r.enemyData.traits].filter(t => GOOD_TRAITS.includes(t)).map(t => (
-                        <span key={t} className="mu-threat__trait">{t}</span>
-                      ))}
-                      {r.enemyData.bestDp > RANKED_META.superArmourThreshold && (
-                        <span className="mu-threat__trait mu-threat__trait--armour">Super Armour</span>
-                      )}
-                    </div>
-
-                    <div className={`mu-threat__verdict ${r.rating.cls}`}>
-                      <span className="mu-threat__icon">{r.rating.icon}</span>
-                      <span className="mu-threat__label">{r.rating.label}</span>
-                    </div>
-
-                    <div className="mu-threat__answer">
-                      <span className="mu-threat__answer-label">Best answer:</span>
-                      {r.bestForm?.image ? (
-                        <img className="mu-threat__answer-img" src={r.bestForm.image} alt={r.bestChar?.name} />
-                      ) : (
-                        <div className="mu-threat__answer-ph" style={{ background: r.bestChar?.color }}>{r.bestChar?.name[0]}</div>
-                      )}
-                      <span className="mu-threat__answer-name">{r.bestChar?.name}</span>
-                    </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             </>
           )}

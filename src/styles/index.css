@@ -1387,7 +1387,7 @@ body {
 
 .mu-threat {
   display: grid;
-  grid-template-columns: 1fr auto auto auto;
+  grid-template-columns: 1fr auto auto auto auto;
   align-items: center;
   gap: 12px;
   background: var(--panel);
@@ -1571,19 +1571,163 @@ body {
   max-width: 100px;
 }
 
+/* --- Overall Record Bar --- */
+.mu-record-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 16px;
+  margin-bottom: 14px;
+}
+
+.mu-record-bar__label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-right: 4px;
+}
+
+.mu-record-bar__wins { font-size: 16px; font-weight: 800; color: var(--green); }
+.mu-record-bar__losses { font-size: 16px; font-weight: 800; color: var(--red); }
+.mu-record-bar__sep { font-size: 14px; color: var(--muted); }
+
+.mu-record-bar__rate {
+  font-size: 13px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 999px;
+  margin-left: 4px;
+}
+
+.mu-record-bar__rate--good { background: rgba(34, 197, 94, 0.15); color: var(--green); }
+.mu-record-bar__rate--bad { background: rgba(239, 68, 68, 0.15); color: var(--red); }
+
+.mu-record-bar__filter {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.mu-record-bar__filter:hover { background: var(--panel-2); }
+
+/* --- Per-threat W/L Record --- */
+.mu-threat__record {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.mu-record {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mu-record__btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: transparent;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mu-record__btn--win {
+  color: var(--green);
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.mu-record__btn--win:hover {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: var(--green);
+}
+
+.mu-record__btn--loss {
+  color: var(--red);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.mu-record__btn--loss:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: var(--red);
+}
+
+.mu-record__display {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 6px;
+}
+
+.mu-record__score {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.mu-record__w { color: var(--green); cursor: pointer; }
+.mu-record__l { color: var(--red); cursor: pointer; }
+.mu-record__w:hover, .mu-record__l:hover { text-decoration: underline; }
+
+.mu-record__wr {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.mu-record__wr--good { background: rgba(34, 197, 94, 0.15); color: var(--green); }
+.mu-record__wr--bad { background: rgba(239, 68, 68, 0.15); color: var(--red); }
+
+.mu-record__clear {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--muted);
+  font-size: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.mu-threat:hover .mu-record__clear { opacity: 1; }
+.mu-record__clear:hover { background: rgba(239, 68, 68, 0.2); color: var(--red); }
+
 /* Responsive: stack threat cards on mobile */
 @media (max-width: 700px) {
   .mu-threat {
     grid-template-columns: 1fr auto;
-    grid-template-rows: auto auto;
+    grid-template-rows: auto auto auto;
     gap: 8px;
   }
 
   .mu-threat__traits { display: none; }
 
-  .mu-threat__answer {
-    grid-column: 1 / -1;
-  }
+  .mu-threat__answer { grid-column: 1 / -1; }
+
+  .mu-threat__record { grid-column: 1 / -1; }
 }
 
 /* ---------- Footer ---------- */
