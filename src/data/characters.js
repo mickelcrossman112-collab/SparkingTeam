@@ -393,9 +393,9 @@ export const characters = [
     name: 'Gotenks',
     color: '#d04a8f',
     forms: [
-      { form: 'Base', dp: 6, health: 20000, kiBars: 4, skillPoints: 5, traits: ['Dodge Skill'], image: jp(71), tags: ['Hybrid Saiyan','Son Family','Vegeta Family','Fusion Warrior'], episodes: ['Majin Buu Saga'] },
-      { form: 'Super Saiyan', dp: 7, health: 22000, kiBars: 5, skillPoints: 6, traits: ['Unblockable Ultimate'], image: jp(72), tags: ['Hybrid Saiyan','Son Family','Vegeta Family','Super Saiyans','Fusion Warrior'], episodes: ['Majin Buu Saga'] },
-      { form: 'Super Saiyan 3', dp: 8, health: 24000, kiBars: 5, skillPoints: 6, traits: [], image: jp(73), tags: ['Hybrid Saiyan','Son Family','Vegeta Family','Fusion Warrior'], episodes: ['Majin Buu Saga'] },
+      { form: 'Base', dp: 6, health: 20000, kiBars: 4, skillPoints: 5, traits: ['Dodge Skill'], image: jp(71), tags: ['Hybrid Saiyan','Fusion Warrior'], episodes: ['Majin Buu Saga'] },
+      { form: 'Super Saiyan', dp: 7, health: 22000, kiBars: 5, skillPoints: 6, traits: ['Unblockable Ultimate'], image: jp(72), tags: ['Hybrid Saiyan','Super Saiyans','Fusion Warrior'], episodes: ['Majin Buu Saga'] },
+      { form: 'Super Saiyan 3', dp: 8, health: 24000, kiBars: 5, skillPoints: 6, traits: [], image: jp(73), tags: ['Hybrid Saiyan','Fusion Warrior'], episodes: ['Majin Buu Saga'] },
     ],
   },
   {
@@ -403,9 +403,9 @@ export const characters = [
     name: 'Vegito',
     color: '#3a5ed0',
     forms: [
-      { form: 'Base', dp: 7, health: 24000, kiBars: 5, skillPoints: 6, traits: ['Dodge Skill'], image: jp(66), tags: ['Vegeta Family','Son Family','Saiyans','Fusion Warrior'], episodes: ['Majin Buu Saga'] },
-      { form: 'Super Vegito', dp: 8, health: 26000, kiBars: 6, skillPoints: 7, traits: ['Dodge Skill'], image: jp(93), tags: ['Vegeta Family','Son Family','Saiyans','Fusion Warrior','Super Saiyans'], episodes: ['Majin Buu Saga'] },
-      { form: 'Super Saiyan Blue', dp: 10, health: 28000, kiBars: 7, skillPoints: 8, traits: [], image: jp(67), tags: ['Vegeta Family','Son Family','Saiyans','Fusion Warrior','God Ki'], episodes: ['Dragon Ball Super'] },
+      { form: 'Base', dp: 7, health: 24000, kiBars: 5, skillPoints: 6, traits: ['Dodge Skill'], image: jp(66), tags: ['Saiyans','Fusion Warrior'], episodes: ['Majin Buu Saga'] },
+      { form: 'Super Vegito', dp: 8, health: 26000, kiBars: 6, skillPoints: 7, traits: ['Dodge Skill'], image: jp(93), tags: ['Saiyans','Fusion Warrior','Super Saiyans'], episodes: ['Majin Buu Saga'] },
+      { form: 'Super Saiyan Blue', dp: 10, health: 28000, kiBars: 7, skillPoints: 8, traits: [], image: jp(67), tags: ['Saiyans','Fusion Warrior','God Ki'], episodes: ['Dragon Ball Super'] },
     ],
   },
   {
@@ -413,7 +413,7 @@ export const characters = [
     name: 'Super Gogeta (Z)',
     color: '#e05a30',
     forms: [
-      { form: 'Base', dp: 8, health: 26000, kiBars: 6, skillPoints: 7, traits: [], image: jp(156), tags: ['Saiyans','Super Saiyans','Fusion Warrior','Son Family','Vegeta Family','Otherworld Warrior'], episodes: ['Sagas from the Movies'] },
+      { form: 'Base', dp: 8, health: 26000, kiBars: 6, skillPoints: 7, traits: [], image: jp(156), tags: ['Saiyans','Super Saiyans','Fusion Warrior','Otherworld Warrior'], episodes: ['Sagas from the Movies'] },
     ],
   },
   {
@@ -421,9 +421,9 @@ export const characters = [
     name: 'Gogeta (Super)',
     color: '#e05a30',
     forms: [
-      { form: 'Base', dp: 7, health: 24000, kiBars: 5, skillPoints: 6, traits: ['Instant Spark', 'Dodge Skill'], image: jp(68), tags: ['Vegeta Family','Saiyans','Son Family','Fusion Warrior'], episodes: ['Sagas from the Movies','Dragon Ball Super'] },
-      { form: 'Super Saiyan', dp: 8, health: 26000, kiBars: 6, skillPoints: 7, traits: [], image: jp(69), tags: ['Vegeta Family','Saiyans','Son Family','Super Saiyans','Fusion Warrior'], episodes: ['Sagas from the Movies','Dragon Ball Super'] },
-      { form: 'Super Saiyan Blue', dp: 10, health: 28000, kiBars: 7, skillPoints: 8, traits: [], image: jp(70), tags: ['Vegeta Family','Saiyans','Son Family','God Ki','Fusion Warrior'], episodes: ['Sagas from the Movies','Dragon Ball Super'] },
+      { form: 'Base', dp: 7, health: 24000, kiBars: 5, skillPoints: 6, traits: ['Instant Spark', 'Dodge Skill'], image: jp(68), tags: ['Saiyans','Fusion Warrior'], episodes: ['Sagas from the Movies','Dragon Ball Super'] },
+      { form: 'Super Saiyan', dp: 8, health: 26000, kiBars: 6, skillPoints: 7, traits: [], image: jp(69), tags: ['Saiyans','Super Saiyans','Fusion Warrior'], episodes: ['Sagas from the Movies','Dragon Ball Super'] },
+      { form: 'Super Saiyan Blue', dp: 10, health: 28000, kiBars: 7, skillPoints: 8, traits: [], image: jp(70), tags: ['Saiyans','God Ki','Fusion Warrior'], episodes: ['Sagas from the Movies','Dragon Ball Super'] },
     ],
   },
   {
@@ -431,7 +431,7 @@ export const characters = [
     name: 'Gogeta (GT)',
     color: '#e05a30',
     forms: [
-      { form: 'Super Saiyan 4', dp: 10, health: 24000, kiBars: 5, skillPoints: 6, traits: ['Instant Spark', 'Dodge Skill'], image: jp(145), tags: ['GT','Fusion Warrior','Son Family','Vegeta Family','Saiyans'], episodes: [] },
+      { form: 'Super Saiyan 4', dp: 10, health: 24000, kiBars: 5, skillPoints: 6, traits: ['Instant Spark', 'Dodge Skill'], image: jp(145), tags: ['GT','Fusion Warrior','Saiyans'], episodes: [] },
     ],
   },
 
