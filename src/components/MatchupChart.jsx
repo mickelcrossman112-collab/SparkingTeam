@@ -8,14 +8,26 @@ import CharacterDetail from './CharacterDetail.jsx'
 
 const GOOD_TRAITS = ['Instant Spark', 'Dodge Skill', 'Unblockable Ultimate', 'Health Regeneration']
 const GOOD_SKILLS = ['Wild Sense', 'Explosive Wave', 'Afterimage Strike', 'Afterimage', 'Full Power', 'Super Explosive Wave']
+const RUSH_SKILLS = ['Rush Attack', 'Instant Transmission', 'False Courage']
 
-function getCharTraitsAndSkills(char) {
+function getFormChain(char, selectedForm) {
+  const idx = char.forms.findIndex(f => f.form === selectedForm.form)
+  if (idx === -1) return char.forms
+  return char.forms.slice(idx)
+}
+
+function getFullProfile(char, selectedForm) {
+  const chain = selectedForm ? getFormChain(char, selectedForm) : char.forms
   const traits = new Set()
   const skills = new Set()
+  const supers = []
   let bestDp = 0
   let peakHp = 0
   let peakMelee = 0
-  for (const form of char.forms) {
+  let peakUltDmg = 0
+  let startDp = selectedForm ? selectedForm.dp : char.forms[0].dp
+
+  for (const form of chain) {
     for (const t of form.traits) traits.add(t)
     if (form.dp > bestDp) bestDp = form.dp
     if (form.health > peakHp) peakHp = form.health
@@ -24,14 +36,19 @@ function getCharTraitsAndSkills(char) {
       if (combat.skill1) skills.add(combat.skill1)
       if (combat.skill2) skills.add(combat.skill2)
       if (combat.meleeDmg > peakMelee) peakMelee = combat.meleeDmg
+      if (combat.super1) supers.push(combat.super1)
+      if (combat.super2) supers.push(combat.super2)
+      if (combat.ultimate?.damage > peakUltDmg) peakUltDmg = combat.ultimate.damage
     }
   }
-  return { traits, skills, bestDp, peakHp, peakMelee }
+
+  const transformRange = bestDp - startDp
+  return { traits, skills, supers, bestDp, startDp, peakHp, peakMelee, peakUltDmg, transformRange }
 }
 
 function scoreMatchup(myChar, myForm, enemyChar) {
-  const my = getCharTraitsAndSkills(myChar)
-  const enemy = getCharTraitsAndSkills(enemyChar)
+  const my = getFullProfile(myChar, myForm)
+  const enemy = getFullProfile(enemyChar, null)
   let score = 0
 
   if (enemy.traits.has('Instant Spark') && my.traits.has('Dodge Skill')) score += 2
@@ -56,11 +73,21 @@ function scoreMatchup(myChar, myForm, enemyChar) {
   if (my.peakHp < enemy.peakHp - 5000) score -= 1
   if (enemy.peakMelee > my.peakMelee + 2000) score -= 1
 
+  if (my.transformRange >= 3) score += 1
+  if (enemy.transformRange >= 3 && my.transformRange < 2) score -= 1
+
+  if (my.peakUltDmg > 18000) score += 1
+  if (enemy.peakUltDmg > 18000 && !my.traits.has('Instant Spark')) score -= 1
+
   let skillBonus = 0
   for (const s of my.skills) {
     if (GOOD_SKILLS.includes(s)) skillBonus += 0.5
   }
   score += Math.min(skillBonus, 1.5)
+
+  for (const s of enemy.skills) {
+    if (RUSH_SKILLS.includes(s) && !my.traits.has('Dodge Skill')) score -= 0.5
+  }
 
   return score
 }
@@ -124,7 +151,7 @@ export default function MatchupChart({ team }) {
         }
       }
 
-      const enemyData = getCharTraitsAndSkills(enemy)
+      const enemyData = getFullProfile(enemy, null)
       const bestEnemyForm = enemy.forms.reduce((a, b) => b.dp > a.dp ? b : a, enemy.forms[0])
       const rating = getRating(bestScore)
 
@@ -159,15 +186,12 @@ export default function MatchupChart({ team }) {
     let lowDpCount = 0
 
     for (const row of teamRows) {
+      const profile = getFullProfile(row.char, row.form)
       totalDp += row.form.dp
-      if (row.form.dp > RANKED_META.superArmourThreshold) highDpCount++
-      if (row.form.dp <= 4) lowDpCount++
-      for (const t of row.form.traits) traits.add(t)
-      const combat = getCombatData(row.char.name, row.form.form)
-      if (combat) {
-        if (combat.skill1) skills.add(combat.skill1)
-        if (combat.skill2) skills.add(combat.skill2)
-      }
+      if (profile.bestDp > RANKED_META.superArmourThreshold) highDpCount++
+      if (profile.bestDp <= 4) lowDpCount++
+      for (const t of profile.traits) traits.add(t)
+      for (const s of profile.skills) skills.add(s)
     }
 
     const gaps = []
@@ -230,7 +254,12 @@ export default function MatchupChart({ team }) {
                       )}
                       <div className="mu-summary__fighter-info">
                         <span className="mu-summary__fighter-name">{r.char.name}</span>
-                        <span className="mu-summary__fighter-dp">{r.form.dp} DP</span>
+                        <span className="mu-summary__fighter-dp">
+                          {(() => {
+                            const p = getFullProfile(r.char, r.form)
+                            return p.bestDp > r.form.dp ? `${r.form.dp}→${p.bestDp} DP` : `${r.form.dp} DP`
+                          })()}
+                        </span>
                       </div>
                     </div>
                   ))}
@@ -291,7 +320,11 @@ export default function MatchupChart({ team }) {
                       )}
                       <div className="mu-threat__info">
                         <span className="mu-threat__name">{r.enemy.name}</span>
-                        <span className="mu-threat__dp">{r.enemyData.bestDp} DP</span>
+                        <span className="mu-threat__dp">
+                          {r.enemyData.startDp !== r.enemyData.bestDp
+                            ? `${r.enemyData.startDp}→${r.enemyData.bestDp} DP`
+                            : `${r.enemyData.bestDp} DP`}
+                        </span>
                         <span className={`mu-threat__tier mu-threat__tier--${r.tier.toLowerCase()}`}>{r.tier}</span>
                       </div>
                     </div>
