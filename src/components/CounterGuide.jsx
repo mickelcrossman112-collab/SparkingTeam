@@ -8,6 +8,7 @@ import CharacterDetail from './CharacterDetail.jsx'
 
 const TIER_SCORES = { Z: 8, S: 6, A: 4, B: 2, D: 0 }
 const GOOD_SKILLS = ['Wild Sense', 'Explosive Wave', 'Afterimage Strike', 'Afterimage', 'Full Power', 'Full Power Charge', 'Super Explosive Wave']
+const GOOD_TRAITS = ['Instant Spark', 'Dodge Skill', 'Health Regeneration', 'Unblockable Ultimate']
 
 function getTierBonus(charId) {
   let best = 0
@@ -57,20 +58,23 @@ function analyzeEnemy(char) {
     }
   }
 
+  if (allTraits.has('Instant Spark')) strengths.push('Has Instant Spark — can escape combos')
+  if (allTraits.has('Dodge Skill')) strengths.push('Has Dodge Skill — auto-dodges attacks')
+  if (allTraits.has('Unblockable Ultimate')) strengths.push('Unblockable Ultimate — bypasses guard')
+  if (allTraits.has('Health Regeneration')) strengths.push('Health Regeneration — heals over time')
   if (peakMelee > 4500) strengths.push('Very high melee damage')
   if (peakUlt > 20000) strengths.push('Devastating ultimate attack')
   if (peakHp >= 28000) strengths.push('Massive health pool')
-  if (peakDef >= 4000) strengths.push('High defence — hard to damage')
   if (peakKi > 3500) strengths.push('Strong ki blasts — dangerous at range')
-  if (char.forms.length >= 4) strengths.push(`${char.forms.length} forms — very versatile`)
   if (bestDp >= 8) strengths.push(`High cost (${bestDp} DP) — powerful but expensive`)
 
+  if (!allTraits.has('Dodge Skill')) weaknesses.push('No Dodge Skill — cannot auto-dodge')
+  if (!allTraits.has('Instant Spark')) weaknesses.push('No Instant Spark — stuck in combos')
   if (peakHp < 22000) weaknesses.push('Low health — can be burst down')
   if (peakDef < 3000) weaknesses.push('Low defence — takes more damage')
   if (slowestSwitch > 4) weaknesses.push('Slow switch time — punishable on swap')
   if (bestDp >= 7) weaknesses.push(`Expensive (${bestDp} DP) — limits team options`)
   if (peakKi < 2500) weaknesses.push('Weak ki blasts — poor at range')
-  if (peakMelee < 3500) weaknesses.push('Low melee damage — struggles up close')
   if (char.forms.length === 1) weaknesses.push('Only 1 form — no transformation options')
 
   const archetypeMatches = []
@@ -81,8 +85,8 @@ function analyzeEnemy(char) {
     if (arch.id === 'tanky-chip' && peakHp >= 25000 && peakDef >= 3500) match += 2
     if (arch.id === 'zoner' && peakKi > 3500) match += 2
     if (arch.id === 'fusion-spam' && char.forms.some(f => f.tags?.includes('Fusion'))) match += 3
-    if (arch.id === 'regen-stall' && peakHp >= 26000) match += 2
-    if (arch.id === 'ultra-instinct' && bestDp >= 8) match += 1
+    if (arch.id === 'regen-stall' && allTraits.has('Health Regeneration')) match += 3
+    if (arch.id === 'ultra-instinct' && allTraits.has('Dodge Skill')) match += 3
     if (arch.id === 'giant' && peakHp >= 30000) match += 2
     if (match > 0) archetypeMatches.push({ ...arch, match })
   }
@@ -93,11 +97,13 @@ function analyzeEnemy(char) {
 
 function scoreCounter(counterChar, enemyAnalysis) {
   let score = 0
+  const allTraits = new Set()
   const allSkills = new Set()
   let peakHp = 0
   let peakMelee = 0
 
   for (const form of counterChar.forms) {
+    for (const t of form.traits) allTraits.add(t)
     if (form.health > peakHp) peakHp = form.health
 
     const combat = getCombatData(counterChar.name, form.form)
@@ -108,22 +114,27 @@ function scoreCounter(counterChar, enemyAnalysis) {
     }
   }
 
-  if (enemyAnalysis.peakMelee > 4000 && peakHp >= 25000) score += 4
-  if (enemyAnalysis.peakHp >= 28000 && peakMelee > 4000) score += 4
-  if (enemyAnalysis.bestDp >= 7 && counterChar.forms.length >= 3) score += 3
-  if (enemyAnalysis.peakKi > 3500 && peakMelee > 4000) score += 3
-  if (enemyAnalysis.peakDef >= 4000 && peakMelee > 4500) score += 3
-  if (peakMelee > 4000) score += 3
+  if (enemyAnalysis.allTraits.has('Instant Spark') && allTraits.has('Dodge Skill')) score += 5
+  if (enemyAnalysis.allTraits.has('Dodge Skill') && allSkills.has('Explosive Wave')) score += 5
+  if (enemyAnalysis.allTraits.has('Health Regeneration') && peakMelee > 4000) score += 4
+  if (enemyAnalysis.allTraits.has('Unblockable Ultimate') && allTraits.has('Dodge Skill')) score += 4
+  if (enemyAnalysis.bestDp >= 7 && allTraits.has('Unblockable Ultimate')) score += 4
+  if (enemyAnalysis.peakMelee > 4000 && allTraits.has('Instant Spark')) score += 3
+  if (!enemyAnalysis.allTraits.has('Dodge Skill') && peakMelee > 4000) score += 3
+  if (!enemyAnalysis.allTraits.has('Instant Spark') && allTraits.has('Unblockable Ultimate')) score += 3
 
   for (const skill of allSkills) {
     if (GOOD_SKILLS.includes(skill)) score += 2
+  }
+  for (const trait of allTraits) {
+    if (GOOD_TRAITS.includes(trait)) score += 1.5
   }
 
   score += getTierBonus(counterChar.id)
   score += peakHp / 5000
   score += peakMelee / 1500
 
-  return { score, allSkills }
+  return { score, allTraits, allSkills }
 }
 
 export default function CounterGuide() {
@@ -150,13 +161,13 @@ export default function CounterGuide() {
     const results = []
     for (const char of characters) {
       if (char.id === selectedEnemy.id) continue
-      const { score, allSkills } = scoreCounter(char, enemyAnalysis)
+      const { score, allTraits, allSkills } = scoreCounter(char, enemyAnalysis)
       let bestForm = char.forms[0]
       let bestDp = 0
       for (const f of char.forms) { if (f.dp > bestDp) { bestDp = f.dp; bestForm = f } }
       const tierBonus = getTierBonus(char.id)
       const tierLabel = tierBonus >= 8 ? 'Z' : tierBonus >= 6 ? 'S' : tierBonus >= 4 ? 'A' : tierBonus >= 2 ? 'B' : 'D'
-      results.push({ char, form: bestForm, score, allSkills, tierLabel })
+      results.push({ char, form: bestForm, score, allTraits, allSkills, tierLabel })
     }
     results.sort((a, b) => b.score - a.score)
     return results.slice(0, 12)
@@ -281,7 +292,7 @@ export default function CounterGuide() {
           <div className="cg-counters">
             <h4 className="cg-counters__title">Best Counters vs {selectedEnemy.name}</h4>
             <div className="cg-counters__grid">
-              {counterPicks.map(({ char, form, score, allSkills, tierLabel }) => (
+              {counterPicks.map(({ char, form, score, allTraits, allSkills, tierLabel }) => (
                 <button
                   key={char.id}
                   className="cg-counter-card"
@@ -299,6 +310,9 @@ export default function CounterGuide() {
                   </div>
                   <h5 className="cg-counter-card__name">{char.name}</h5>
                   <div className="cg-counter-card__tags">
+                    {[...allTraits].filter(t => GOOD_TRAITS.includes(t)).map(t => (
+                      <span key={t} className="cg-tag cg-tag--trait">{t}</span>
+                    ))}
                     {[...allSkills].filter(s => GOOD_SKILLS.includes(s)).map(s => (
                       <span key={s} className="cg-tag cg-tag--skill">{s}</span>
                     ))}
