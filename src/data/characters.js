@@ -97,7 +97,7 @@ export const characters = [
     name: 'Vegeta (Z-Scouter)',
     color: '#3a6ee0',
     forms: [
-      { form: 'Base', dp: 4, health: 20000, kiBars: 3, skillPoints: 4, traits: [], image: jp(12), tags: ['Saiyans','Vegeta Family','Powerful Opponent','Frieza Force'], episodes: ['Saiyan Saga'] },
+      { form: 'Base', dp: 4, health: 20000, kiBars: 3, skillPoints: 4, traits: [], image: jp(12), tags: ['Saiyans','Vegeta Family','Powerful Opponent','Frieza Force'], episodes: ['Saiyan Saga','Namek Saga'] },
     ],
   },
   {
