@@ -6,6 +6,7 @@ import { buildShareUrl } from './utils/share.js'
 import { useLocalStorage } from './hooks/useLocalStorage.js'
 import { useShareableTeam } from './hooks/useShareableTeam.js'
 import { checkAchievements, ACHIEVEMENTS } from './data/achievements.js'
+import { playAdd, playRemove, playSave, playBadge, playRandom, playPreset } from './utils/sounds.js'
 import CharacterData from './components/CharacterData.jsx'
 import CharacterRankings from './components/CharacterRankings.jsx'
 import TeamBar from './components/TeamBar.jsx'
@@ -20,6 +21,8 @@ import CounterPicks from './components/CounterPicks.jsx'
 import News from './components/News.jsx'
 import MetaDashboard from './components/MetaDashboard.jsx'
 import BadgeNotification from './components/BadgeNotification.jsx'
+import CharacterSpotlight from './components/CharacterSpotlight.jsx'
+import PresetTeams from './components/PresetTeams.jsx'
 
 const VIEW_LABELS = {
   builder: 'Team Builder',
@@ -51,6 +54,7 @@ export default function App() {
   const [favorites, setFavorites] = useLocalStorage('szFavorites', [])
   const [seenBadges, setSeenBadges] = useLocalStorage('szSeenBadges', [])
   const [notifQueue, setNotifQueue] = useState([])
+  const [showPresets, setShowPresets] = useState(false)
 
   const unlockedIds = useMemo(
     () => checkAchievements(team, savedTeams, favorites),
@@ -71,6 +75,7 @@ export default function App() {
       setNotifQueue((q) => [...q, ...badgeObjects])
       setSeenBadges((prev) => [...new Set([...prev, ...newBadges])])
       prevUnlockedRef.current = [...new Set([...prevUnlockedRef.current, ...newBadges])]
+      playBadge()
     }
   }, [unlockedIds, setSeenBadges])
 
@@ -108,9 +113,13 @@ export default function App() {
     if (full || form.dp > remaining) return
     setTeam((t) => [...t, { characterId: character.id, formName: form.form }])
     setPicking(null)
+    playAdd()
   }
 
-  const removeAt = (index) => setTeam((t) => t.filter((_, i) => i !== index))
+  const removeAt = (index) => {
+    setTeam((t) => t.filter((_, i) => i !== index))
+    playRemove()
+  }
 
   const reorderTeam = (fromIndex, toIndex) => {
     setTeam((t) => {
@@ -130,6 +139,7 @@ export default function App() {
     setSavedTeams((list) => [{ id: Date.now().toString(36), name, team, notes }, ...list])
     setTeamName('')
     setTeamNotes('')
+    playSave()
   }
 
   const deleteSaved = (id) => setSavedTeams((list) => list.filter((s) => s.id !== id))
@@ -164,6 +174,13 @@ export default function App() {
   const randomTeam = () => {
     const { team: smartTeam } = generateSmartTeam()
     setTeam(smartTeam)
+    playRandom()
+  }
+
+  const loadPreset = (presetTeam) => {
+    setTeam(presetTeam)
+    setShowPresets(false)
+    playPreset()
   }
 
   return (
@@ -192,6 +209,17 @@ export default function App() {
 
         {view === 'builder' ? (
           <>
+            <CharacterSpotlight />
+            <div className="preset-toggle-row">
+              <button
+                className="preset-toggle-btn"
+                type="button"
+                onClick={() => setShowPresets((v) => !v)}
+              >
+                {showPresets ? 'Hide Iconic Teams' : 'Iconic Teams'}
+              </button>
+            </div>
+            {showPresets && <PresetTeams onLoad={loadPreset} />}
             {showFilters && (
               <FilterBar
                 search={search}
