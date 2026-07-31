@@ -18,6 +18,7 @@ import SavedTeams from './components/SavedTeams.jsx'
 import MatchupChart from './components/MatchupChart.jsx'
 import TeamCompare from './components/TeamCompare.jsx'
 import CounterPicks from './components/CounterPicks.jsx'
+import CounterGuide from './components/CounterGuide.jsx'
 import News from './components/News.jsx'
 import MetaDashboard from './components/MetaDashboard.jsx'
 import BadgeNotification from './components/BadgeNotification.jsx'
@@ -31,6 +32,7 @@ const VIEW_LABELS = {
   matchups: 'Matchups',
   rankings: 'Rankings',
   counter: 'Counter Picks',
+  guide: 'Counter Guide',
   compare: 'Compare',
   news: 'News',
   meta: 'Meta',
@@ -248,6 +250,8 @@ export default function App() {
           <CharacterRankings />
         ) : view === 'counter' ? (
           <CounterPicks team={team} />
+        ) : view === 'guide' ? (
+          <CounterGuide />
         ) : view === 'compare' ? (
           <TeamCompare teams={savedTeams} />
         ) : view === 'news' ? (
