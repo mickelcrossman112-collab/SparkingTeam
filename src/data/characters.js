@@ -471,7 +471,7 @@ export const characters = [
     name: 'King Cold',
     color: '#8040a0',
     forms: [
-      { form: 'Base', dp: 4, health: 20000, kiBars: 3, skillPoints: 4, traits: [], image: jp(126), tags: ['Frieza Force','Lineage of Evil'], episodes: ['Cell Saga','Sagas from the Movies'] },
+      { form: 'Base', dp: 4, health: 20000, kiBars: 3, skillPoints: 4, traits: [], image: jp(126), tags: ['Frieza Force','Lineage of Evil'], episodes: ['Cell Saga'] },
     ],
   },
   {
