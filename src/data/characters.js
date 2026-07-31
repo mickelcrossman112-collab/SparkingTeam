@@ -20,7 +20,7 @@ export const characters = [
     name: 'Goku (Z-Early)',
     color: '#f0a020',
     forms: [
-      { form: 'Base', dp: 4, health: 20000, kiBars: 3, skillPoints: 4, traits: ['Dodge Skill'], image: jp(1), tags: ['Saiyans','Son Family'], episodes: ['Saiyan Saga'] },
+      { form: 'Base', dp: 4, health: 20000, kiBars: 3, skillPoints: 4, traits: ['Dodge Skill', 'Unblockable Ultimate'], image: jp(1), tags: ['Saiyans','Son Family'], episodes: ['Saiyan Saga'] },
       { form: 'NEO Base', dp: 4, health: 20000, kiBars: 3, skillPoints: 4, traits: ['Legend Strike'], image: neo(19), tags: ['Saiyans','Son Family','Super Saiyans'], episodes: ['Sagas from the Movies'] },
     ],
   },
@@ -29,7 +29,7 @@ export const characters = [
     name: 'Goku (Z-Mid)',
     color: '#f0a020',
     forms: [
-      { form: 'Base', dp: 5, health: 21000, kiBars: 3, skillPoints: 4, traits: [], image: jp(2), tags: ['Saiyans','Son Family'], episodes: ['Namek Saga'] },
+      { form: 'Base', dp: 5, health: 21000, kiBars: 3, skillPoints: 4, traits: ['Unblockable Ultimate'], image: jp(2), tags: ['Saiyans','Son Family'], episodes: ['Namek Saga'] },
       { form: 'Super Saiyan', dp: 6, health: 22000, kiBars: 4, skillPoints: 5, traits: ['Instant Spark', 'Dodge Skill'], image: jp(3), tags: ['Saiyans','Son Family','Super Saiyans'], episodes: ['Namek Saga'] },
       { form: 'NEO Super Saiyan', dp: 6, health: 22000, kiBars: 4, skillPoints: 5, traits: ['Full Power Kamehameha', 'Instant Spark', 'Dodge Skill'], image: neo(20), tags: ['Saiyans','Son Family','Super Saiyans'], episodes: ['Sagas from the Movies'] },
     ],
@@ -40,7 +40,7 @@ export const characters = [
     color: '#f0a020',
     forms: [
       { form: 'Base', dp: 5, health: 21000, kiBars: 3, skillPoints: 4, traits: ['Dodge Skill', 'Unblockable Ultimate'], image: jp(4), tags: ['Son Family','Saiyans'], episodes: ['Majin Buu Saga'] },
-      { form: 'Super Saiyan', dp: 6, health: 22000, kiBars: 4, skillPoints: 5, traits: ['Dodge Skill'], image: jp(5), tags: ['Son Family','Saiyans','Super Saiyans'], episodes: ['Majin Buu Saga'] },
+      { form: 'Super Saiyan', dp: 6, health: 22000, kiBars: 4, skillPoints: 5, traits: ['Dodge Skill', 'Unblockable Ultimate'], image: jp(5), tags: ['Son Family','Saiyans','Super Saiyans'], episodes: ['Majin Buu Saga'] },
       { form: 'Super Saiyan 2', dp: 6, health: 23000, kiBars: 5, skillPoints: 5, traits: ['Instant Spark'], image: jp(6), tags: ['Son Family','Saiyans'], episodes: ['Majin Buu Saga'] },
       { form: 'Super Saiyan 3', dp: 7, health: 24000, kiBars: 5, skillPoints: 6, traits: ['Dodge Skill'], image: jp(7), tags: ['Son Family','Saiyans'], episodes: ['Majin Buu Saga'] },
       { form: 'NEO Base (Outfit)', dp: 5, health: 21000, kiBars: 3, skillPoints: 4, traits: ['Dodge Skill'], image: neo(5), tags: ['Son Family','Saiyans','Super Saiyans'], episodes: ['Cell Saga'] },
@@ -75,10 +75,10 @@ export const characters = [
     name: 'Goku (GT)',
     color: '#f0b030',
     forms: [
-      { form: 'Base', dp: 5, health: 21000, kiBars: 3, skillPoints: 4, traits: ['Dodge Skill'], image: jp(140), tags: ['GT','Son Family','Saiyans'], episodes: [] },
+      { form: 'Base', dp: 5, health: 21000, kiBars: 3, skillPoints: 4, traits: ['Dodge Skill', 'Unblockable Ultimate'], image: jp(140), tags: ['GT','Son Family','Saiyans'], episodes: [] },
       { form: 'Super Saiyan', dp: 6, health: 22000, kiBars: 4, skillPoints: 5, traits: ['Instant Spark', 'Dodge Skill'], image: jp(141), tags: ['GT','Son Family','Saiyans','Super Saiyans'], episodes: [] },
       { form: 'Super Saiyan 3', dp: 7, health: 24000, kiBars: 5, skillPoints: 6, traits: [], image: jp(142), tags: ['GT','Son Family','Saiyans'], episodes: [] },
-      { form: 'Super Saiyan 4', dp: 8, health: 26000, kiBars: 6, skillPoints: 7, traits: ['Unblockable Ultimate'], image: jp(143), tags: ['GT','Son Family','Saiyans'], episodes: [] },
+      { form: 'Super Saiyan 4', dp: 8, health: 26000, kiBars: 6, skillPoints: 7, traits: [], image: jp(143), tags: ['GT','Son Family','Saiyans'], episodes: [] },
     ],
   },
   {
@@ -133,7 +133,7 @@ export const characters = [
     name: 'Majin Vegeta',
     color: '#3a6ee0',
     forms: [
-      { form: 'Base', dp: 7, health: 23000, kiBars: 5, skillPoints: 6, traits: ['Instant Spark'], image: jp(20), tags: ['Saiyans','Vegeta Family','Powerful Opponent'], episodes: ['Majin Buu Saga'] },
+      { form: 'Base', dp: 7, health: 23000, kiBars: 5, skillPoints: 6, traits: ['Instant Spark', 'Unblockable Ultimate'], image: jp(20), tags: ['Saiyans','Vegeta Family','Powerful Opponent'], episodes: ['Majin Buu Saga'] },
     ],
   },
   {
@@ -144,7 +144,7 @@ export const characters = [
       { form: 'Base', dp: 5, health: 22000, kiBars: 4, skillPoints: 5, traits: ['Dodge Skill'], image: jp(21), tags: ['Future','Saiyans','Vegeta Family','Universal Rep'], episodes: ['Dragon Ball Super','Sagas from the Movies'] },
       { form: 'Super Saiyan', dp: 6, health: 23000, kiBars: 4, skillPoints: 5, traits: ['Instant Spark'], image: jp(22), tags: ['Future','Saiyans','Vegeta Family','Universal Rep','Super Saiyans'], episodes: ['Dragon Ball Super','Sagas from the Movies'] },
       { form: 'Super Saiyan God', dp: 7, health: 24000, kiBars: 5, skillPoints: 6, traits: ['Dodge Skill'], image: jp(23), tags: ['Saiyans','Vegeta Family','Universal Rep','God Ki'], episodes: ['Dragon Ball Super','Sagas from the Movies'] },
-      { form: 'Super Saiyan Blue', dp: 8, health: 25000, kiBars: 6, skillPoints: 7, traits: [], image: jp(24), tags: ['Future','Saiyans','Vegeta Family','Universal Rep','God Ki'], episodes: ['Dragon Ball Super','Sagas from the Movies'] },
+      { form: 'Super Saiyan Blue', dp: 8, health: 25000, kiBars: 6, skillPoints: 7, traits: ['Unblockable Ultimate'], image: jp(24), tags: ['Future','Saiyans','Vegeta Family','Universal Rep','God Ki'], episodes: ['Dragon Ball Super','Sagas from the Movies'] },
       { form: 'NEO SSGSS (Combined)', dp: 8, health: 25000, kiBars: 6, skillPoints: 7, traits: ['Combined Strike'], image: neo(18), tags: ['Saiyans','Vegeta Family','God Ki'], episodes: ['Dragon Ball Super','Sagas from the Movies'] },
     ],
   },
@@ -172,9 +172,9 @@ export const characters = [
     color: '#7b3fbf',
     forms: [
       { form: 'Base', dp: 4, health: 18000, kiBars: 3, skillPoints: 4, traits: ['Dodge Skill'], image: jp(116), tags: ['Hybrid Saiyan','Son Family'], episodes: ['Cell Saga'] },
-      { form: 'Super Saiyan', dp: 6, health: 21000, kiBars: 4, skillPoints: 5, traits: ['Dodge Skill', 'Unblockable Ultimate'], image: jp(117), tags: ['Hybrid Saiyan','Son Family','Super Saiyans'], episodes: ['Cell Saga'] },
-      { form: 'Super Saiyan 2', dp: 7, health: 23000, kiBars: 5, skillPoints: 6, traits: ['Unblockable Ultimate', 'Instant Spark', 'Dodge Skill'], image: jp(118), tags: ['Hybrid Saiyan','Son Family'], episodes: ['Cell Saga'] },
-      { form: 'NEO Base', dp: 4, health: 18000, kiBars: 3, skillPoints: 4, traits: ['Dodge Skill', 'Unblockable Ultimate'], image: neo(6), tags: ['Hybrid Saiyan','Son Family','Super Saiyans'], episodes: ['Cell Saga'] },
+      { form: 'Super Saiyan', dp: 6, health: 21000, kiBars: 4, skillPoints: 5, traits: ['Dodge Skill'], image: jp(117), tags: ['Hybrid Saiyan','Son Family','Super Saiyans'], episodes: ['Cell Saga'] },
+      { form: 'Super Saiyan 2', dp: 7, health: 23000, kiBars: 5, skillPoints: 6, traits: ['Instant Spark', 'Dodge Skill', 'Unblockable Ultimate'], image: jp(118), tags: ['Hybrid Saiyan','Son Family'], episodes: ['Cell Saga'] },
+      { form: 'NEO Base', dp: 4, health: 18000, kiBars: 3, skillPoints: 4, traits: ['Dodge Skill'], image: neo(6), tags: ['Hybrid Saiyan','Son Family','Super Saiyans'], episodes: ['Cell Saga'] },
       { form: 'NEO Super Saiyan 2', dp: 7, health: 23000, kiBars: 5, skillPoints: 6, traits: ['Flash Strike', 'Instant Spark', 'Dodge Skill', 'Unblockable Ultimate'], image: neo(23), tags: ['Hybrid Saiyan','Son Family'], episodes: ['Sagas from the Movies'] },
     ],
   },
@@ -184,7 +184,7 @@ export const characters = [
     color: '#8b4fcf',
     forms: [
       { form: 'Base', dp: 4, health: 19000, kiBars: 3, skillPoints: 4, traits: ['Dodge Skill'], image: jp(53), tags: ['Son Family','Hybrid Saiyan'], episodes: ['Majin Buu Saga','Dragon Ball Super'] },
-      { form: 'Super Saiyan', dp: 6, health: 21000, kiBars: 4, skillPoints: 5, traits: ['Dodge Skill'], image: jp(131), tags: ['Son Family','Hybrid Saiyan','Super Saiyans'], episodes: ['Majin Buu Saga','Dragon Ball Super'] },
+      { form: 'Super Saiyan', dp: 6, health: 21000, kiBars: 4, skillPoints: 5, traits: ['Dodge Skill', 'Unblockable Ultimate'], image: jp(131), tags: ['Son Family','Hybrid Saiyan','Super Saiyans'], episodes: ['Majin Buu Saga','Dragon Ball Super'] },
       { form: 'Super Saiyan 2', dp: 7, health: 23000, kiBars: 5, skillPoints: 6, traits: ['Instant Spark', 'Dodge Skill'], image: jp(84), tags: ['Son Family','Hybrid Saiyan'], episodes: ['Majin Buu Saga','Dragon Ball Super'] },
       { form: 'NEO Super Saiyan', dp: 6, health: 21000, kiBars: 4, skillPoints: 5, traits: ['Family Triple Kamehameha', 'Dodge Skill'], image: neo(24), tags: ['Son Family','Hybrid Saiyan','Super Saiyans'], episodes: ['Majin Buu Saga','Sagas from the Movies'] },
       { form: 'NEO Base (Punch Rush)', dp: 4, health: 19000, kiBars: 3, skillPoints: 4, traits: ['Punishment Rush', 'Dodge Skill'], image: neo(25), tags: ['Son Family','Hybrid Saiyan'], episodes: ['Majin Buu Saga'] },
@@ -273,7 +273,7 @@ export const characters = [
     name: 'Krillin',
     color: '#e0a83a',
     forms: [
-      { form: 'Base', dp: 3, health: 16000, kiBars: 3, skillPoints: 3, traits: ['Dodge Skill'], image: jp(26), tags: ['Earthling'], episodes: ['Saiyan Saga','Namek Saga'] },
+      { form: 'Base', dp: 3, health: 16000, kiBars: 3, skillPoints: 3, traits: ['Dodge Skill', 'Unblockable Ultimate'], image: jp(26), tags: ['Earthling'], episodes: ['Saiyan Saga','Namek Saga'] },
       { form: 'NEO Base', dp: 3, health: 16000, kiBars: 3, skillPoints: 3, traits: ['Round Cannon Ball', 'Dodge Skill'], image: neo(15), tags: ['Earthling','Universal Rep'], episodes: ['Namek Saga','Dragon Ball Super'] },
     ],
   },
@@ -332,7 +332,7 @@ export const characters = [
     name: 'Master Roshi',
     color: '#d0b060',
     forms: [
-      { form: 'Base', dp: 2, health: 15000, kiBars: 3, skillPoints: 3, traits: ['Dodge Skill'], image: jp(59), tags: ['Universal Rep','Dragon Ball Saga','Earthling'], episodes: ['Saiyan Saga','Dragon Ball Super'] },
+      { form: 'Base', dp: 2, health: 15000, kiBars: 3, skillPoints: 3, traits: ['Dodge Skill', 'Unblockable Ultimate'], image: jp(59), tags: ['Universal Rep','Dragon Ball Saga','Earthling'], episodes: ['Saiyan Saga','Dragon Ball Super'] },
       { form: 'Max Power', dp: 5, health: 19000, kiBars: 4, skillPoints: 4, traits: [], image: jp(42), tags: ['Universal Rep','Dragon Ball Saga','Earthling'], episodes: ['Saiyan Saga','Dragon Ball Super'] },
     ],
   },
@@ -343,7 +343,7 @@ export const characters = [
     name: 'Trunks (Sword)',
     color: '#4a8fd0',
     forms: [
-      { form: 'Base', dp: 4, health: 19000, kiBars: 3, skillPoints: 4, traits: ['Instant Spark', 'Dodge Skill'], image: jp(56), tags: ['Future','Hybrid Saiyan','Vegeta Family'], episodes: ['Cell Saga'] },
+      { form: 'Base', dp: 4, health: 19000, kiBars: 3, skillPoints: 4, traits: ['Instant Spark', 'Dodge Skill', 'Unblockable Ultimate'], image: jp(56), tags: ['Future','Hybrid Saiyan','Vegeta Family'], episodes: ['Cell Saga'] },
       { form: 'Super Saiyan', dp: 6, health: 22000, kiBars: 4, skillPoints: 5, traits: ['Instant Spark', 'Dodge Skill'], image: jp(57), tags: ['Future','Hybrid Saiyan','Vegeta Family','Super Saiyans'], episodes: ['Cell Saga'] },
     ],
   },
@@ -394,7 +394,7 @@ export const characters = [
     color: '#d04a8f',
     forms: [
       { form: 'Base', dp: 6, health: 20000, kiBars: 4, skillPoints: 5, traits: ['Dodge Skill'], image: jp(71), tags: ['Hybrid Saiyan','Son Family','Vegeta Family','Fusion Warrior'], episodes: ['Majin Buu Saga'] },
-      { form: 'Super Saiyan', dp: 7, health: 22000, kiBars: 5, skillPoints: 6, traits: [], image: jp(72), tags: ['Hybrid Saiyan','Son Family','Vegeta Family','Super Saiyans','Fusion Warrior'], episodes: ['Majin Buu Saga'] },
+      { form: 'Super Saiyan', dp: 7, health: 22000, kiBars: 5, skillPoints: 6, traits: ['Unblockable Ultimate'], image: jp(72), tags: ['Hybrid Saiyan','Son Family','Vegeta Family','Super Saiyans','Fusion Warrior'], episodes: ['Majin Buu Saga'] },
       { form: 'Super Saiyan 3', dp: 8, health: 24000, kiBars: 5, skillPoints: 6, traits: [], image: jp(73), tags: ['Hybrid Saiyan','Son Family','Vegeta Family','Fusion Warrior'], episodes: ['Majin Buu Saga'] },
     ],
   },
@@ -487,7 +487,7 @@ export const characters = [
     name: 'Super Zarbon',
     color: '#40a070',
     forms: [
-      { form: 'Base', dp: 3, health: 18000, kiBars: 3, skillPoints: 3, traits: [], image: jp(110), tags: ['Minion','Frieza Force'], episodes: ['Namek Saga'] },
+      { form: 'Base', dp: 3, health: 18000, kiBars: 3, skillPoints: 3, traits: ['Unblockable Ultimate'], image: jp(110), tags: ['Minion','Frieza Force'], episodes: ['Namek Saga'] },
     ],
   },
   {
@@ -511,7 +511,7 @@ export const characters = [
     name: 'Captain Ginyu',
     color: '#8040a0',
     forms: [
-      { form: 'Base', dp: 4, health: 19000, kiBars: 3, skillPoints: 4, traits: ['Instant Spark'], image: jp(113), tags: ['Minion','Frieza Force','Ginyu Force'], episodes: ['Namek Saga'] },
+      { form: 'Base', dp: 4, health: 19000, kiBars: 3, skillPoints: 4, traits: ['Instant Spark', 'Unblockable Ultimate'], image: jp(113), tags: ['Minion','Frieza Force','Ginyu Force'], episodes: ['Namek Saga'] },
     ],
   },
   {
@@ -543,7 +543,7 @@ export const characters = [
     name: 'Guldo',
     color: '#60a040',
     forms: [
-      { form: 'Base', dp: 2, health: 13000, kiBars: 3, skillPoints: 2, traits: ['Dodge Skill'], image: jp(115), tags: ['Minion','Frieza Force','Ginyu Force'], episodes: ['Namek Saga'] },
+      { form: 'Base', dp: 2, health: 13000, kiBars: 3, skillPoints: 2, traits: ['Dodge Skill', 'Unblockable Ultimate'], image: jp(115), tags: ['Minion','Frieza Force','Ginyu Force'], episodes: ['Namek Saga'] },
     ],
   },
   {
@@ -551,7 +551,7 @@ export const characters = [
     name: 'Frieza Force Soldier',
     color: '#606080',
     forms: [
-      { form: 'Base', dp: 2, health: 12000, kiBars: 2, skillPoints: 2, traits: [], image: jp(157), tags: ['Minion'], episodes: ['Namek Saga'] },
+      { form: 'Base', dp: 2, health: 12000, kiBars: 2, skillPoints: 2, traits: ['Unblockable Ultimate'], image: jp(157), tags: ['Minion'], episodes: ['Namek Saga'] },
     ],
   },
 
@@ -561,7 +561,7 @@ export const characters = [
     name: 'Android 16',
     color: '#4a9050',
     forms: [
-      { form: 'Base', dp: 5, health: 22000, kiBars: 4, skillPoints: 4, traits: ['Dodge Skill'], image: jp(127), tags: ['Android'], episodes: ['Cell Saga'] },
+      { form: 'Base', dp: 5, health: 22000, kiBars: 4, skillPoints: 4, traits: ['Dodge Skill', 'Unblockable Ultimate'], image: jp(127), tags: ['Android'], episodes: ['Cell Saga'] },
     ],
   },
   {
@@ -612,7 +612,7 @@ export const characters = [
     color: '#6abf4a',
     forms: [
       { form: '1st Form', dp: 5, health: 20000, kiBars: 3, skillPoints: 4, traits: ['Health Regeneration', 'Dodge Skill'], image: jp(122), tags: ['Regeneration','Android','Powerful Opponent','Future'], episodes: ['Cell Saga'] },
-      { form: '2nd Form', dp: 5, health: 21000, kiBars: 4, skillPoints: 5, traits: ['Health Regeneration'], image: jp(123), tags: ['Regeneration','Android','Powerful Opponent','Future'], episodes: ['Cell Saga'] },
+      { form: '2nd Form', dp: 5, health: 21000, kiBars: 4, skillPoints: 5, traits: ['Health Regeneration', 'Unblockable Ultimate'], image: jp(123), tags: ['Regeneration','Android','Powerful Opponent','Future'], episodes: ['Cell Saga'] },
       { form: 'Perfect Form', dp: 6, health: 22000, kiBars: 5, skillPoints: 6, traits: ['Health Regeneration', 'Dodge Skill'], image: jp(32), tags: ['Regeneration','Android','Powerful Opponent','Future'], episodes: ['Cell Saga'] },
     ],
   },
@@ -639,7 +639,7 @@ export const characters = [
     name: 'Majin Buu',
     color: '#e88ad0',
     forms: [
-      { form: 'Base', dp: 6, health: 24000, kiBars: 4, skillPoints: 5, traits: ['Health Regeneration'], image: jp(33), tags: ['Regeneration','Powerful Opponent'], episodes: ['Majin Buu Saga'] },
+      { form: 'Base', dp: 6, health: 24000, kiBars: 4, skillPoints: 5, traits: ['Health Regeneration', 'Unblockable Ultimate'], image: jp(33), tags: ['Regeneration','Powerful Opponent'], episodes: ['Majin Buu Saga'] },
     ],
   },
   {
@@ -655,7 +655,7 @@ export const characters = [
     name: 'Super Buu',
     color: '#d06ab0',
     forms: [
-      { form: 'Base', dp: 6, health: 25000, kiBars: 5, skillPoints: 6, traits: ['Health Regeneration'], image: jp(135), tags: ['Powerful Opponent','Regeneration'], episodes: ['Majin Buu Saga'] },
+      { form: 'Base', dp: 6, health: 25000, kiBars: 5, skillPoints: 6, traits: ['Health Regeneration', 'Unblockable Ultimate'], image: jp(135), tags: ['Powerful Opponent','Regeneration'], episodes: ['Majin Buu Saga'] },
     ],
   },
   {
@@ -671,7 +671,7 @@ export const characters = [
     name: 'Super Buu (Gohan)',
     color: '#d06ab0',
     forms: [
-      { form: 'Base', dp: 7, health: 27000, kiBars: 6, skillPoints: 7, traits: ['Health Regeneration', 'Dodge Skill'], image: jp(137), tags: ['Powerful Opponent','Regeneration'], episodes: ['Majin Buu Saga'] },
+      { form: 'Base', dp: 7, health: 27000, kiBars: 6, skillPoints: 7, traits: ['Health Regeneration', 'Dodge Skill', 'Unblockable Ultimate'], image: jp(137), tags: ['Powerful Opponent','Regeneration'], episodes: ['Majin Buu Saga'] },
     ],
   },
   {
@@ -687,7 +687,7 @@ export const characters = [
     name: 'Babidi',
     color: '#e0c030',
     forms: [
-      { form: 'Base', dp: 3, health: 12000, kiBars: 3, skillPoints: 2, traits: [], image: jp(139), tags: [], episodes: ['Majin Buu Saga'] },
+      { form: 'Base', dp: 3, health: 12000, kiBars: 3, skillPoints: 2, traits: ['Unblockable Ultimate'], image: jp(139), tags: [], episodes: ['Majin Buu Saga'] },
     ],
   },
   {
@@ -741,7 +741,7 @@ export const characters = [
     forms: [
       { form: 'Base', dp: 5, health: 24000, kiBars: 4, skillPoints: 5, traits: ['Instant Spark', 'Dodge Skill'], image: jp(158), tags: ['Powerful Opponent','Saiyans'], episodes: ['Sagas from the Movies'] },
       { form: 'Super Saiyan', dp: 7, health: 26000, kiBars: 5, skillPoints: 6, traits: ['Instant Spark'], image: jp(159), tags: ['Powerful Opponent','Saiyans','Super Saiyans'], episodes: ['Sagas from the Movies'] },
-      { form: 'Legendary Super Saiyan', dp: 9, health: 30000, kiBars: 6, skillPoints: 7, traits: ['Unblockable Ultimate', 'Instant Spark', 'Dodge Skill'], image: jp(160), tags: ['Powerful Opponent','Saiyans','Super Saiyans'], episodes: ['Sagas from the Movies'] },
+      { form: 'Legendary Super Saiyan', dp: 9, health: 30000, kiBars: 6, skillPoints: 7, traits: ['Instant Spark', 'Dodge Skill', 'Unblockable Ultimate'], image: jp(160), tags: ['Powerful Opponent','Saiyans','Super Saiyans'], episodes: ['Sagas from the Movies'] },
     ],
   },
   {
@@ -834,7 +834,7 @@ export const characters = [
     color: '#d05060',
     forms: [
       { form: 'Base', dp: 5, health: 19000, kiBars: 3, skillPoints: 4, traits: ['Dodge Skill'], image: jp(76), tags: ['Saiyans','Universal Rep','Girls'], episodes: ['Dragon Ball Super'] },
-      { form: 'Super Saiyan 2', dp: 7, health: 22000, kiBars: 5, skillPoints: 6, traits: ['Instant Spark', 'Dodge Skill'], image: jp(77), tags: ['Saiyans','Universal Rep','Girls'], episodes: ['Dragon Ball Super'] },
+      { form: 'Super Saiyan 2', dp: 7, health: 22000, kiBars: 5, skillPoints: 6, traits: ['Instant Spark', 'Dodge Skill', 'Unblockable Ultimate'], image: jp(77), tags: ['Saiyans','Universal Rep','Girls'], episodes: ['Dragon Ball Super'] },
     ],
   },
   {
@@ -843,7 +843,7 @@ export const characters = [
     color: '#40a060',
     forms: [
       { form: 'Base', dp: 5, health: 19000, kiBars: 3, skillPoints: 4, traits: ['Dodge Skill'], image: jp(78), tags: ['Girls','Saiyans','Universal Rep'], episodes: ['Dragon Ball Super'] },
-      { form: 'Super Saiyan', dp: 6, health: 21000, kiBars: 4, skillPoints: 5, traits: [], image: jp(79), tags: ['Girls','Saiyans','Universal Rep','Super Saiyans'], episodes: ['Dragon Ball Super'] },
+      { form: 'Super Saiyan', dp: 6, health: 21000, kiBars: 4, skillPoints: 5, traits: ['Unblockable Ultimate'], image: jp(79), tags: ['Girls','Saiyans','Universal Rep','Super Saiyans'], episodes: ['Dragon Ball Super'] },
       { form: 'Super Saiyan (Berserk)', dp: 7, health: 25000, kiBars: 5, skillPoints: 6, traits: ['Instant Spark'], image: jp(48), tags: ['Girls','Universal Rep','Saiyans','Super Saiyans'], episodes: ['Dragon Ball Super'] },
     ],
   },
@@ -853,7 +853,7 @@ export const characters = [
     color: '#5ad0a0',
     forms: [
       { form: 'Base', dp: 6, health: 22000, kiBars: 4, skillPoints: 5, traits: ['Dodge Skill'], image: jp(80), tags: ['Saiyans','Universal Rep','Powerful Opponent','Girls','Fusion Warrior'], episodes: ['Dragon Ball Super'] },
-      { form: 'Super Saiyan', dp: 7, health: 24000, kiBars: 5, skillPoints: 6, traits: ['Instant Spark'], image: jp(81), tags: ['Saiyans','Universal Rep','Powerful Opponent','Girls','Fusion Warrior','Super Saiyans'], episodes: ['Dragon Ball Super'] },
+      { form: 'Super Saiyan', dp: 7, health: 24000, kiBars: 5, skillPoints: 6, traits: ['Instant Spark', 'Unblockable Ultimate'], image: jp(81), tags: ['Saiyans','Universal Rep','Powerful Opponent','Girls','Fusion Warrior','Super Saiyans'], episodes: ['Dragon Ball Super'] },
       { form: 'Super Saiyan 2', dp: 8, health: 26000, kiBars: 6, skillPoints: 7, traits: [], image: jp(82), tags: ['Saiyans','Universal Rep','Powerful Opponent','Girls','Fusion Warrior'], episodes: ['Dragon Ball Super'] },
     ],
   },
@@ -865,7 +865,7 @@ export const characters = [
     color: '#c03a3a',
     forms: [
       { form: 'Base', dp: 8, health: 27000, kiBars: 6, skillPoints: 7, traits: [], image: jp(39), tags: ['Powerful Opponent','Universal Rep'], episodes: ['Dragon Ball Super'] },
-      { form: 'Full Power', dp: 9, health: 30000, kiBars: 7, skillPoints: 8, traits: ['Dodge Skill', 'Unblockable Ultimate', 'Instant Spark'], image: jp(90), tags: ['Powerful Opponent','Universal Rep'], episodes: ['Dragon Ball Super'] },
+      { form: 'Full Power', dp: 9, health: 30000, kiBars: 7, skillPoints: 8, traits: ['Dodge Skill', 'Instant Spark', 'Unblockable Ultimate'], image: jp(90), tags: ['Powerful Opponent','Universal Rep'], episodes: ['Dragon Ball Super'] },
     ],
   },
   {
@@ -874,7 +874,7 @@ export const characters = [
     color: '#c06040',
     forms: [
       { form: 'Base', dp: 7, health: 24000, kiBars: 5, skillPoints: 6, traits: ['Instant Spark'], image: jp(49), tags: ['Universal Rep','Powerful Opponent'], episodes: ['Dragon Ball Super'] },
-      { form: 'God of Destruction', dp: 8, health: 27000, kiBars: 6, skillPoints: 7, traits: ['Dodge Skill'], image: jp(181), tags: ['Universal Rep','Powerful Opponent'], episodes: ['Dragon Ball Super'] },
+      { form: 'God of Destruction', dp: 8, health: 27000, kiBars: 6, skillPoints: 7, traits: ['Dodge Skill', 'Unblockable Ultimate'], image: jp(181), tags: ['Universal Rep','Powerful Opponent'], episodes: ['Dragon Ball Super'] },
     ],
   },
   {
@@ -932,7 +932,7 @@ export const characters = [
     name: 'Super Garlic Jr.',
     color: '#30a060',
     forms: [
-      { form: 'Base', dp: 4, health: 18000, kiBars: 3, skillPoints: 3, traits: [], image: jp(161), tags: ['Powerful Opponent'], episodes: ['Sagas from the Movies'] },
+      { form: 'Base', dp: 4, health: 18000, kiBars: 3, skillPoints: 3, traits: ['Unblockable Ultimate'], image: jp(161), tags: ['Powerful Opponent'], episodes: ['Sagas from the Movies'] },
     ],
   },
   {
@@ -990,7 +990,7 @@ export const characters = [
     name: 'Fusion Android 13',
     color: '#5060c0',
     forms: [
-      { form: 'Base', dp: 7, health: 26000, kiBars: 5, skillPoints: 6, traits: ['Dodge Skill'], image: jp(170), tags: ['Powerful Opponent','Android'], episodes: ['Sagas from the Movies'] },
+      { form: 'Base', dp: 7, health: 26000, kiBars: 5, skillPoints: 6, traits: ['Dodge Skill', 'Unblockable Ultimate'], image: jp(170), tags: ['Powerful Opponent','Android'], episodes: ['Sagas from the Movies'] },
     ],
   },
   {
@@ -1014,7 +1014,7 @@ export const characters = [
     name: 'Janemba',
     color: '#e0c040',
     forms: [
-      { form: 'Base', dp: 5, health: 20000, kiBars: 4, skillPoints: 5, traits: ['Instant Spark'], image: jp(173), tags: ['Powerful Opponent','Regeneration','Fusion Warrior','Otherworld Warrior'], episodes: ['Sagas from the Movies'] },
+      { form: 'Base', dp: 5, health: 20000, kiBars: 4, skillPoints: 5, traits: ['Instant Spark', 'Unblockable Ultimate'], image: jp(173), tags: ['Powerful Opponent','Regeneration','Fusion Warrior','Otherworld Warrior'], episodes: ['Sagas from the Movies'] },
     ],
   },
   {
@@ -1185,7 +1185,7 @@ export const characters = [
     name: 'Majin Kuu',
     color: '#d06ab0',
     forms: [
-      { form: 'Base', dp: 4, health: 22000, kiBars: 4, skillPoints: 5, traits: ['Health Regeneration'], image: jp(201), tags: ['Regeneration'], episodes: ['Daima'] },
+      { form: 'Base', dp: 5, health: 22000, kiBars: 4, skillPoints: 5, traits: ['Health Regeneration'], image: jp(201), tags: ['Regeneration'], episodes: ['Daima'] },
     ],
   },
 
@@ -1386,7 +1386,7 @@ export const characters = [
     name: 'Super 17',
     color: '#4a6090',
     forms: [
-      { form: 'Base', dp: 8, health: 25000, kiBars: 5, skillPoints: 6, traits: ['Unblockable Ultimate', 'Dodge Skill'], image: dlc(8), tags: ['GT','Android','Powerful Opponent','Fusion Warrior'], episodes: [] },
+      { form: 'Base', dp: 8, health: 25000, kiBars: 5, skillPoints: 6, traits: ['Dodge Skill'], image: dlc(8), tags: ['GT','Android','Powerful Opponent','Fusion Warrior'], episodes: [] },
     ],
   },
   {

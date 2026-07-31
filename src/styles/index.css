@@ -3517,6 +3517,7 @@ body {
   padding: 1rem 1.2rem; margin-bottom: 1rem;
 }
 .cg-tips-box--danger { border-left: 4px solid var(--red); }
+.cg-tips-box--ranked { border-left: 4px solid #e0a020; background: rgba(224, 160, 32, 0.06); }
 .cg-tips-label { margin: 0 0 0.4rem; font-size: 0.95rem; color: var(--orange); }
 .cg-tips-danger { color: var(--red); margin: 0 0 0.8rem; font-size: 0.9rem; line-height: 1.5; }
 .cg-tips-list { margin: 0; padding-left: 1.2rem; }

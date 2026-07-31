@@ -3,7 +3,7 @@ import { characters, charactersById } from '../data/characters.js'
 import { getCombatData } from '../data/combatData.js'
 import { getForm } from '../utils/dp.js'
 import { tierLists } from '../data/tierList.js'
-import { ARCHETYPES, CHARACTER_TIPS } from '../data/counterStrategies.js'
+import { ARCHETYPES, CHARACTER_TIPS, RANKED_META } from '../data/counterStrategies.js'
 import CharacterDetail from './CharacterDetail.jsx'
 
 const TIER_SCORES = { Z: 8, S: 6, A: 4, B: 2, D: 0 }
@@ -23,14 +23,27 @@ function getTierBonus(charId) {
   return best
 }
 
+function getTransformRange(char) {
+  if (char.forms.length <= 1) return 0
+  let minDp = Infinity, maxDp = 0
+  for (const f of char.forms) {
+    if (f.dp < minDp) minDp = f.dp
+    if (f.dp > maxDp) maxDp = f.dp
+  }
+  return maxDp - minDp
+}
+
 function analyzeEnemy(char) {
   const weaknesses = []
   const strengths = []
+  const rankedWarnings = []
   let bestForm = char.forms[0]
   let bestDp = 0
+  let lowestDp = Infinity
 
   for (const form of char.forms) {
     if (form.dp > bestDp) { bestDp = form.dp; bestForm = form }
+    if (form.dp < lowestDp) lowestDp = form.dp
   }
 
   const allTraits = new Set()
@@ -58,16 +71,46 @@ function analyzeEnemy(char) {
     }
   }
 
+  // Trait-based strengths
   if (allTraits.has('Instant Spark')) strengths.push('Has Instant Spark — can escape combos')
   if (allTraits.has('Dodge Skill')) strengths.push('Has Dodge Skill — auto-dodges attacks')
   if (allTraits.has('Unblockable Ultimate')) strengths.push('Unblockable Ultimate — bypasses guard')
   if (allTraits.has('Health Regeneration')) strengths.push('Health Regeneration — heals over time')
+
+  // Stat-based strengths
   if (peakMelee > 4500) strengths.push('Very high melee damage')
   if (peakUlt > 20000) strengths.push('Devastating ultimate attack')
   if (peakHp >= 28000) strengths.push('Massive health pool')
   if (peakKi > 3500) strengths.push('Strong ki blasts — dangerous at range')
   if (bestDp >= 8) strengths.push(`High cost (${bestDp} DP) — powerful but expensive`)
 
+  // Super armour mechanic
+  if (bestDp > RANKED_META.superArmourThreshold) {
+    strengths.push(`Super armour vs characters below ${RANKED_META.superArmourThreshold} DP`)
+    rankedWarnings.push(`Gets super armour against characters below ${RANKED_META.superArmourThreshold} DP — your low DP characters will bounce off. Match their DP or use cheese moves to survive.`)
+  }
+
+  // Transformation threat
+  const transformRange = getTransformRange(char)
+  if (transformRange >= 4) {
+    strengths.push(`Transformation threat — goes from ${lowestDp} to ${bestDp} DP`)
+    rankedWarnings.push(`Starts cheap at ${lowestDp} DP but transforms to ${bestDp} DP. Kill them before they power up or you will face a monster.`)
+  } else if (transformRange >= 2 && bestDp >= 7) {
+    strengths.push(`Can transform up to ${bestDp} DP`)
+  }
+
+  // Ranked meta awareness
+  if (RANKED_META.passiveCrutch.includes(char.id)) {
+    rankedWarnings.push('Common ranked crutch pick — players abuse a specific gimmick with this character. Learn the counter or you will struggle.')
+  }
+  if (RANKED_META.cheesePicks.includes(char.id)) {
+    rankedWarnings.push('Popular low DP cheese pick in ranked. Annoying but beatable once you know the tricks.')
+  }
+  if (RANKED_META.androidIds.includes(char.id)) {
+    rankedWarnings.push('Android character — cannot charge ki, must land hits to build meter. Expect non-stop aggression.')
+  }
+
+  // Weaknesses
   if (!allTraits.has('Dodge Skill')) weaknesses.push('No Dodge Skill — cannot auto-dodge')
   if (!allTraits.has('Instant Spark')) weaknesses.push('No Instant Spark — stuck in combos')
   if (peakHp < 22000) weaknesses.push('Low health — can be burst down')
@@ -76,15 +119,23 @@ function analyzeEnemy(char) {
   if (bestDp >= 7) weaknesses.push(`Expensive (${bestDp} DP) — limits team options`)
   if (peakKi < 2500) weaknesses.push('Weak ki blasts — poor at range')
   if (char.forms.length === 1) weaknesses.push('Only 1 form — no transformation options')
+  if (bestDp <= RANKED_META.superArmourThreshold && bestDp >= 3) {
+    weaknesses.push('Vulnerable to super armour from high DP characters')
+  }
 
+  // Archetype matching
   const archetypeMatches = []
   for (const arch of ARCHETYPES) {
     let match = 0
     if (arch.id === 'rush-spam' && peakMelee > 4000) match += 2
-    if (arch.id === 'high-dp-duo' && bestDp >= 7) match += 3
-    if (arch.id === 'tanky-chip' && peakHp >= 25000 && peakDef >= 3500) match += 2
-    if (arch.id === 'zoner' && peakKi > 3500) match += 2
-    if (arch.id === 'fusion-spam' && char.forms.some(f => f.tags?.includes('Fusion'))) match += 3
+    if (arch.id === 'high-dp-duo' && bestDp >= 8) match += 3
+    if (arch.id === 'low-dp-cheese' && bestDp <= 4 && (allSkills.has('Afterimage Strike') || allSkills.has('Explosive Wave'))) match += 3
+    if (arch.id === 'low-dp-cheese' && RANKED_META.cheesePicks.includes(char.id)) match += 3
+    if (arch.id === 'transform-team' && transformRange >= 3) match += 3
+    if (arch.id === 'transform-team' && RANKED_META.transformThreat.includes(char.id)) match += 2
+    if (arch.id === 'passive-crutch' && RANKED_META.passiveCrutch.includes(char.id)) match += 4
+    if (arch.id === 'android-aggro' && RANKED_META.androidIds.includes(char.id)) match += 4
+    if (arch.id === 'fusion-spam' && char.forms.some(f => f.tags?.includes('Fusion Warrior'))) match += 3
     if (arch.id === 'regen-stall' && allTraits.has('Health Regeneration')) match += 3
     if (arch.id === 'ultra-instinct' && allTraits.has('Dodge Skill')) match += 3
     if (arch.id === 'giant' && peakHp >= 30000) match += 2
@@ -92,7 +143,7 @@ function analyzeEnemy(char) {
   }
   archetypeMatches.sort((a, b) => b.match - a.match)
 
-  return { weaknesses, strengths, bestForm, bestDp, allTraits, allSkills, peakHp, peakMelee, peakKi, peakDef, peakUlt, archetypeMatches }
+  return { weaknesses, strengths, rankedWarnings, bestForm, bestDp, lowestDp, allTraits, allSkills, peakHp, peakMelee, peakKi, peakDef, peakUlt, archetypeMatches, transformRange }
 }
 
 function scoreCounter(counterChar, enemyAnalysis) {
@@ -101,10 +152,12 @@ function scoreCounter(counterChar, enemyAnalysis) {
   const allSkills = new Set()
   let peakHp = 0
   let peakMelee = 0
+  let bestDp = 0
 
   for (const form of counterChar.forms) {
     for (const t of form.traits) allTraits.add(t)
     if (form.health > peakHp) peakHp = form.health
+    if (form.dp > bestDp) bestDp = form.dp
 
     const combat = getCombatData(counterChar.name, form.form)
     if (combat) {
@@ -114,6 +167,7 @@ function scoreCounter(counterChar, enemyAnalysis) {
     }
   }
 
+  // Trait-based counter scoring
   if (enemyAnalysis.allTraits.has('Instant Spark') && allTraits.has('Dodge Skill')) score += 5
   if (enemyAnalysis.allTraits.has('Dodge Skill') && allSkills.has('Explosive Wave')) score += 5
   if (enemyAnalysis.allTraits.has('Health Regeneration') && peakMelee > 4000) score += 4
@@ -123,6 +177,27 @@ function scoreCounter(counterChar, enemyAnalysis) {
   if (!enemyAnalysis.allTraits.has('Dodge Skill') && peakMelee > 4000) score += 3
   if (!enemyAnalysis.allTraits.has('Instant Spark') && allTraits.has('Unblockable Ultimate')) score += 3
 
+  // Super armour awareness: if enemy is high DP, prefer counters that also hit the threshold
+  if (enemyAnalysis.bestDp > RANKED_META.superArmourThreshold) {
+    if (bestDp > RANKED_META.superArmourThreshold) score += 5
+    else if (bestDp <= 4) score -= 3
+  }
+
+  // Against cheese squads, prefer high DP characters with super armour
+  if (RANKED_META.cheesePicks.includes(counterChar.id)) {
+    if (enemyAnalysis.bestDp > RANKED_META.superArmourThreshold) score -= 4
+  }
+  if (enemyAnalysis.bestDp <= 4 && bestDp > RANKED_META.superArmourThreshold) score += 4
+
+  // Against transformation teams, prefer aggressive characters that can pressure early
+  if (enemyAnalysis.transformRange >= 4 && peakMelee > 4000) score += 3
+
+  // Against androids, reward zoning and dodge
+  if (RANKED_META.androidIds.includes(counterChar.id) && enemyAnalysis.allTraits.has('Dodge Skill')) {
+    score -= 2
+  }
+
+  // Skill and trait bonuses
   for (const skill of allSkills) {
     if (GOOD_SKILLS.includes(skill)) score += 2
   }
@@ -134,7 +209,7 @@ function scoreCounter(counterChar, enemyAnalysis) {
   score += peakHp / 5000
   score += peakMelee / 1500
 
-  return { score, allTraits, allSkills }
+  return { score, allTraits, allSkills, bestDp }
 }
 
 export default function CounterGuide() {
@@ -161,13 +236,13 @@ export default function CounterGuide() {
     const results = []
     for (const char of characters) {
       if (char.id === selectedEnemy.id) continue
-      const { score, allTraits, allSkills } = scoreCounter(char, enemyAnalysis)
+      const { score, allTraits, allSkills, bestDp } = scoreCounter(char, enemyAnalysis)
       let bestForm = char.forms[0]
-      let bestDp = 0
-      for (const f of char.forms) { if (f.dp > bestDp) { bestDp = f.dp; bestForm = f } }
+      let formBestDp = 0
+      for (const f of char.forms) { if (f.dp > formBestDp) { formBestDp = f.dp; bestForm = f } }
       const tierBonus = getTierBonus(char.id)
       const tierLabel = tierBonus >= 8 ? 'Z' : tierBonus >= 6 ? 'S' : tierBonus >= 4 ? 'A' : tierBonus >= 2 ? 'B' : 'D'
-      results.push({ char, form: bestForm, score, allTraits, allSkills, tierLabel })
+      results.push({ char, form: bestForm, score, allTraits, allSkills, tierLabel, bestDp })
     }
     results.sort((a, b) => b.score - a.score)
     return results.slice(0, 12)
@@ -248,6 +323,15 @@ export default function CounterGuide() {
             </div>
           )}
 
+          {enemyAnalysis.rankedWarnings.length > 0 && (
+            <div className="cg-tips-box cg-tips-box--ranked">
+              <h4 className="cg-tips-label">Ranked Meta Intel</h4>
+              <ul className="cg-tips-list">
+                {enemyAnalysis.rankedWarnings.map((w, i) => <li key={i}>{w}</li>)}
+              </ul>
+            </div>
+          )}
+
           <div className="cg-analysis-grid">
             <div className="cg-analysis-col">
               <h4 className="cg-analysis-title cg-analysis-title--red">Strengths</h4>
@@ -292,7 +376,7 @@ export default function CounterGuide() {
           <div className="cg-counters">
             <h4 className="cg-counters__title">Best Counters vs {selectedEnemy.name}</h4>
             <div className="cg-counters__grid">
-              {counterPicks.map(({ char, form, score, allTraits, allSkills, tierLabel }) => (
+              {counterPicks.map(({ char, form, score, allTraits, allSkills, tierLabel, bestDp }) => (
                 <button
                   key={char.id}
                   className="cg-counter-card"
