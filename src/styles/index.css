@@ -2143,25 +2143,15 @@ body {
   margin-bottom: 12px;
 }
 
-.rankings-admin-bar {
+.rankings-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   margin-left: auto;
 }
 
-.rankings-admin-badge {
-  padding: 3px 10px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--orange) 0%, var(--red) 100%);
-  color: #000;
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-}
-
-.rankings-admin-btn {
-  padding: 5px 12px;
+.rankings-action-btn {
+  padding: 5px 14px;
   border-radius: var(--radius);
   border: 1px solid var(--line);
   background: var(--panel);
@@ -2171,15 +2161,13 @@ body {
   cursor: pointer;
   transition: border-color 0.2s;
 }
+.rankings-action-btn:hover { border-color: var(--orange); }
+.rankings-action-btn--reset { border-color: rgba(255,85,85,0.4); color: var(--red); }
+.rankings-action-btn--reset:hover { border-color: var(--red); }
 
-.rankings-admin-btn:hover { border-color: var(--orange); }
-.rankings-admin-btn--danger { border-color: rgba(255,85,85,0.4); color: var(--red); }
-.rankings-admin-btn--danger:hover { border-color: var(--red); }
-
-.rankings-vote-hint {
+.rankings-hint {
   font-size: 12px;
   color: var(--muted);
-  margin-left: auto;
 }
 
 .tier-unranked {
@@ -2190,13 +2178,35 @@ body {
   background: rgba(255,255,255,0.02);
 }
 
+.tier-unranked__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
 .tier-unranked__title {
   font-size: 14px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--muted);
-  margin: 0 0 4px;
+  margin: 0;
+}
+
+.tier-unranked__search {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+  font-size: 12px;
+  outline: none;
+  width: 140px;
+  transition: border-color 0.2s;
+}
+.tier-unranked__search:focus {
+  border-color: var(--orange);
 }
 
 .tier-unranked__hint {
@@ -2401,31 +2411,18 @@ body {
   outline-offset: -2px;
 }
 
-.tier-card-votes {
+.tier-remove-btn {
   position: absolute;
   top: -4px;
   right: -4px;
-  background: var(--orange);
-  color: #000;
-  font-size: 9px;
-  font-weight: 800;
-  padding: 1px 5px;
-  border-radius: 999px;
-  white-space: nowrap;
-  z-index: 2;
-}
-
-.tier-vote-btn {
-  position: absolute;
-  bottom: 18px;
-  right: -2px;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid var(--line);
-  color: var(--muted);
-  font-size: 10px;
+  background: rgba(255,85,85,0.15);
+  border: 1px solid rgba(255,85,85,0.3);
+  color: var(--red);
+  font-size: 12px;
+  line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -2435,14 +2432,14 @@ body {
   z-index: 2;
 }
 
-.tier-card-wrap:hover .tier-vote-btn {
+.tier-card-wrap:hover .tier-remove-btn {
   opacity: 1;
 }
 
-.tier-vote-btn:hover {
-  background: var(--orange);
-  border-color: var(--orange);
-  color: #000;
+.tier-remove-btn:hover {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
 }
 
 .tier-vote-popup {

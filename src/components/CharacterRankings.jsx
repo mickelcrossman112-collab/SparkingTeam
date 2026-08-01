@@ -4,40 +4,29 @@ import { tierLists as defaultTierLists } from '../data/tierList.js'
 import { useLocalStorage } from '../hooks/useLocalStorage.js'
 import CharacterDetail from './CharacterDetail.jsx'
 
-const ADMIN_KEY = 'sparking'
 const charById = Object.fromEntries(characters.map((c) => [c.id, c]))
 const TIER_NAMES = ['Z', 'S', 'A', 'B', 'D']
 const TIER_COLORS = { Z: '#ff4444', S: '#ff9900', A: '#ffcc00', B: '#3a8dff', D: '#888888' }
 
-function isAdmin() {
-  try {
-    const params = new URLSearchParams(window.location.search)
-    return params.get('admin') === ADMIN_KEY
-  } catch { return false }
-}
-
-function TierCard({ char, admin, onDetail, onDragStart, onCardDragOver, onCardDrop, onVote, onPlace, votes, votingChar, setVotingChar, placingChar, setPlacingChar, dragOver, isUnranked }) {
+function TierCard({ char, onDetail, onDragStart, onCardDragOver, onCardDrop, onPlace, onRemove, placingChar, setPlacingChar, dragOver, isUnranked }) {
   const form = char.forms[0]
-  const charVotes = votes[char.id]
-  const hasVotes = charVotes && Object.values(charVotes).some((v) => v > 0)
-  const showPlacePicker = admin && placingChar === char.id
+  const showPlacePicker = placingChar === char.id
 
   return (
     <div
       className={'tier-card-wrap' + (dragOver ? ' tier-card-wrap--drag-over' : '')}
-      onDragOver={admin ? (e) => onCardDragOver(e, char.id) : undefined}
-      onDrop={admin ? (e) => onCardDrop(e, char.id) : undefined}
+      onDragOver={(e) => onCardDragOver(e, char.id)}
+      onDrop={(e) => onCardDrop(e, char.id)}
     >
       <button
-        className={'tier-card' + (admin ? ' tier-card--draggable' : '') + (isUnranked ? ' tier-card--unranked' : '')}
+        className={'tier-card tier-card--draggable' + (isUnranked ? ' tier-card--unranked' : '')}
         onClick={() => {
-          if (admin && isUnranked) { setPlacingChar(placingChar === char.id ? null : char.id) }
-          else if (admin) { onDetail(char) }
-          else { onDetail(char) }
+          if (isUnranked) setPlacingChar(placingChar === char.id ? null : char.id)
+          else onDetail(char)
         }}
         type="button"
-        draggable={admin}
-        onDragStart={admin ? (e) => onDragStart(e, char.id) : undefined}
+        draggable
+        onDragStart={(e) => onDragStart(e, char.id)}
       >
         {form.image ? (
           <img className="tier-card-img" src={form.image} alt={char.name} />
@@ -47,13 +36,18 @@ function TierCard({ char, admin, onDetail, onDragStart, onCardDragOver, onCardDr
           </div>
         )}
         <span className="tier-card-name">{char.name}</span>
-        {isUnranked && admin && <span className="tier-card-add">+ Add</span>}
-        {hasVotes && admin && !isUnranked && (
-          <span className="tier-card-votes" title="Community votes">
-            {Object.entries(charVotes).filter(([, v]) => v > 0).map(([tier, v]) => tier + ':' + v).join(' ')}
-          </span>
-        )}
+        {isUnranked && <span className="tier-card-add">+ Add</span>}
       </button>
+      {!isUnranked && (
+        <button
+          className="tier-remove-btn"
+          onClick={(e) => { e.stopPropagation(); onRemove(char.id) }}
+          type="button"
+          title="Remove from tier"
+        >
+          &times;
+        </button>
+      )}
       {showPlacePicker && (
         <div className="tier-vote-popup">
           <span className="tier-vote-popup__label">Add to:</span>
@@ -70,47 +64,18 @@ function TierCard({ char, admin, onDetail, onDragStart, onCardDragOver, onCardDr
           ))}
         </div>
       )}
-      {!admin && (
-        <button
-          className="tier-vote-btn"
-          onClick={(e) => { e.stopPropagation(); setVotingChar(votingChar === char.id ? null : char.id) }}
-          type="button"
-          title="Vote to move"
-        >
-          ▲
-        </button>
-      )}
-      {!admin && votingChar === char.id && (
-        <div className="tier-vote-popup">
-          <span className="tier-vote-popup__label">Move to:</span>
-          {TIER_NAMES.map((t) => (
-            <button
-              key={t}
-              className="tier-vote-popup__btn"
-              style={{ background: TIER_COLORS[t] }}
-              onClick={() => { onVote(char.id, t); setVotingChar(null) }}
-              type="button"
-            >
-              {t}
-            </button>
-          ))}
-        </div>
-      )}
     </div>
   )
 }
 
 export default function CharacterRankings() {
-  const admin = isAdmin()
   const [activeList, setActiveList] = useState(0)
   const [selectedChar, setSelectedChar] = useState(null)
   const [customTiers, setCustomTiers] = useLocalStorage('szTierEdits', {})
-  const [votes, setVotes] = useLocalStorage('szTierVotes', {})
   const [dragCharId, setDragCharId] = useState(null)
   const [dropTargetId, setDropTargetId] = useState(null)
-  const [votingChar, setVotingChar] = useState(null)
   const [placingChar, setPlacingChar] = useState(null)
-  const [copied, setCopied] = useState(false)
+  const [search, setSearch] = useState('')
 
   const listKey = defaultTierLists[activeList]?.name || ''
 
@@ -134,6 +99,14 @@ export default function CharacterRankings() {
     }
     return characters.filter((c) => !placed.has(c.id))
   }, [currentTiers])
+
+  const filteredUnranked = useMemo(() => {
+    if (!search) return unranked
+    const q = search.toLowerCase()
+    return unranked.filter((c) => c.name.toLowerCase().includes(q))
+  }, [unranked, search])
+
+  const isEdited = !!customTiers[listKey]
 
   const saveTiers = useCallback((newTiers) => {
     const editsForList = {}
@@ -224,43 +197,13 @@ export default function CharacterRankings() {
     saveTiers(newTiers)
   }
 
-  const handleVote = (charId, toTier) => {
-    setVotes((prev) => {
-      const charVotes = { ...(prev[charId] || {}) }
-      charVotes[toTier] = (charVotes[toTier] || 0) + 1
-      return { ...prev, [charId]: charVotes }
-    })
+  const handleRemove = (charId) => {
+    const newTiers = currentTiers.map((t) => ({
+      ...t,
+      characters: t.characters.filter((id) => id !== charId),
+    }))
+    saveTiers(newTiers)
   }
-
-  const exportVotes = async () => {
-    const lines = []
-    for (const [charId, tierVotes] of Object.entries(votes)) {
-      const char = charById[charId]
-      if (!char) continue
-      const parts = Object.entries(tierVotes)
-        .filter(([, v]) => v > 0)
-        .map(([tier, count]) => tier + ' (' + count + ')')
-      if (parts.length > 0) {
-        lines.push(char.name + ' -> ' + parts.join(', '))
-      }
-    }
-    if (lines.length === 0) {
-      alert('No votes yet.')
-      return
-    }
-    const text = 'Tier List Votes:\n' + lines.join('\n')
-    try {
-      await navigator.clipboard.writeText(text)
-    } catch {}
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
-
-  const clearVotes = () => setVotes({})
-
-  const totalVotes = Object.values(votes).reduce((sum, v) =>
-    sum + Object.values(v).reduce((s, c) => s + c, 0), 0
-  )
 
   return (
     <div className="rankings-page">
@@ -280,37 +223,23 @@ export default function CharacterRankings() {
           </div>
         )}
 
-        {admin && (
-          <div className="rankings-admin-bar">
-            <span className="rankings-admin-badge">ADMIN</span>
-            <button className="rankings-admin-btn" onClick={resetTiers} type="button">
+        <div className="rankings-actions">
+          {isEdited && (
+            <button className="rankings-action-btn rankings-action-btn--reset" onClick={resetTiers} type="button">
               Reset to Default
             </button>
-            {totalVotes > 0 && (
-              <>
-                <button className="rankings-admin-btn" onClick={exportVotes} type="button">
-                  {copied ? 'Copied!' : 'Export Votes (' + totalVotes + ')'}
-                </button>
-                <button className="rankings-admin-btn rankings-admin-btn--danger" onClick={clearVotes} type="button">
-                  Clear Votes
-                </button>
-              </>
-            )}
-          </div>
-        )}
-
-        {!admin && (
-          <p className="rankings-vote-hint">Click ▲ on a character to vote for a tier change</p>
-        )}
+          )}
+          <span className="rankings-hint">Drag to reorder &middot; Click unranked to add</span>
+        </div>
       </div>
 
-      <div className="rankings-display">
+      <div className="rankings-display" onDragEnd={handleDragEnd}>
         {currentTiers.map((t) => (
           <div
             key={t.tier}
-            className={'tier-row' + (admin && dragCharId ? ' tier-row--drop-target' : '')}
-            onDragOver={admin ? handleTierDragOver : undefined}
-            onDrop={admin ? (e) => handleTierDrop(e, t.tier) : undefined}
+            className={'tier-row' + (dragCharId ? ' tier-row--drop-target' : '')}
+            onDragOver={handleTierDragOver}
+            onDrop={(e) => handleTierDrop(e, t.tier)}
           >
             <div className="tier-label" style={{ background: t.color }}>
               <span className="tier-letter">{t.tier}</span>
@@ -323,16 +252,12 @@ export default function CharacterRankings() {
                   <TierCard
                     key={char.id}
                     char={char}
-                    admin={admin}
                     onDetail={setSelectedChar}
                     onDragStart={handleDragStart}
                     onCardDragOver={handleCardDragOver}
                     onCardDrop={handleCardDrop}
-                    onVote={handleVote}
                     onPlace={handlePlace}
-                    votes={votes}
-                    votingChar={votingChar}
-                    setVotingChar={setVotingChar}
+                    onRemove={handleRemove}
                     placingChar={placingChar}
                     setPlacingChar={setPlacingChar}
                     dragOver={dropTargetId === char.id}
@@ -346,34 +271,48 @@ export default function CharacterRankings() {
         ))}
       </div>
 
-      {admin && unranked.length > 0 && (
-        <div className="tier-unranked">
+      <div className="tier-unranked">
+        <div className="tier-unranked__header">
           <h3 className="tier-unranked__title">Unranked ({unranked.length})</h3>
-          <p className="tier-unranked__hint">Click a character to pick a tier, or drag into a tier above</p>
-          <div className="tier-unranked__grid">
-            {unranked.map((char) => (
-              <TierCard
-                key={char.id}
-                char={char}
-                admin={admin}
-                onDetail={setSelectedChar}
-                onDragStart={handleDragStart}
-                onCardDragOver={handleCardDragOver}
-                onCardDrop={handleCardDrop}
-                onVote={handleVote}
-                onPlace={handlePlace}
-                votes={votes}
-                votingChar={votingChar}
-                setVotingChar={setVotingChar}
-                placingChar={placingChar}
-                setPlacingChar={setPlacingChar}
-                dragOver={dropTargetId === char.id}
-                isUnranked={true}
-              />
-            ))}
-          </div>
+          {unranked.length > 8 && (
+            <input
+              className="tier-unranked__search"
+              type="text"
+              placeholder="Search..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          )}
         </div>
-      )}
+        {unranked.length === 0 ? (
+          <p className="tier-unranked__hint">All characters are ranked!</p>
+        ) : (
+          <>
+            <p className="tier-unranked__hint">Click a character to pick a tier, or drag into a row above</p>
+            <div className="tier-unranked__grid">
+              {filteredUnranked.map((char) => (
+                <TierCard
+                  key={char.id}
+                  char={char}
+                  onDetail={setSelectedChar}
+                  onDragStart={handleDragStart}
+                  onCardDragOver={handleCardDragOver}
+                  onCardDrop={handleCardDrop}
+                  onPlace={handlePlace}
+                  onRemove={handleRemove}
+                  placingChar={placingChar}
+                  setPlacingChar={setPlacingChar}
+                  dragOver={dropTargetId === char.id}
+                  isUnranked={true}
+                />
+              ))}
+              {filteredUnranked.length === 0 && search && (
+                <span className="tier-unranked__hint">No matches for "{search}"</span>
+              )}
+            </div>
+          </>
+        )}
+      </div>
 
       {selectedChar && (
         <CharacterDetail character={selectedChar} onClose={() => setSelectedChar(null)} />
