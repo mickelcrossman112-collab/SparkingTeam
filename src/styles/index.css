@@ -2652,6 +2652,45 @@ body {
 
 .journal-empty { text-align: center; padding: 32px; color: var(--muted); font-size: 14px; }
 
+/* Ranked Stats */
+.journal-ranked-stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.journal-ranked-stat {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 18px;
+  text-align: center;
+  flex: 1;
+  min-width: 80px;
+}
+.journal-ranked-stat__val { display: block; font-size: 22px; font-weight: 800; }
+.journal-ranked-stat__val--good { color: var(--green); }
+.journal-ranked-stat__val--bad { color: var(--red); }
+.journal-ranked-stat__label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+.journal-ranked-sessions-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.journal-ranked-sessions-stat {
+  flex: 1;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.journal-ranked-sessions-stat__label { font-size: 13px; color: var(--muted); font-weight: 600; }
+.journal-ranked-sessions-stat__val { font-size: 18px; font-weight: 800; }
+
 /* Quick Log */
 .journal-log-intro { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
 .journal-log-search {

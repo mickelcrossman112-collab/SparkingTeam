@@ -4,6 +4,7 @@ import { useLocalStorage } from '../hooks/useLocalStorage.js'
 
 const RECORD_KEY = 'szMatchRecord'
 const HISTORY_KEY = 'szMatchHistory'
+const SESSIONS_KEY = 'szSessions'
 
 function loadRecords() {
   try { return JSON.parse(localStorage.getItem(RECORD_KEY)) || {} } catch { return {} }
@@ -13,6 +14,9 @@ function loadHistory() {
   try { return JSON.parse(localStorage.getItem(HISTORY_KEY)) || [] } catch { return [] }
 }
 function saveHistory(h) { localStorage.setItem(HISTORY_KEY, JSON.stringify(h)) }
+function loadSessions() {
+  try { return JSON.parse(localStorage.getItem(SESSIONS_KEY)) || [] } catch { return [] }
+}
 
 function formatTime(ts) {
   const d = new Date(ts)
@@ -29,6 +33,7 @@ export default function FighterJournal() {
   const [main, setMain] = useLocalStorage('szMainFighter', null)
   const [records, setRecords] = useState(loadRecords)
   const [history, setHistory] = useState(loadHistory)
+  const [sessions] = useState(loadSessions)
   const [search, setSearch] = useState('')
   const [tab, setTab] = useState('overview')
 
@@ -94,6 +99,45 @@ export default function FighterJournal() {
       return next
     })
   }, [])
+
+  const rankedStats = useMemo(() => {
+    if (sessions.length === 0) return null
+    let totalW = 0, totalL = 0, totalSessions = sessions.length
+    let bestSessionRate = 0, worstSessionRate = 100
+    let longestStreak = 0, curStreak = 0
+
+    const charRecord = {}
+
+    for (const s of sessions) {
+      let sw = 0, sl = 0
+      for (const m of s.matches) {
+        if (m.result === 'w') { totalW++; sw++; curStreak++; if (curStreak > longestStreak) longestStreak = curStreak }
+        else { totalL++; sl++; curStreak = 0 }
+        if (!charRecord[m.enemyId]) charRecord[m.enemyId] = { w: 0, l: 0 }
+        charRecord[m.enemyId][m.result]++
+      }
+      const rate = (sw + sl) > 0 ? Math.round((sw / (sw + sl)) * 100) : 0
+      if (rate > bestSessionRate) bestSessionRate = rate
+      if (rate < worstSessionRate) worstSessionRate = rate
+    }
+
+    const total = totalW + totalL
+    const winRate = total > 0 ? Math.round((totalW / total) * 100) : 0
+    const avgPerSession = total > 0 ? Math.round(total / totalSessions) : 0
+
+    const opponents = Object.entries(charRecord).map(([id, rec]) => {
+      const char = charactersById[id]
+      if (!char) return null
+      const t = rec.w + rec.l
+      return { id, char, ...rec, total: t, winRate: Math.round((rec.w / t) * 100) }
+    }).filter(Boolean)
+
+    const nemesis = [...opponents].filter(o => o.total >= 2).sort((a, b) => a.winRate - b.winRate).slice(0, 5)
+    const victims = [...opponents].filter(o => o.total >= 2).sort((a, b) => b.winRate - a.winRate).slice(0, 5)
+    const mostPlayed = [...opponents].sort((a, b) => b.total - a.total).slice(0, 5)
+
+    return { totalW, totalL, total, winRate, totalSessions, avgPerSession, longestStreak, bestSessionRate, worstSessionRate, nemesis, victims, mostPlayed }
+  }, [sessions])
 
   const recentHistory = history.slice(0, 20)
 
@@ -171,6 +215,7 @@ export default function FighterJournal() {
 
       <div className="journal-tabs">
         <button className={'journal-tab' + (tab === 'overview' ? ' journal-tab--active' : '')} type="button" onClick={() => setTab('overview')}>Overview</button>
+        <button className={'journal-tab' + (tab === 'ranked' ? ' journal-tab--active' : '')} type="button" onClick={() => setTab('ranked')}>Ranked</button>
         <button className={'journal-tab' + (tab === 'log' ? ' journal-tab--active' : '')} type="button" onClick={() => setTab('log')}>Quick Log</button>
         <button className={'journal-tab' + (tab === 'history' ? ' journal-tab--active' : '')} type="button" onClick={() => setTab('history')}>History</button>
       </div>
@@ -221,6 +266,116 @@ export default function FighterJournal() {
             <div className="journal-empty">
               <p>No matches logged yet. Use the Quick Log tab to record your results, or log wins/losses from the Matchups page.</p>
             </div>
+          )}
+        </div>
+      )}
+
+      {tab === 'ranked' && (
+        <div className="journal-content">
+          {!rankedStats ? (
+            <div className="journal-empty">
+              <p>No completed sessions yet. Start a session from Session Mode, play some matches, and end it to see your ranked stats here.</p>
+            </div>
+          ) : (
+            <>
+              <div className="journal-ranked-stats">
+                <div className="journal-ranked-stat">
+                  <span className={'journal-ranked-stat__val' + (rankedStats.winRate >= 50 ? ' journal-ranked-stat__val--good' : ' journal-ranked-stat__val--bad')}>{rankedStats.winRate}%</span>
+                  <span className="journal-ranked-stat__label">Win Rate</span>
+                </div>
+                <div className="journal-ranked-stat">
+                  <span className="journal-ranked-stat__val">{rankedStats.totalW}-{rankedStats.totalL}</span>
+                  <span className="journal-ranked-stat__label">Record</span>
+                </div>
+                <div className="journal-ranked-stat">
+                  <span className="journal-ranked-stat__val">{rankedStats.total}</span>
+                  <span className="journal-ranked-stat__label">Matches</span>
+                </div>
+                <div className="journal-ranked-stat">
+                  <span className="journal-ranked-stat__val">{rankedStats.totalSessions}</span>
+                  <span className="journal-ranked-stat__label">Sessions</span>
+                </div>
+                <div className="journal-ranked-stat">
+                  <span className="journal-ranked-stat__val">{rankedStats.avgPerSession}</span>
+                  <span className="journal-ranked-stat__label">Avg/Session</span>
+                </div>
+                <div className="journal-ranked-stat">
+                  <span className="journal-ranked-stat__val journal-ranked-stat__val--good">{rankedStats.longestStreak}</span>
+                  <span className="journal-ranked-stat__label">Best Streak</span>
+                </div>
+              </div>
+
+              <div className="journal-ranked-sessions-row">
+                <div className="journal-ranked-sessions-stat">
+                  <span className="journal-ranked-sessions-stat__label">Best Session</span>
+                  <span className="journal-ranked-sessions-stat__val journal-ranked-stat__val--good">{rankedStats.bestSessionRate}%</span>
+                </div>
+                <div className="journal-ranked-sessions-stat">
+                  <span className="journal-ranked-sessions-stat__label">Worst Session</span>
+                  <span className="journal-ranked-sessions-stat__val journal-ranked-stat__val--bad">{rankedStats.worstSessionRate}%</span>
+                </div>
+              </div>
+
+              {rankedStats.mostPlayed.length > 0 && (
+                <div className="journal-section">
+                  <h3 className="journal-section__title">Most Played Against</h3>
+                  <div className="journal-matchup-list">
+                    {rankedStats.mostPlayed.map(opp => (
+                      <div key={opp.id} className="journal-matchup">
+                        <div className="journal-matchup__left">
+                          {opp.char.forms[0]?.image ? <img className="journal-matchup__img" src={opp.char.forms[0].image} alt="" /> : <div className="journal-matchup__ph" style={{ background: opp.char.color }}>{opp.char.name[0]}</div>}
+                          <span className="journal-matchup__name">{opp.char.name}</span>
+                        </div>
+                        <div className="journal-matchup__right">
+                          <span className="journal-matchup__rate">{opp.winRate}%</span>
+                          <span className="journal-matchup__record">{opp.w}W-{opp.l}L ({opp.total})</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {rankedStats.nemesis.length > 0 && (
+                <div className="journal-section">
+                  <h3 className="journal-section__title">Nemesis (Lowest Win Rate)</h3>
+                  <div className="journal-matchup-list">
+                    {rankedStats.nemesis.map(opp => (
+                      <div key={opp.id} className="journal-matchup">
+                        <div className="journal-matchup__left">
+                          {opp.char.forms[0]?.image ? <img className="journal-matchup__img" src={opp.char.forms[0].image} alt="" /> : <div className="journal-matchup__ph" style={{ background: opp.char.color }}>{opp.char.name[0]}</div>}
+                          <span className="journal-matchup__name">{opp.char.name}</span>
+                        </div>
+                        <div className="journal-matchup__right">
+                          <span className="journal-matchup__rate journal-matchup__rate--bad">{opp.winRate}%</span>
+                          <span className="journal-matchup__record">{opp.w}W-{opp.l}L</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {rankedStats.victims.length > 0 && (
+                <div className="journal-section">
+                  <h3 className="journal-section__title">Free Wins (Highest Win Rate)</h3>
+                  <div className="journal-matchup-list">
+                    {rankedStats.victims.map(opp => (
+                      <div key={opp.id} className="journal-matchup">
+                        <div className="journal-matchup__left">
+                          {opp.char.forms[0]?.image ? <img className="journal-matchup__img" src={opp.char.forms[0].image} alt="" /> : <div className="journal-matchup__ph" style={{ background: opp.char.color }}>{opp.char.name[0]}</div>}
+                          <span className="journal-matchup__name">{opp.char.name}</span>
+                        </div>
+                        <div className="journal-matchup__right">
+                          <span className="journal-matchup__rate journal-matchup__rate--good">{opp.winRate}%</span>
+                          <span className="journal-matchup__record">{opp.w}W-{opp.l}L</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </div>
       )}

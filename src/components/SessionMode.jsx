@@ -2,6 +2,23 @@ import { useState, useMemo, useCallback } from 'react'
 import { characters, charactersById } from '../data/characters.js'
 import { useLocalStorage } from '../hooks/useLocalStorage.js'
 
+const RECORD_KEY = 'szMatchRecord'
+const HISTORY_KEY = 'szMatchHistory'
+
+function syncToJournal(enemyId, result) {
+  try {
+    const records = JSON.parse(localStorage.getItem(RECORD_KEY)) || {}
+    if (!records[enemyId]) records[enemyId] = { w: 0, l: 0 }
+    records[enemyId][result]++
+    localStorage.setItem(RECORD_KEY, JSON.stringify(records))
+  } catch {}
+  try {
+    const history = JSON.parse(localStorage.getItem(HISTORY_KEY)) || []
+    history.unshift({ enemyId, result, ts: Date.now() })
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(0, 500)))
+  } catch {}
+}
+
 function formatDuration(ms) {
   const mins = Math.floor(ms / 60000)
   const hrs = Math.floor(mins / 60)
@@ -33,6 +50,7 @@ export default function SessionMode() {
       if (!prev) return prev
       return { ...prev, matches: [...prev.matches, { enemyId, result, ts: Date.now() }] }
     })
+    syncToJournal(enemyId, result)
   }, [setActive])
 
   const endSession = useCallback(() => {
