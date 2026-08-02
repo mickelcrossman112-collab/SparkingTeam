@@ -69,7 +69,8 @@ function TierCard({ char, onDetail, onDragStart, onCardDragOver, onCardDrop, onP
 }
 
 export default function CharacterRankings() {
-  const [activeList, setActiveList] = useState(0)
+  const singlesIdx = defaultTierLists.findIndex(tl => tl.name === 'Singles')
+  const [activeList, setActiveList] = useState(singlesIdx >= 0 ? singlesIdx : 0)
   const [selectedChar, setSelectedChar] = useState(null)
   const [customTiers, setCustomTiers] = useLocalStorage('szTierEdits', {})
   const [dragCharId, setDragCharId] = useState(null)

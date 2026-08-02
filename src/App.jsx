@@ -23,27 +23,47 @@ import CounterGuide from './components/CounterGuide.jsx'
 import HeadToHead from './components/HeadToHead.jsx'
 import SinglesMeta from './components/SinglesMeta.jsx'
 import FighterJournal from './components/FighterJournal.jsx'
+import UltimateDatabase from './components/UltimateDatabase.jsx'
+import SessionMode from './components/SessionMode.jsx'
 import News from './components/News.jsx'
 import MetaDashboard from './components/MetaDashboard.jsx'
 import BadgeNotification from './components/BadgeNotification.jsx'
 import CharacterSpotlight from './components/CharacterSpotlight.jsx'
 import PresetTeams from './components/PresetTeams.jsx'
 
-const VIEW_LABELS = {
-  hub: 'Fighter Hub',
-  h2h: '1v1',
-  smeta: 'Singles Meta',
-  journal: 'My Journal',
-  matchups: 'Matchups',
-  rankings: 'Rankings',
-  counter: 'Counter Picks',
-  guide: 'Counter Guide',
-  builder: 'Team Builder',
-  teams: 'My Teams',
-  data: 'Character Data',
-  compare: 'Compare',
-  news: 'News',
-  meta: 'Meta',
+const NAV_ITEMS = [
+  { key: 'hub', label: 'Fighter Hub', sub: [
+    { key: 'h2h', label: '1v1' },
+    { key: 'smeta', label: 'Singles Meta' },
+    { key: 'matchups', label: 'Matchups' },
+    { key: 'rankings', label: 'Rankings' },
+    { key: 'ultimates', label: 'Ultimates' },
+  ]},
+  { key: 'journal', label: 'My Journal', sub: [
+    { key: 'session', label: 'Session Mode' },
+  ]},
+  { key: 'builder', label: 'Team Builder', sub: [
+    { key: 'counter', label: 'Counter Picks' },
+    { key: 'guide', label: 'Counter Guide' },
+    { key: 'compare', label: 'Compare' },
+  ]},
+  { key: 'teams', label: 'My Teams' },
+  { key: 'data', label: 'Character Data', sub: [
+    { key: 'meta', label: 'Meta' },
+  ]},
+  { key: 'news', label: 'News' },
+]
+
+const ALL_KEYS = NAV_ITEMS.flatMap(item => [item.key, ...(item.sub || []).map(s => s.key)])
+
+function getViewLabel(key) {
+  for (const item of NAV_ITEMS) {
+    if (item.key === key) return item.label
+    for (const s of item.sub || []) {
+      if (s.key === key) return s.label
+    }
+  }
+  return key
 }
 
 export default function App() {
@@ -65,6 +85,7 @@ export default function App() {
   const [seenBadges, setSeenBadges] = useLocalStorage('szSeenBadges', [])
   const [notifQueue, setNotifQueue] = useState([])
   const [showPresets, setShowPresets] = useState(false)
+  const [openDropdown, setOpenDropdown] = useState(null)
 
   const unlockedIds = useMemo(
     () => checkAchievements(team, savedTeams, favorites),
@@ -195,25 +216,50 @@ export default function App() {
 
   return (
     <div className="app">
-      <TeamBar team={team} onRemove={removeAt} onReorder={reorderTeam} />
+      {(view === 'builder' || view === 'teams' || view === 'compare' || view === 'counter') && (
+        <TeamBar team={team} onRemove={removeAt} onReorder={reorderTeam} />
+      )}
 
       <main className="main">
         <div className="brand">
           <h1>
             Sparking! <span className="accent">Zero</span>
-            {view !== 'hub' && <> {VIEW_LABELS[view] || view}</>}
+            {view !== 'hub' && <> {getViewLabel(view)}</>}
           </h1>
           <nav className="view-tabs">
-            {Object.entries(VIEW_LABELS).map(([key, label]) => (
-              <button
-                key={key}
-                className={view === key ? 'view-tab view-tab--active' : 'view-tab'}
-                onClick={() => setView(key)}
-                type="button"
-              >
-                {key === 'teams' && savedTeams.length > 0 ? `${label} (${savedTeams.length})` : label}
-              </button>
-            ))}
+            {NAV_ITEMS.map(item => {
+              const isActive = view === item.key || (item.sub || []).some(s => s.key === view)
+              const hasSub = item.sub && item.sub.length > 0
+              return (
+                <div key={item.key} className="view-tab-wrap" onMouseLeave={() => setOpenDropdown(null)}>
+                  <button
+                    className={'view-tab' + (isActive ? ' view-tab--active' : '')}
+                    onClick={() => { setView(item.key); setOpenDropdown(null) }}
+                    onMouseEnter={() => hasSub && setOpenDropdown(item.key)}
+                    type="button"
+                  >
+                    {item.key === 'teams' && savedTeams.length > 0 ? `${item.label} (${savedTeams.length})` : item.label}
+                    {hasSub && <span className="view-tab__arrow">&#9662;</span>}
+                  </button>
+                  {hasSub && openDropdown === item.key && (
+                    <div className="view-dropdown">
+                      <div className="view-dropdown__menu">
+                        {item.sub.map(s => (
+                          <button
+                            key={s.key}
+                            className={'view-dropdown__item' + (view === s.key ? ' view-dropdown__item--active' : '')}
+                            onClick={() => { setView(s.key); setOpenDropdown(null) }}
+                            type="button"
+                          >
+                            {s.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
           </nav>
         </div>
 
@@ -256,6 +302,10 @@ export default function App() {
           <HeadToHead />
         ) : view === 'smeta' ? (
           <SinglesMeta />
+        ) : view === 'ultimates' ? (
+          <UltimateDatabase />
+        ) : view === 'session' ? (
+          <SessionMode />
         ) : view === 'journal' ? (
           <FighterJournal />
         ) : view === 'matchups' ? (

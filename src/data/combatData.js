@@ -25,7 +25,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Spirit Bomb",
-        "damage": 15000
+        "damage": 15000,
+        "boostedDmg": 19500,
+        "type": "Mini Death Ball Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -52,7 +59,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Spirit Bomb",
-        "damage": 15750
+        "damage": 15750,
+        "boostedDmg": 20475,
+        "type": "Death Ball Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -77,7 +91,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Angry Kamehameha",
-        "damage": 18751
+        "damage": 18751,
+        "boostedDmg": 24375,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -104,7 +125,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Spirit Bomb",
-        "damage": 17719
+        "damage": 17719,
+        "boostedDmg": 23035,
+        "type": "Death Ball Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -129,7 +157,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Instant Transmission Kamehameha",
-        "damage": 18001
+        "damage": 18001,
+        "boostedDmg": 23400,
+        "type": "Teleport Beam Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan 2": {
@@ -154,7 +189,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Kamehameha",
-        "damage": 18751
+        "damage": 18751,
+        "boostedDmg": 24375,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan 3": {
@@ -179,7 +221,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Dragon Fist",
-        "damage": 18750
+        "damage": 18750,
+        "boostedDmg": 24375,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -206,7 +255,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Spirit Bomb",
-        "damage": 18375
+        "damage": 18375,
+        "boostedDmg": 23888,
+        "type": "Death Ball Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -231,7 +287,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Sonic Blast",
-        "damage": 18001
+        "damage": 18001,
+        "boostedDmg": 23400,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     },
     "Super Saiyan God": {
@@ -256,7 +319,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "God Burst Kamehameha",
-        "damage": 18750
+        "damage": 18750,
+        "boostedDmg": 24375,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan Blue": {
@@ -281,7 +351,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Limit Breaker God Kamehameha",
-        "damage": 19501
+        "damage": 19501,
+        "boostedDmg": 25350,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -308,7 +385,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Point-Blank Kamehameha",
-        "damage": 20250
+        "damage": 20250,
+        "boostedDmg": 26325,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     },
     "Ultra Instinct": {
@@ -333,7 +417,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Supreme Kamehameha",
-        "damage": 21000
+        "damage": 21000,
+        "boostedDmg": 27300,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     }
   },
@@ -360,7 +451,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Spirit Bomb",
-        "damage": 17063
+        "damage": 17063,
+        "boostedDmg": 22182,
+        "type": "Death Ball Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -385,7 +483,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Explosive Wave",
-        "damage": 18751
+        "damage": 18751,
+        "boostedDmg": 24375,
+        "type": "Explosive Wave Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan 3": {
@@ -410,7 +515,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Dragon Fist",
-        "damage": 19646
+        "damage": 19646,
+        "boostedDmg": 24875,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan 4": {
@@ -435,7 +547,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Dragon Fist",
-        "damage": 19501
+        "damage": 19501,
+        "boostedDmg": 25350,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -462,7 +581,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Keep Going!",
-        "damage": 14250
+        "damage": 14250,
+        "boostedDmg": 18525,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     }
   },
@@ -489,7 +615,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Power Pole Rush",
-        "damage": 15000
+        "damage": 15000,
+        "boostedDmg": 19500,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -566,7 +699,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Dirty Fireworks",
-        "damage": 15000
+        "damage": 15000,
+        "boostedDmg": 19500,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     }
   },
@@ -593,7 +733,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Galick Gun",
-        "damage": 20125
+        "damage": 20125,
+        "boostedDmg": 26163,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -620,7 +767,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Explosive Wave",
-        "damage": 16407
+        "damage": 16407,
+        "boostedDmg": 21329,
+        "type": "Explosive Wave Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -645,7 +799,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Big Bang Attack",
-        "damage": 18001
+        "damage": 18001,
+        "boostedDmg": 23400,
+        "type": "Mini Death Ball Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Vegeta": {
@@ -670,7 +831,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Final Flash",
-        "damage": 19501
+        "damage": 19501,
+        "boostedDmg": 25350,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -697,7 +865,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Big Bang Attack",
-        "damage": 15750
+        "damage": 15750,
+        "boostedDmg": 20475,
+        "type": "Mini Death Ball Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -722,7 +897,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Cosmic Circle",
-        "damage": 18001
+        "damage": 18001,
+        "boostedDmg": 23400,
+        "type": "Multi Shot Ki Blast Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan 2": {
@@ -747,7 +929,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Infinity Flasher",
-        "damage": 18751
+        "damage": 18751,
+        "boostedDmg": 24375,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -774,7 +963,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Final Explosion",
-        "damage": 25000
+        "damage": 25000,
+        "boostedDmg": 32500,
+        "type": "Self-Destruct Explosive Wave Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": true,
+        "movable": false
       }
     }
   },
@@ -801,7 +997,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Final Flash",
-        "damage": 15735
+        "damage": 15735,
+        "boostedDmg": 20475,
+        "type": "Standard Beam",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -826,7 +1029,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Final Galick Blast",
-        "damage": 18001
+        "damage": 18001,
+        "boostedDmg": 23400,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     },
     "Super Saiyan God": {
@@ -851,7 +1061,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Prominence Flash",
-        "damage": 18750
+        "damage": 18750,
+        "boostedDmg": 24375,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan Blue": {
@@ -876,7 +1093,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Final God Explosion",
-        "damage": 26001
+        "damage": 26001,
+        "boostedDmg": 33800,
+        "type": "Self-Destruct Explosive Wave Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": true,
+        "movable": false
       }
     }
   },
@@ -903,7 +1127,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Final Shine Attack",
-        "damage": 19501
+        "damage": 19501,
+        "boostedDmg": 25350,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -930,7 +1161,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Wild Rush Blaster",
-        "damage": 18250
+        "damage": 18250,
+        "boostedDmg": 22925,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     }
   },
@@ -957,7 +1195,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Kamehameha",
-        "damage": 15000
+        "damage": 15000,
+        "boostedDmg": 19500,
+        "type": "Standard Beam",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -982,7 +1227,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Raging Masenko",
-        "damage": 18001
+        "damage": 18001,
+        "boostedDmg": 23404,
+        "type": "Multi-Shot Ki Blast Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan 2": {
@@ -1007,7 +1259,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Father-Son Kamehameha",
-        "damage": 19250
+        "damage": 19250,
+        "boostedDmg": 22344,
+        "type": "Beam Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -1034,7 +1293,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Kamehameha",
-        "damage": 15000
+        "damage": 15000,
+        "boostedDmg": 19500,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -1059,7 +1325,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Bros. Kamehameha",
-        "damage": 18001
+        "damage": 18001,
+        "boostedDmg": 23400,
+        "type": "Beam Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan 2": {
@@ -1084,7 +1357,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Kamehameha",
-        "damage": 18750
+        "damage": 18750,
+        "boostedDmg": 24375,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -1111,7 +1391,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Justice Judgement",
-        "damage": 15500
+        "damage": 15500,
+        "boostedDmg": 20000,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -1138,7 +1425,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Burst Rush",
-        "damage": 18750
+        "damage": 18750,
+        "boostedDmg": 24275,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -1165,7 +1459,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Kamehameha",
-        "damage": 15750
+        "damage": 15750,
+        "boostedDmg": 20475,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -1190,7 +1491,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Fierce Combination",
-        "damage": 18001
+        "damage": 18001,
+        "boostedDmg": 23400,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -1217,7 +1525,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Special Beam Cannon",
-        "damage": 15000
+        "damage": 15000,
+        "boostedDmg": 20125,
+        "type": "Standard Beam",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -1244,7 +1559,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Hellzone Grenade",
-        "damage": 15750
+        "damage": 15750,
+        "boostedDmg": 21330,
+        "type": "Centralized Multi-Shot Ki Blast Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -1271,7 +1593,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Mystic Flasher",
-        "damage": 15000
+        "damage": 15000,
+        "boostedDmg": 19500,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     }
   },
@@ -1298,7 +1627,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Chain Destructo Disc",
-        "damage": 14428
+        "damage": 14428,
+        "boostedDmg": 18526,
+        "type": "Multi-Shot Ki Saw Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -1325,7 +1661,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Spirit Ball",
-        "damage": 14250
+        "damage": 14250,
+        "boostedDmg": 18525,
+        "type": "Mini Death Ball Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -1352,7 +1695,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Neo Tri-Beam",
-        "damage": 37500
+        "damage": 37500,
+        "boostedDmg": 48750,
+        "type": "Standard Mini Death Ball Multi Shot",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -1379,7 +1729,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Lightning Sword Slash",
-        "damage": 15000
+        "damage": 15000,
+        "boostedDmg": 19500,
+        "type": "Mini Death Ball Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -1404,7 +1761,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Shining Sword Attack",
-        "damage": 18001
+        "damage": 18001,
+        "boostedDmg": 23400,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -1431,7 +1795,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Finish Buster",
-        "damage": 15750
+        "damage": 15750,
+        "boostedDmg": 20475,
+        "type": "Standard Mini Death Ball",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -1456,7 +1827,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Heat Dome Attack",
-        "damage": 18001
+        "damage": 18001,
+        "boostedDmg": 23409,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Trunks": {
@@ -1481,7 +1859,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Explosive Wave",
-        "damage": 16407
+        "damage": 16407,
+        "boostedDmg": 21329,
+        "type": "Explosive Wave Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -1508,7 +1893,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Shining Slash",
-        "damage": 15750
+        "damage": 15750,
+        "boostedDmg": 20475,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -1533,7 +1925,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Final Hope Slash",
-        "damage": 18001
+        "damage": 18001,
+        "boostedDmg": 23400,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -1560,7 +1959,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Finish Buster",
-        "damage": 15000
+        "damage": 15000,
+        "boostedDmg": 19500,
+        "type": "Standard Mini Death Ball",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -1585,7 +1991,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Victory Cannon",
-        "damage": 17250
+        "damage": 17250,
+        "boostedDmg": 22425,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -1612,7 +2025,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Kamekameha",
-        "damage": 15000
+        "damage": 15000,
+        "boostedDmg": 19500,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -1637,7 +2057,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Double Kamehameha",
-        "damage": 17250
+        "damage": 17250,
+        "boostedDmg": 22425,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -1664,7 +2091,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Kamehameha",
-        "damage": 18750
+        "damage": 18750,
+        "boostedDmg": 24375,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Vegito": {
@@ -1689,7 +2123,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Beam Sword Slash",
-        "damage": 19501
+        "damage": 19501,
+        "boostedDmg": 25350,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan Blue": {
@@ -1714,7 +2155,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "God Final Kamehameha",
-        "damage": 21000
+        "damage": 21000,
+        "boostedDmg": 27300,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -1741,7 +2189,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Stardust Breaker",
-        "damage": 19501
+        "damage": 19501,
+        "boostedDmg": 25350,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     }
   },
@@ -1768,7 +2223,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Big Bang Kamehameha",
-        "damage": 18750
+        "damage": 18750,
+        "boostedDmg": 24375,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -1793,7 +2255,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Stardust Fall",
-        "damage": 19501
+        "damage": 19501,
+        "boostedDmg": 25350,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     },
     "Super Saiyan Blue": {
@@ -1818,7 +2287,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Ultimate Kamehameha",
-        "damage": 21000
+        "damage": 21000,
+        "boostedDmg": 27300,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -1845,7 +2321,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Ultra Big Bang Kamehameha",
-        "damage": 21000
+        "damage": 21000,
+        "boostedDmg": 27300,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -1872,7 +2355,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Victory Cannon",
-        "damage": 18001
+        "damage": 18001,
+        "boostedDmg": 23400,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -1897,7 +2387,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Ghost Kamikaze Attack",
-        "damage": 12500
+        "damage": 12500,
+        "boostedDmg": 28441,
+        "type": "Centralized Standard Multi-Shot Ki Blast",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan 3": {
@@ -1922,7 +2419,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Charging Ultra Buu Buu Volleyball",
-        "damage": 20001
+        "damage": 20001,
+        "boostedDmg": 25850,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     }
   },
@@ -1949,7 +2453,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Videl Rush",
-        "damage": 13500
+        "damage": 13500,
+        "boostedDmg": 17550,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -1976,7 +2487,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Evil Containment Wave",
-        "damage": 14375
+        "damage": 14375,
+        "boostedDmg": 21938,
+        "type": "Short Range Beam Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Max Power": {
@@ -2001,7 +2519,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Max Power Kamehameha",
-        "damage": 14875
+        "damage": 14875,
+        "boostedDmg": 23036,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -2028,7 +2553,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Death Ball",
-        "damage": 15750
+        "damage": 15750,
+        "boostedDmg": 20475,
+        "type": "Standard Death Ball",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "2nd Form": {
@@ -2053,7 +2585,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "HAIL Frieza",
-        "damage": 16250
+        "damage": 16250,
+        "boostedDmg": 21125,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "3rd Form": {
@@ -2078,7 +2617,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Crazy Finger Beam",
-        "damage": 19141
+        "damage": 19141,
+        "boostedDmg": 24883,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     },
     "4th Form": {
@@ -2103,7 +2649,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "I'll Destroy This Planet!",
-        "damage": 18328
+        "damage": 18328,
+        "boostedDmg": 23828,
+        "type": "Standard Death Ball",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Full Power": {
@@ -2128,7 +2681,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "I'm the One Who'll Kill You!",
-        "damage": 19875
+        "damage": 19875,
+        "boostedDmg": 25838,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -2155,7 +2715,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Supernova",
-        "damage": 16500
+        "damage": 16500,
+        "boostedDmg": 21450,
+        "type": "Death Ball Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -2182,7 +2749,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Death Ball",
-        "damage": 17188
+        "damage": 17188,
+        "boostedDmg": 25039,
+        "type": "Death Ball Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Golden": {
@@ -2207,7 +2781,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Earth Breaker",
-        "damage": 19501
+        "damage": 19501,
+        "boostedDmg": 25350,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     }
   },
@@ -2234,7 +2815,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Drain Life Cell",
-        "damage": 17063
+        "damage": 17063,
+        "boostedDmg": 20476,
+        "type": "Life Steal Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     },
     "2nd Form": {
@@ -2259,7 +2847,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Unforgivable!",
-        "damage": 14250
+        "damage": 14250,
+        "boostedDmg": 22182,
+        "type": "Self-Destruct Explosive Wave Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": true,
+        "movable": false
       }
     },
     "Perfect Form": {
@@ -2284,7 +2879,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Perfect Barrier",
-        "damage": 19620
+        "damage": 19620,
+        "boostedDmg": 25370,
+        "type": "Standard Barrier",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -2311,7 +2913,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Solar Kamehameha",
-        "damage": 18750
+        "damage": 18750,
+        "boostedDmg": 24375,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -2338,7 +2947,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Kamehameha",
-        "damage": 15751
+        "damage": 15751,
+        "boostedDmg": 18525,
+        "type": "Standard Beam",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -2365,7 +2981,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Angry Explosion",
-        "damage": 17063
+        "damage": 17063,
+        "boostedDmg": 22182,
+        "type": "Explosive Wave Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -2392,7 +3015,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Guilty Flash",
-        "damage": 16500
+        "damage": 16500,
+        "boostedDmg": 21450,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     }
   },
@@ -2419,7 +3049,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Revenge Death Bomber",
-        "damage": 25500
+        "damage": 25500,
+        "boostedDmg": 33150,
+        "type": "Self-Destruct Explosive Wave Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": true,
+        "movable": false
       }
     }
   },
@@ -2446,7 +3083,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Kamehameha",
-        "damage": 18750
+        "damage": 18750,
+        "boostedDmg": 24375,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -2473,7 +3117,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Ghost Buu Attack",
-        "damage": 19532
+        "damage": 19532,
+        "boostedDmg": 25391,
+        "type": "Centralized Multi-Shot Ki Blast Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -2500,7 +3151,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Planet Burst",
-        "damage": 19532
+        "damage": 19532,
+        "boostedDmg": 25391,
+        "type": "Death Ball Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -2527,7 +3185,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Mr. Buu Arrives!",
-        "damage": 9375
+        "damage": 9375,
+        "boostedDmg": 12188,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     }
   },
@@ -2554,7 +3219,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Farewell, Mr. Tien",
-        "damage": 16750
+        "damage": 16750,
+        "boostedDmg": 20975,
+        "type": "Self-Destruct Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": true,
+        "movable": true
       }
     }
   },
@@ -2581,7 +3253,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Miracle Ka-Blam Slash",
-        "damage": 12000
+        "damage": 12000,
+        "boostedDmg": 15600,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -2608,7 +3287,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Maiden's Rage",
-        "damage": 14250
+        "damage": 14250,
+        "boostedDmg": 18525,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -2635,7 +3321,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Explosive Wave",
-        "damage": 17500
+        "damage": 17500,
+        "boostedDmg": 21950,
+        "type": "Standard Explosive Wave",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -2662,7 +3355,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Lightning Arrow",
-        "damage": 16500
+        "damage": 16500,
+        "boostedDmg": 21450,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     }
   },
@@ -2689,7 +3389,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Final Spirit Cannon",
-        "damage": 15000
+        "damage": 15000,
+        "boostedDmg": 19500,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -2716,7 +3423,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Begone!",
-        "damage": 14250
+        "damage": 14250,
+        "boostedDmg": 18525,
+        "type": "Mini Death Ball Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -2743,7 +3457,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Saibaman Bomb",
-        "damage": 14625
+        "damage": 14625,
+        "boostedDmg": 19013,
+        "type": "Self-Destruct Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": true,
+        "movable": false
       }
     }
   },
@@ -2770,7 +3491,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Nappa Cannon",
-        "damage": 14625
+        "damage": 14625,
+        "boostedDmg": 19013,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -2797,7 +3525,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Elegant Blaster",
-        "damage": 14250
+        "damage": 14250,
+        "boostedDmg": 18525,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -2824,7 +3559,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Monster Crush",
-        "damage": 15688
+        "damage": 15688,
+        "boostedDmg": 20244,
+        "type": "Short Range Grab Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -2851,7 +3593,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Maximum Buster",
-        "damage": 14625
+        "damage": 14625,
+        "boostedDmg": 19013,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -2878,7 +3627,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Ah! Lord Frieza!",
-        "damage": 14250
+        "damage": 14250,
+        "boostedDmg": 18525,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     }
   },
@@ -2905,7 +3661,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Body Change",
-        "damage": 0
+        "damage": 0,
+        "boostedDmg": 0,
+        "type": "Beam Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -2932,7 +3695,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Recoome Fighting Bomber",
-        "damage": 16313
+        "damage": 16313,
+        "boostedDmg": 21207,
+        "type": "Explosive Wave Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -2959,7 +3729,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Purple Comet Attack",
-        "damage": 14250
+        "damage": 14250,
+        "boostedDmg": 18525,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     }
   },
@@ -2986,7 +3763,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Purple Comet Attack",
-        "damage": 14250
+        "damage": 14250,
+        "boostedDmg": 18525,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     }
   },
@@ -3013,7 +3797,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Guldo Special",
-        "damage": 14000
+        "damage": 14000,
+        "boostedDmg": 18050,
+        "type": "Mini Death Ball Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3040,7 +3831,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Power of the Cold Clan",
-        "damage": 14250
+        "damage": 14250,
+        "boostedDmg": 18525,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3067,7 +3865,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Self Destruct Device",
-        "damage": 17500
+        "damage": 17500,
+        "boostedDmg": 22750,
+        "type": "Self-Destruct Dash Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": false,
+        "selfDestruct": true,
+        "movable": true
       }
     }
   },
@@ -3094,7 +3899,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Sadistic Dance",
-        "damage": 15750
+        "damage": 15750,
+        "boostedDmg": 20475,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     }
   },
@@ -3121,7 +3933,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "BarrierExplosion",
-        "damage": 17875
+        "damage": 17875,
+        "boostedDmg": 23238,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     }
   },
@@ -3148,7 +3967,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Sadistic 18",
-        "damage": 15750
+        "damage": 15750,
+        "boostedDmg": 20475,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     }
   },
@@ -3175,7 +4001,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Drain Life 19",
-        "damage": 14251
+        "damage": 14251,
+        "boostedDmg": 18526,
+        "type": "Life Steal Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     }
   },
@@ -3202,7 +4035,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Drain Life 20",
-        "damage": 15001
+        "damage": 15001,
+        "boostedDmg": 19501,
+        "type": "Life Steal Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     }
   },
@@ -3229,7 +4069,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Electroshock Sorcery",
-        "damage": 14250
+        "damage": 14250,
+        "boostedDmg": 18525,
+        "type": "Short Range Beam Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3256,7 +4103,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Dark Sword Strike",
-        "damage": 19125
+        "damage": 19125,
+        "boostedDmg": 24863,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3283,7 +4137,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Life-Risking Blow!",
-        "damage": 13500
+        "damage": 13500,
+        "boostedDmg": 17550,
+        "type": "Standard Dash",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": true
       }
     }
   },
@@ -3310,7 +4171,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Explosive Wave",
-        "damage": 16407
+        "damage": 16407,
+        "boostedDmg": 21329,
+        "type": "Explosive Wave Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -3335,7 +4203,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Eraser Cannon",
-        "damage": 17875
+        "damage": 17875,
+        "boostedDmg": 23238,
+        "type": "Mini Death Ball Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Legendary Super Saiyan": {
@@ -3360,7 +4235,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Omega Blaster",
-        "damage": 21938
+        "damage": 21938,
+        "boostedDmg": 28519,
+        "type": "Death Ball Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3387,7 +4269,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Gigantic Impact",
-        "damage": 15750
+        "damage": 15750,
+        "boostedDmg": 20475,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -3412,7 +4301,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Gigantic Ball",
-        "damage": 17875
+        "damage": 17875,
+        "boostedDmg": 23238,
+        "type": "Death Ball Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan Full Power": {
@@ -3437,7 +4333,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Gigantic Catastrophe",
-        "damage": 21938
+        "damage": 21938,
+        "boostedDmg": 28519,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3464,7 +4367,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Dead Zone",
-        "damage": 15438
+        "damage": 15438,
+        "boostedDmg": 20069,
+        "type": "Dash Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3491,7 +4401,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Planet Geyser",
-        "damage": 16500
+        "damage": 16500,
+        "boostedDmg": 21450,
+        "type": "Standard Beam",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3518,7 +4435,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Meteor Burst",
-        "damage": 15000
+        "damage": 15000,
+        "boostedDmg": 19500,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3545,7 +4469,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Power of Darkness",
-        "damage": 14250
+        "damage": 14250,
+        "boostedDmg": 18525,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Giant Form": {
@@ -3570,7 +4501,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Darkness Blaster",
-        "damage": 19501
+        "damage": 19501,
+        "boostedDmg": 25350,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3597,7 +4535,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Death Ball",
-        "damage": 16500
+        "damage": 16500,
+        "boostedDmg": 21450,
+        "type": "Standard Death Ball",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Final Form": {
@@ -3622,7 +4567,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Supernova",
-        "damage": 17875
+        "damage": 17875,
+        "boostedDmg": 23238,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3649,7 +4601,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Supernova",
-        "damage": 19875
+        "damage": 19875,
+        "boostedDmg": 25838,
+        "type": "Death Ball Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3676,7 +4635,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "S.S. Deadly Bomber",
-        "damage": 15750
+        "damage": 15750,
+        "boostedDmg": 20475,
+        "type": "Standard Death Ball",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3703,7 +4669,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "S.S. Deadly Hammer",
-        "damage": 17875
+        "damage": 17875,
+        "boostedDmg": 23238,
+        "type": "Short Range Grab Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3730,7 +4703,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Grand Smasher",
-        "damage": 16245
+        "damage": 16245,
+        "boostedDmg": 21125,
+        "type": "Standard Mini Death Ball",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3757,7 +4737,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Galactic Buster",
-        "damage": 17188
+        "damage": 17188,
+        "boostedDmg": 22344,
+        "type": "Mini Death Ball Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3784,7 +4771,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Illusion Smash",
-        "damage": 19188
+        "damage": 19188,
+        "boostedDmg": 24794,
+        "type": "Short Range Grab Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3811,7 +4805,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Dimension Sword Attack",
-        "damage": 18750
+        "damage": 18750,
+        "boostedDmg": 24375,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3838,7 +4839,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Brave Sword Attack",
-        "damage": 15000
+        "damage": 15000,
+        "boostedDmg": 19500,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3865,7 +4873,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Gigantic Flame",
-        "damage": 19501
+        "damage": 19501,
+        "boostedDmg": 25350,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3892,7 +4907,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Final Flash",
-        "damage": 15750
+        "damage": 15750,
+        "boostedDmg": 20475,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3919,7 +4941,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Final Flash",
-        "damage": 16500
+        "damage": 16500,
+        "boostedDmg": 21450,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3946,7 +4975,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Revenge Death Ball",
-        "damage": 17188
+        "damage": 17188,
+        "boostedDmg": 22344,
+        "type": "Death Ball Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -3973,7 +5009,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Revenge Death Ball Final",
-        "damage": 20313
+        "damage": 20313,
+        "boostedDmg": 26407,
+        "type": "Death Ball Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4000,7 +5043,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Gigantic Blaze",
-        "damage": 16500
+        "damage": 16500,
+        "boostedDmg": 21450,
+        "type": "Long Range Explosive Wave Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4027,7 +5077,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Minus Energy Power Ball",
-        "damage": 19501
+        "damage": 19501,
+        "boostedDmg": 25350,
+        "type": "Death Ball Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4054,7 +5111,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Majin Buu Resurrection",
-        "damage": 12750
+        "damage": 12750,
+        "boostedDmg": 16575,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4081,7 +5145,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Sphere of Destruction",
-        "damage": 21000
+        "damage": 21000,
+        "boostedDmg": 27300,
+        "type": "Death Ball Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4108,7 +5179,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Epilogue to Destruction",
-        "damage": 21000
+        "damage": 21000,
+        "boostedDmg": 27300,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     }
   },
@@ -4135,7 +5213,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Black Kamehameha",
-        "damage": 15735
+        "damage": 15735,
+        "boostedDmg": 20475,
+        "type": "Standard Beam",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan Rosé": {
@@ -4160,7 +5245,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Godly Black Kamehameha",
-        "damage": 19501
+        "damage": 19501,
+        "boostedDmg": 25350,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4187,7 +5279,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Holy Light Grenade",
-        "damage": 18375
+        "damage": 18375,
+        "boostedDmg": 23888,
+        "type": "Mini Death Ball Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4214,7 +5313,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Lightning of Absolution",
-        "damage": 20625
+        "damage": 20625,
+        "boostedDmg": 26813,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     },
     "Half-Corrupted": {
@@ -4239,7 +5345,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Divine Hammer",
-        "damage": 20251
+        "damage": 20251,
+        "boostedDmg": 26325,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4266,7 +5379,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Time Prison",
-        "damage": 18001
+        "damage": 18001,
+        "boostedDmg": 23400,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4293,7 +5413,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Chaos Ball",
-        "damage": 16500
+        "damage": 16500,
+        "boostedDmg": 21450,
+        "type": "Mini Death Ball Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4320,7 +5447,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Galick Rage",
-        "damage": 15750
+        "damage": 15750,
+        "boostedDmg": 20475,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -4345,7 +5479,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Galick Cannon",
-        "damage": 18001
+        "damage": 18001,
+        "boostedDmg": 23400,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan 2": {
@@ -4370,7 +5511,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Final Stream",
-        "damage": 18750
+        "damage": 18750,
+        "boostedDmg": 24375,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4397,7 +5545,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Crush Cannon",
-        "damage": 15750
+        "damage": 15750,
+        "boostedDmg": 20475,
+        "type": "Standard Multi-Shot Ki Blast",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan 2": {
@@ -4422,7 +5577,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Limit Break Blaster",
-        "damage": 19532
+        "damage": 19532,
+        "boostedDmg": 25391,
+        "type": "Beam Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4449,7 +5611,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Resistance Blast",
-        "damage": 15750
+        "damage": 15750,
+        "boostedDmg": 20475,
+        "type": "Standard Mini Death Ball",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -4474,7 +5643,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Limit Break Blaster",
-        "damage": 20251
+        "damage": 20251,
+        "boostedDmg": 26325,
+        "type": "Beam Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan (Berserk)": {
@@ -4499,7 +5675,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Berserk Blaster",
-        "damage": 21000
+        "damage": 21000,
+        "boostedDmg": 27300,
+        "type": "Explosive Wave Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4526,7 +5709,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Gigantic Burn",
-        "damage": 18751
+        "damage": 18751,
+        "boostedDmg": 24375,
+        "type": "Explosive Wave Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -4551,7 +5741,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Hexa-Cannonball",
-        "damage": 18750
+        "damage": 18750,
+        "boostedDmg": 24375,
+        "type": "Multi-Shot Ki Blast Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan 2": {
@@ -4576,7 +5773,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Gigantic Burst",
-        "damage": 20313
+        "damage": 20313,
+        "boostedDmg": 26407,
+        "type": "Explosive Wave Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4603,7 +5807,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Heat Break",
-        "damage": 18001
+        "damage": 18001,
+        "boostedDmg": 23400,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": true
       }
     },
     "Full Power": {
@@ -4628,7 +5839,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Omegaheat Magnetron",
-        "damage": 20250
+        "damage": 20250,
+        "boostedDmg": 26325,
+        "type": "Beam Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4655,7 +5873,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "United Justice Stream",
-        "damage": 17250
+        "damage": 17250,
+        "boostedDmg": 22425,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "God of Destruction": {
@@ -4680,7 +5905,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Large Sphere of Destruction",
-        "damage": 19501
+        "damage": 19501,
+        "boostedDmg": 25350,
+        "type": "Death Ball Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4707,7 +5939,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "United Justice Stream",
-        "damage": 16500
+        "damage": 16500,
+        "boostedDmg": 21450,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4734,7 +5973,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Triangle Danger Beam",
-        "damage": 15750
+        "damage": 15750,
+        "boostedDmg": 20475,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4761,7 +6007,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Infinite Love",
-        "damage": 16750
+        "damage": 16750,
+        "boostedDmg": 21125,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4788,7 +6041,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Love Symphony",
-        "damage": 15750
+        "damage": 15750,
+        "boostedDmg": 20475,
+        "type": "Standard Mini Death Ball",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4815,7 +6075,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Love Symphony",
-        "damage": 15750
+        "damage": 15750,
+        "boostedDmg": 20475,
+        "type": "Standard Mini Death Ball",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4842,7 +6109,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Destruction Burst",
-        "damage": 19501
+        "damage": 19501,
+        "boostedDmg": 25350,
+        "type": "Death Ball Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4869,7 +6143,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Gamma Shift Shot",
-        "damage": 17250
+        "damage": 17250,
+        "boostedDmg": 22425,
+        "type": "Multi-Shot Ki Blast Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4896,7 +6177,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Kamehameha",
-        "damage": 15000
+        "damage": 15000,
+        "boostedDmg": 19500,
+        "type": "Standard Beam",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Super Saiyan": {
@@ -4921,7 +6209,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Super Kamehameha",
-        "damage": 18001
+        "damage": 18001,
+        "boostedDmg": 23400,
+        "type": "Beam Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Ultimate Gohan": {
@@ -4946,7 +6241,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Explosive Onslaught",
-        "damage": 19501
+        "damage": 19501,
+        "boostedDmg": 25350,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Beast": {
@@ -4971,7 +6273,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Special Beam Cannon",
-        "damage": 21000
+        "damage": 21000,
+        "boostedDmg": 27300,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -4998,7 +6307,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Light Grenade",
-        "damage": 15750
+        "damage": 15750,
+        "boostedDmg": 20475,
+        "type": "Standard Mini Death Ball",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Power Awakening": {
@@ -5023,7 +6339,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Special Beam Cannon",
-        "damage": 16500
+        "damage": 16500,
+        "boostedDmg": 21450,
+        "type": "Standard Beam",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Orange Piccolo": {
@@ -5048,7 +6371,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Special Beam Cannon",
-        "damage": 19501
+        "damage": 19501,
+        "boostedDmg": 25350,
+        "type": "Dash Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": false,
+        "selfDestruct": false,
+        "movable": false
       }
     },
     "Giant Orange Piccolo": {
@@ -5073,7 +6403,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Apocalyptic Burst",
-        "damage": 19501
+        "damage": 19501,
+        "boostedDmg": 25350,
+        "type": "Short Range Grab Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
@@ -5100,7 +6437,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Core Breaker",
-        "damage": 23000
+        "damage": 23000,
+        "boostedDmg": 29900,
+        "type": "Self-Destruct Explosive Wave Cutscene",
+        "blockable": false,
+        "unblockable": true,
+        "affectsGiants": true,
+        "selfDestruct": true,
+        "movable": false
       }
     }
   },
@@ -5127,7 +6471,14 @@ export const combatData = {
       },
       "ultimate": {
         "name": "Max Bomb",
-        "damage": 20250
+        "damage": 20250,
+        "boostedDmg": 26325,
+        "type": "Death Ball Cutscene",
+        "blockable": true,
+        "unblockable": false,
+        "affectsGiants": true,
+        "selfDestruct": false,
+        "movable": false
       }
     }
   },
