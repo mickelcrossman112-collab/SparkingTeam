@@ -25,6 +25,8 @@ import SinglesMeta from './components/SinglesMeta.jsx'
 import FighterJournal from './components/FighterJournal.jsx'
 import UltimateDatabase from './components/UltimateDatabase.jsx'
 import SessionMode from './components/SessionMode.jsx'
+import TrainingPlanner from './components/TrainingPlanner.jsx'
+import MoveList from './components/MoveList.jsx'
 import News from './components/News.jsx'
 import MetaDashboard from './components/MetaDashboard.jsx'
 import BadgeNotification from './components/BadgeNotification.jsx'
@@ -38,9 +40,11 @@ const NAV_ITEMS = [
     { key: 'matchups', label: 'Matchups' },
     { key: 'rankings', label: 'Rankings' },
     { key: 'ultimates', label: 'Ultimates' },
+    { key: 'moves', label: 'Move List' },
   ]},
   { key: 'journal', label: 'My Journal', sub: [
     { key: 'session', label: 'Session Mode' },
+    { key: 'training', label: 'Training Planner' },
   ]},
   { key: 'builder', label: 'Team Builder', sub: [
     { key: 'counter', label: 'Counter Picks' },
@@ -304,8 +308,12 @@ export default function App() {
           <SinglesMeta />
         ) : view === 'ultimates' ? (
           <UltimateDatabase />
+        ) : view === 'moves' ? (
+          <MoveList />
         ) : view === 'session' ? (
           <SessionMode />
+        ) : view === 'training' ? (
+          <TrainingPlanner />
         ) : view === 'journal' ? (
           <FighterJournal />
         ) : view === 'matchups' ? (

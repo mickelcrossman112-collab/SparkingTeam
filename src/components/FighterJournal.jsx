@@ -1,22 +1,10 @@
 import { useState, useMemo, useCallback } from 'react'
 import { characters, charactersById } from '../data/characters.js'
 import { useLocalStorage } from '../hooks/useLocalStorage.js'
-
-const RECORD_KEY = 'szMatchRecord'
-const HISTORY_KEY = 'szMatchHistory'
-const SESSIONS_KEY = 'szSessions'
-
-function loadRecords() {
-  try { return JSON.parse(localStorage.getItem(RECORD_KEY)) || {} } catch { return {} }
-}
-function saveRecords(r) { localStorage.setItem(RECORD_KEY, JSON.stringify(r)) }
-function loadHistory() {
-  try { return JSON.parse(localStorage.getItem(HISTORY_KEY)) || [] } catch { return [] }
-}
-function saveHistory(h) { localStorage.setItem(HISTORY_KEY, JSON.stringify(h)) }
-function loadSessions() {
-  try { return JSON.parse(localStorage.getItem(SESSIONS_KEY)) || [] } catch { return [] }
-}
+import {
+  loadRecords, saveRecords, loadHistory, saveHistory, loadSessions,
+  allMatches, masteryFor, MASTERY_TIERS,
+} from '../utils/matchLog.js'
 
 function formatTime(ts) {
   const d = new Date(ts)
@@ -36,6 +24,8 @@ export default function FighterJournal() {
   const [sessions] = useState(loadSessions)
   const [search, setSearch] = useState('')
   const [tab, setTab] = useState('overview')
+  const [playedAs, setPlayedAs] = useState('all')
+  const [matchupSort, setMatchupSort] = useState('played')
 
   const searchResults = useMemo(() => {
     if (!search.trim()) return []
@@ -93,12 +83,12 @@ export default function FighterJournal() {
       return next
     })
     setHistory(prev => {
-      const entry = { enemyId, result, ts: Date.now() }
+      const entry = { enemyId, result, myId: main || null, ts: Date.now() }
       const next = [entry, ...prev].slice(0, 500)
       saveHistory(next)
       return next
     })
-  }, [])
+  }, [main])
 
   const rankedStats = useMemo(() => {
     if (sessions.length === 0) return null
@@ -138,6 +128,86 @@ export default function FighterJournal() {
 
     return { totalW, totalL, total, winRate, totalSessions, avgPerSession, longestStreak, bestSessionRate, worstSessionRate, nemesis, victims, mostPlayed }
   }, [sessions])
+
+  const matches = useMemo(() => allMatches(), [history, sessions])
+
+  const playedAsOptions = useMemo(() => {
+    const counts = {}
+    for (const m of matches) {
+      if (!m.myId) continue
+      counts[m.myId] = (counts[m.myId] || 0) + 1
+    }
+    return Object.entries(counts)
+      .map(([id, n]) => ({ id, char: charactersById[id], n }))
+      .filter(o => o.char)
+      .sort((a, b) => b.n - a.n)
+  }, [matches])
+
+  const matchupRows = useMemo(() => {
+    const scoped = playedAs === 'all' ? matches : matches.filter(m => m.myId === playedAs)
+    const byOpp = {}
+    for (const m of scoped) {
+      if (!byOpp[m.enemyId]) byOpp[m.enemyId] = { w: 0, l: 0, last: 0 }
+      byOpp[m.enemyId][m.result]++
+      if (m.ts > byOpp[m.enemyId].last) byOpp[m.enemyId].last = m.ts
+    }
+    const rows = Object.entries(byOpp).map(([id, rec]) => {
+      const char = charactersById[id]
+      if (!char) return null
+      const total = rec.w + rec.l
+      return { id, char, ...rec, total, winRate: Math.round((rec.w / total) * 100) }
+    }).filter(Boolean)
+
+    if (matchupSort === 'played') rows.sort((a, b) => b.total - a.total)
+    else if (matchupSort === 'best') rows.sort((a, b) => b.winRate - a.winRate || b.total - a.total)
+    else if (matchupSort === 'worst') rows.sort((a, b) => a.winRate - b.winRate || b.total - a.total)
+    else if (matchupSort === 'recent') rows.sort((a, b) => b.last - a.last)
+    else rows.sort((a, b) => a.char.name.localeCompare(b.char.name))
+    return rows
+  }, [matches, playedAs, matchupSort])
+
+  const masteryRows = useMemo(() => {
+    const byChar = {}
+    for (const m of matches) {
+      if (!m.myId) continue
+      if (!byChar[m.myId]) byChar[m.myId] = { w: 0, l: 0 }
+      byChar[m.myId][m.result]++
+    }
+    return Object.entries(byChar).map(([id, rec]) => {
+      const char = charactersById[id]
+      if (!char) return null
+      const total = rec.w + rec.l
+      return {
+        id, char, ...rec, total,
+        winRate: Math.round((rec.w / total) * 100),
+        ...masteryFor(rec.w),
+      }
+    }).filter(Boolean).sort((a, b) => b.w - a.w)
+  }, [matches])
+
+  const usageData = useMemo(() => {
+    const played = {}, faced = {}
+    let taggedCount = 0
+    for (const m of matches) {
+      if (m.myId) { played[m.myId] = (played[m.myId] || 0) + 1; taggedCount++ }
+      faced[m.enemyId] = (faced[m.enemyId] || 0) + 1
+    }
+    const toList = (obj) => Object.entries(obj)
+      .map(([id, n]) => ({ id, char: charactersById[id], n }))
+      .filter(o => o.char)
+      .sort((a, b) => b.n - a.n)
+      .slice(0, 12)
+    const playedList = toList(played)
+    const facedList = toList(faced)
+    return {
+      played: playedList,
+      faced: facedList,
+      playedMax: playedList[0]?.n || 1,
+      facedMax: facedList[0]?.n || 1,
+      taggedCount,
+      untagged: matches.length - taggedCount,
+    }
+  }, [matches])
 
   const recentHistory = history.slice(0, 20)
 
@@ -216,6 +286,9 @@ export default function FighterJournal() {
       <div className="journal-tabs">
         <button className={'journal-tab' + (tab === 'overview' ? ' journal-tab--active' : '')} type="button" onClick={() => setTab('overview')}>Overview</button>
         <button className={'journal-tab' + (tab === 'ranked' ? ' journal-tab--active' : '')} type="button" onClick={() => setTab('ranked')}>Ranked</button>
+        <button className={'journal-tab' + (tab === 'matchups' ? ' journal-tab--active' : '')} type="button" onClick={() => setTab('matchups')}>Matchups</button>
+        <button className={'journal-tab' + (tab === 'mastery' ? ' journal-tab--active' : '')} type="button" onClick={() => setTab('mastery')}>Mastery</button>
+        <button className={'journal-tab' + (tab === 'usage' ? ' journal-tab--active' : '')} type="button" onClick={() => setTab('usage')}>Usage</button>
         <button className={'journal-tab' + (tab === 'log' ? ' journal-tab--active' : '')} type="button" onClick={() => setTab('log')}>Quick Log</button>
         <button className={'journal-tab' + (tab === 'history' ? ' journal-tab--active' : '')} type="button" onClick={() => setTab('history')}>History</button>
       </div>
@@ -374,6 +447,168 @@ export default function FighterJournal() {
                     ))}
                   </div>
                 </div>
+              )}
+            </>
+          )}
+        </div>
+      )}
+
+      {tab === 'matchups' && (
+        <div className="journal-content">
+          <div className="mt-controls">
+            <div className="mt-control">
+              <label className="mt-control__label">Played as</label>
+              <select className="mt-select" value={playedAs} onChange={e => setPlayedAs(e.target.value)}>
+                <option value="all">All fighters</option>
+                {playedAsOptions.map(o => (
+                  <option key={o.id} value={o.id}>{o.char.name} ({o.n})</option>
+                ))}
+              </select>
+            </div>
+            <div className="mt-control">
+              <label className="mt-control__label">Sort by</label>
+              <select className="mt-select" value={matchupSort} onChange={e => setMatchupSort(e.target.value)}>
+                <option value="played">Most played</option>
+                <option value="worst">Worst win rate</option>
+                <option value="best">Best win rate</option>
+                <option value="recent">Most recent</option>
+                <option value="name">Name</option>
+              </select>
+            </div>
+          </div>
+
+          {matchupRows.length === 0 ? (
+            <div className="journal-empty">
+              <p>No matches recorded for this filter. Log some matches from Quick Log or Session Mode.</p>
+            </div>
+          ) : (
+            <div className="mt-grid">
+              {matchupRows.map(r => (
+                <div key={r.id} className="mt-row">
+                  <div className="mt-row__left">
+                    {r.char.forms[0]?.image
+                      ? <img className="mt-row__img" src={r.char.forms[0].image} alt="" />
+                      : <div className="mt-row__ph" style={{ background: r.char.color }}>{r.char.name[0]}</div>}
+                    <span className="mt-row__name">{r.char.name}</span>
+                  </div>
+                  <div className="mt-row__bar">
+                    <div className="mt-row__bar-w" style={{ width: r.winRate + '%' }} />
+                    <div className="mt-row__bar-l" style={{ width: (100 - r.winRate) + '%' }} />
+                  </div>
+                  <div className="mt-row__right">
+                    <span className={'mt-row__rate' + (r.winRate >= 60 ? ' mt-row__rate--good' : r.winRate < 40 ? ' mt-row__rate--bad' : '')}>
+                      {r.winRate}%
+                    </span>
+                    <span className="mt-row__record">{r.w}W-{r.l}L</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {tab === 'mastery' && (
+        <div className="journal-content">
+          <div className="mastery-legend">
+            {[...MASTERY_TIERS].reverse().map(t => (
+              <span key={t.name} className="mastery-legend__item">
+                <span className="mastery-legend__dot" style={{ background: t.color }} />
+                {t.name} {t.min > 0 && <em>{t.min}+</em>}
+              </span>
+            ))}
+          </div>
+
+          {masteryRows.length === 0 ? (
+            <div className="journal-empty">
+              <p>No mastery data yet. Pick your fighter in Session Mode before logging matches so wins get credited to that character.</p>
+            </div>
+          ) : (
+            <div className="mastery-list">
+              {masteryRows.map(m => (
+                <div key={m.id} className="mastery-card" style={{ borderColor: m.tier.color + '55' }}>
+                  <div className="mastery-card__head">
+                    {m.char.forms[0]?.image
+                      ? <img className="mastery-card__img" src={m.char.forms[0].image} alt="" />
+                      : <div className="mastery-card__ph" style={{ background: m.char.color }}>{m.char.name[0]}</div>}
+                    <div className="mastery-card__id">
+                      <span className="mastery-card__name">{m.char.name}</span>
+                      <span className="mastery-card__record">{m.w}W-{m.l}L · {m.winRate}%</span>
+                    </div>
+                    <span className="mastery-card__tier" style={{ color: m.tier.color, borderColor: m.tier.color + '66' }}>
+                      {m.tier.name}
+                    </span>
+                  </div>
+                  <div className="mastery-card__bar">
+                    <div className="mastery-card__bar-fill" style={{ width: m.progress + '%', background: m.tier.color }} />
+                  </div>
+                  <span className="mastery-card__next">
+                    {m.next
+                      ? `${m.next.min - m.w} more wins to ${m.next.name}`
+                      : 'Max tier reached'}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {tab === 'usage' && (
+        <div className="journal-content">
+          {matches.length === 0 ? (
+            <div className="journal-empty"><p>No matches logged yet.</p></div>
+          ) : (
+            <>
+              {usageData.played.length > 0 && (
+                <div className="journal-section">
+                  <h3 className="journal-section__title">Fighters You Play</h3>
+                  <div className="usage-list">
+                    {usageData.played.map(u => (
+                      <div key={u.id} className="usage-row">
+                        {u.char.forms[0]?.image
+                          ? <img className="usage-row__img" src={u.char.forms[0].image} alt="" />
+                          : <div className="usage-row__ph" style={{ background: u.char.color }}>{u.char.name[0]}</div>}
+                        <span className="usage-row__name">{u.char.name}</span>
+                        <div className="usage-row__track">
+                          <div
+                            className="usage-row__fill usage-row__fill--played"
+                            style={{ width: Math.round((u.n / usageData.playedMax) * 100) + '%' }}
+                          />
+                        </div>
+                        <span className="usage-row__n">{u.n}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="journal-section">
+                <h3 className="journal-section__title">Fighters You Face Most</h3>
+                <div className="usage-list">
+                  {usageData.faced.map(u => (
+                    <div key={u.id} className="usage-row">
+                      {u.char.forms[0]?.image
+                        ? <img className="usage-row__img" src={u.char.forms[0].image} alt="" />
+                        : <div className="usage-row__ph" style={{ background: u.char.color }}>{u.char.name[0]}</div>}
+                      <span className="usage-row__name">{u.char.name}</span>
+                      <div className="usage-row__track">
+                        <div
+                          className="usage-row__fill"
+                          style={{ width: Math.round((u.n / usageData.facedMax) * 100) + '%' }}
+                        />
+                      </div>
+                      <span className="usage-row__n">{u.n}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {usageData.untagged > 0 && (
+                <p className="usage-note">
+                  {usageData.untagged} match{usageData.untagged === 1 ? '' : 'es'} logged before fighter tracking —
+                  set "Playing as" in Session Mode to credit future matches.
+                </p>
               )}
             </>
           )}

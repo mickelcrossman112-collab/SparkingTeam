@@ -1,23 +1,7 @@
 import { useState, useMemo, useCallback } from 'react'
 import { characters, charactersById } from '../data/characters.js'
 import { useLocalStorage } from '../hooks/useLocalStorage.js'
-
-const RECORD_KEY = 'szMatchRecord'
-const HISTORY_KEY = 'szMatchHistory'
-
-function syncToJournal(enemyId, result) {
-  try {
-    const records = JSON.parse(localStorage.getItem(RECORD_KEY)) || {}
-    if (!records[enemyId]) records[enemyId] = { w: 0, l: 0 }
-    records[enemyId][result]++
-    localStorage.setItem(RECORD_KEY, JSON.stringify(records))
-  } catch {}
-  try {
-    const history = JSON.parse(localStorage.getItem(HISTORY_KEY)) || []
-    history.unshift({ enemyId, result, ts: Date.now() })
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(0, 500)))
-  } catch {}
-}
+import { logToJournal } from '../utils/matchLog.js'
 
 function formatDuration(ms) {
   const mins = Math.floor(ms / 60000)
@@ -33,8 +17,21 @@ function formatDate(ts) {
 export default function SessionMode() {
   const [sessions, setSessions] = useLocalStorage('szSessions', [])
   const [active, setActive] = useLocalStorage('szActiveSession', null)
+  const [main] = useLocalStorage('szMainFighter', null)
+  const [playingAs, setPlayingAs] = useLocalStorage('szPlayingAs', null)
   const [search, setSearch] = useState('')
   const [viewingSession, setViewingSession] = useState(null)
+  const [tiltDismissed, setTiltDismissed] = useState(0)
+  const [showAsPicker, setShowAsPicker] = useState(false)
+  const [asSearch, setAsSearch] = useState('')
+
+  const currentAs = playingAs || main
+  const currentAsChar = currentAs ? charactersById[currentAs] : null
+
+  const asResults = useMemo(() => {
+    if (!asSearch.trim()) return characters.slice(0, 12)
+    return characters.filter(c => c.name.toLowerCase().includes(asSearch.trim().toLowerCase())).slice(0, 12)
+  }, [asSearch])
 
   const searchResults = useMemo(() => {
     if (!search.trim()) return characters.slice(0, 16)
@@ -43,15 +40,17 @@ export default function SessionMode() {
 
   const startSession = useCallback(() => {
     setActive({ startedAt: Date.now(), matches: [] })
+    setTiltDismissed(0)
   }, [setActive])
 
   const logMatch = useCallback((enemyId, result) => {
+    const ts = Date.now()
     setActive(prev => {
       if (!prev) return prev
-      return { ...prev, matches: [...prev.matches, { enemyId, result, ts: Date.now() }] }
+      return { ...prev, matches: [...prev.matches, { enemyId, result, myId: currentAs || null, ts }] }
     })
-    syncToJournal(enemyId, result)
-  }, [setActive])
+    logToJournal(enemyId, result, currentAs, ts)
+  }, [setActive, currentAs])
 
   const endSession = useCallback(() => {
     if (!active || active.matches.length === 0) {
@@ -107,6 +106,18 @@ export default function SessionMode() {
 
   const activeStats = active ? getSessionStats({ ...active, endedAt: Date.now() }) : null
 
+  const lossStreak = useMemo(() => {
+    if (!active) return 0
+    let n = 0
+    for (let i = active.matches.length - 1; i >= 0; i--) {
+      if (active.matches[i].result === 'l') n++
+      else break
+    }
+    return n
+  }, [active])
+
+  const showTilt = lossStreak >= 3 && lossStreak > tiltDismissed
+
   if (viewingSession) {
     const stats = getSessionStats(viewingSession)
     return (
@@ -128,6 +139,69 @@ export default function SessionMode() {
           </div>
           <button className="session-end-btn" type="button" onClick={endSession}>End Session</button>
         </div>
+
+        <div className="session-as">
+          <span className="session-as__label">Playing as</span>
+          {currentAsChar ? (
+            <button className="session-as__current" type="button" onClick={() => setShowAsPicker(v => !v)}>
+              {currentAsChar.forms[0]?.image ? (
+                <img className="session-as__img" src={currentAsChar.forms[0].image} alt="" />
+              ) : (
+                <div className="session-as__ph" style={{ background: currentAsChar.color }}>{currentAsChar.name[0]}</div>
+              )}
+              <span>{currentAsChar.name}</span>
+              <span className="session-as__caret">&#9662;</span>
+            </button>
+          ) : (
+            <button className="session-as__pick" type="button" onClick={() => setShowAsPicker(v => !v)}>Choose fighter</button>
+          )}
+          {showAsPicker && (
+            <div className="session-as__picker">
+              <input
+                className="session-as__search"
+                type="text"
+                placeholder="Search your fighter..."
+                value={asSearch}
+                onChange={e => setAsSearch(e.target.value)}
+                autoFocus
+              />
+              <div className="session-as__results">
+                {asResults.map(c => (
+                  <button
+                    key={c.id}
+                    className={'session-as__result' + (c.id === currentAs ? ' session-as__result--active' : '')}
+                    type="button"
+                    onClick={() => { setPlayingAs(c.id); setShowAsPicker(false); setAsSearch('') }}
+                  >
+                    {c.forms[0]?.image ? (
+                      <img className="session-as__result-img" src={c.forms[0].image} alt="" />
+                    ) : (
+                      <div className="session-as__result-ph" style={{ background: c.color }}>{c.name[0]}</div>
+                    )}
+                    <span>{c.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {showTilt && (
+          <div className="session-tilt">
+            <div className="session-tilt__body">
+              <span className="session-tilt__title">{lossStreak} losses in a row</span>
+              <span className="session-tilt__sub">
+                {lossStreak >= 5
+                  ? "That's a rough run. Step away for a bit — you'll come back sharper."
+                  : 'Tilt kills more runs than bad matchups. Take a breather?'}
+              </span>
+            </div>
+            <div className="session-tilt__actions">
+              <button className="session-tilt__btn" type="button" onClick={() => setTiltDismissed(lossStreak)}>Keep playing</button>
+              <button className="session-tilt__btn session-tilt__btn--end" type="button" onClick={endSession}>End session</button>
+            </div>
+          </div>
+        )}
 
         <div className="session-live-stats">
           <div className="session-live-stat">
@@ -235,7 +309,14 @@ export default function SessionMode() {
             {sessions.map(s => {
               const stats = getSessionStats(s)
               return (
-                <button key={s.id} className="session-history__card" type="button" onClick={() => setViewingSession(s)}>
+                <div
+                  key={s.id}
+                  className="session-history__card"
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => setViewingSession(s)}
+                  onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setViewingSession(s) } }}
+                >
                   <div className="session-history__card-top">
                     <span className="session-history__date">{formatDate(s.startedAt)}</span>
                     <span className="session-history__duration">{formatDuration(stats.duration)}</span>
@@ -258,7 +339,7 @@ export default function SessionMode() {
                     type="button"
                     onClick={e => { e.stopPropagation(); deleteSession(s.id) }}
                   >&times;</button>
-                </button>
+                </div>
               )
             })}
           </div>
