@@ -9,6 +9,7 @@ import { checkAchievements, ACHIEVEMENTS } from './data/achievements.js'
 import { playAdd, playRemove, playSave, playBadge, playRandom, playPreset } from './utils/sounds.js'
 import CharacterData from './components/CharacterData.jsx'
 import CharacterRankings from './components/CharacterRankings.jsx'
+import FighterHub from './components/FighterHub.jsx'
 import TeamBar from './components/TeamBar.jsx'
 import FilterBar from './components/FilterBar.jsx'
 import CharacterGrid from './components/CharacterGrid.jsx'
@@ -26,13 +27,14 @@ import CharacterSpotlight from './components/CharacterSpotlight.jsx'
 import PresetTeams from './components/PresetTeams.jsx'
 
 const VIEW_LABELS = {
-  builder: 'Team Builder',
-  teams: 'My Teams',
-  data: 'Character Data',
+  hub: 'Fighter Hub',
   matchups: 'Matchups',
   rankings: 'Rankings',
   counter: 'Counter Picks',
   guide: 'Counter Guide',
+  builder: 'Team Builder',
+  teams: 'My Teams',
+  data: 'Character Data',
   compare: 'Compare',
   news: 'News',
   meta: 'Meta',
@@ -42,7 +44,7 @@ export default function App() {
   const [team, setTeam] = useShareableTeam()
   const [savedTeams, setSavedTeams] = useLocalStorage('szTeams', [])
 
-  const [view, setView] = useState('builder')
+  const [view, setView] = useState('hub')
   const [search, setSearch] = useState('')
   const [tag, setTag] = useState('')
   const [episode, setEpisode] = useState('')
@@ -192,8 +194,8 @@ export default function App() {
       <main className="main">
         <div className="brand">
           <h1>
-            Sparking! <span className="accent">Zero</span>{' '}
-            {VIEW_LABELS[view] || view}
+            Sparking! <span className="accent">Zero</span>
+            {view !== 'hub' && <> {VIEW_LABELS[view] || view}</>}
           </h1>
           <nav className="view-tabs">
             {Object.entries(VIEW_LABELS).map(([key, label]) => (
@@ -209,7 +211,9 @@ export default function App() {
           </nav>
         </div>
 
-        {view === 'builder' ? (
+        {view === 'hub' ? (
+          <FighterHub onNavigate={setView} />
+        ) : view === 'builder' ? (
           <>
             <CharacterSpotlight />
             <div className="preset-toggle-row">
@@ -263,8 +267,8 @@ export default function App() {
 
       <footer className="footer">
         <p>
-          Fan-made team builder for Dragon Ball: Sparking! Zero. Not affiliated with Bandai Namco.
-          DP values are starter estimates — verify against the game.
+          Fan-made toolkit for Dragon Ball: Sparking! Zero. Not affiliated with Bandai Namco.
+          Matchup data and DP values are community estimates.
         </p>
       </footer>
 
