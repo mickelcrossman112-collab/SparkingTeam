@@ -20,6 +20,9 @@ import MatchupChart from './components/MatchupChart.jsx'
 import TeamCompare from './components/TeamCompare.jsx'
 import CounterPicks from './components/CounterPicks.jsx'
 import CounterGuide from './components/CounterGuide.jsx'
+import HeadToHead from './components/HeadToHead.jsx'
+import SinglesMeta from './components/SinglesMeta.jsx'
+import FighterJournal from './components/FighterJournal.jsx'
 import News from './components/News.jsx'
 import MetaDashboard from './components/MetaDashboard.jsx'
 import BadgeNotification from './components/BadgeNotification.jsx'
@@ -28,6 +31,9 @@ import PresetTeams from './components/PresetTeams.jsx'
 
 const VIEW_LABELS = {
   hub: 'Fighter Hub',
+  h2h: '1v1',
+  smeta: 'Singles Meta',
+  journal: 'My Journal',
   matchups: 'Matchups',
   rankings: 'Rankings',
   counter: 'Counter Picks',
@@ -246,6 +252,12 @@ export default function App() {
           </>
         ) : view === 'teams' ? (
           <SavedTeams teams={savedTeams} onLoad={loadSaved} onDelete={deleteSaved} onUpdateNotes={updateSavedNotes} fullPage />
+        ) : view === 'h2h' ? (
+          <HeadToHead />
+        ) : view === 'smeta' ? (
+          <SinglesMeta />
+        ) : view === 'journal' ? (
+          <FighterJournal />
         ) : view === 'matchups' ? (
           <MatchupChart team={team} />
         ) : view === 'data' ? (
