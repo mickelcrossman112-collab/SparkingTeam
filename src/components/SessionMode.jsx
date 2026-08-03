@@ -24,6 +24,8 @@ export default function SessionMode() {
   const [tiltDismissed, setTiltDismissed] = useState(0)
   const [showAsPicker, setShowAsPicker] = useState(false)
   const [asSearch, setAsSearch] = useState('')
+  const [logMode, setLogMode] = useLocalStorage('szLogMode', 'single')
+  const [openSet, setOpenSet] = useState(null)
 
   const currentAs = playingAs || main
   const currentAsChar = currentAs ? charactersById[currentAs] : null
@@ -51,6 +53,41 @@ export default function SessionMode() {
     })
     logToJournal(enemyId, result, currentAs, ts)
   }, [setActive, currentAs])
+
+  // A ranked set is up to 3 games vs the same opponent. Each game is still
+  // logged individually so per-character records stay accurate; the shared
+  // setId is what lets us report set wins on top of game wins.
+  const commitSet = useCallback((enemyId, games) => {
+    if (games.length === 0) return
+    const setId = Date.now().toString(36) + Math.random().toString(36).slice(2, 6)
+    const base = Date.now()
+    const newMatches = games.map((result, i) => ({
+      enemyId, result, myId: currentAs || null, ts: base + i, setId, gameNo: i + 1,
+    }))
+    setActive(prev => prev ? { ...prev, matches: [...prev.matches, ...newMatches] } : prev)
+    for (const m of newMatches) logToJournal(m.enemyId, m.result, m.myId, m.ts)
+    setOpenSet(null)
+  }, [setActive, currentAs])
+
+  const addSetGame = (result) => {
+    setOpenSet(prev => {
+      if (!prev || prev.games.length >= 3) return prev
+      return { ...prev, games: [...prev.games, result] }
+    })
+  }
+
+  const undoSetGame = () => {
+    setOpenSet(prev => prev ? { ...prev, games: prev.games.slice(0, -1) } : prev)
+  }
+
+  const setScore = (games) => ({
+    w: games.filter(g => g === 'w').length,
+    l: games.filter(g => g === 'l').length,
+  })
+  const setDecided = (games) => {
+    const { w, l } = setScore(games)
+    return w === 2 || l === 2 || games.length === 3
+  }
 
   const endSession = useCallback(() => {
     if (!active || active.matches.length === 0) {
@@ -101,7 +138,39 @@ export default function SessionMode() {
     const easiest = [...oppEntries].filter(o => o.total >= 2).sort((a, b) => b.winRate - a.winRate).slice(0, 3)
     const mostFaced = [...oppEntries].sort((a, b) => b.total - a.total).slice(0, 3)
 
-    return { wins, losses, total, winRate, duration, bestStreak, worstStreak, hardest, easiest, mostFaced }
+    // Sets: only matches tagged with a setId count toward set W/L.
+    const setMap = new Map()
+    for (const m of matches) {
+      if (!m.setId) continue
+      if (!setMap.has(m.setId)) setMap.set(m.setId, { w: 0, l: 0 })
+      setMap.get(m.setId)[m.result]++
+    }
+    let setsWon = 0, setsLost = 0
+    for (const s of setMap.values()) {
+      if (s.w > s.l) setsWon++
+      else if (s.l > s.w) setsLost++
+    }
+    const setsTotal = setsWon + setsLost
+    const setWinRate = setsTotal > 0 ? Math.round((setsWon / setsTotal) * 100) : 0
+
+    return {
+      wins, losses, total, winRate, duration, bestStreak, worstStreak,
+      hardest, easiest, mostFaced, setsWon, setsLost, setsTotal, setWinRate,
+    }
+  }
+
+  // Collapse set games into a single display entry, keeping singles as-is.
+  const groupEntries = (matches) => {
+    const out = []
+    const bySet = new Map()
+    for (const m of matches) {
+      if (!m.setId) { out.push({ type: 'single', ...m }); continue }
+      if (bySet.has(m.setId)) { bySet.get(m.setId).games.push(m); continue }
+      const entry = { type: 'set', setId: m.setId, enemyId: m.enemyId, ts: m.ts, games: [m] }
+      bySet.set(m.setId, entry)
+      out.push(entry)
+    }
+    return out
   }
 
   const activeStats = active ? getSessionStats({ ...active, endedAt: Date.now() }) : null
@@ -220,6 +289,12 @@ export default function SessionMode() {
             <span className="session-live-stat__val">{activeStats.winRate}%</span>
             <span className="session-live-stat__label">Win Rate</span>
           </div>
+          {activeStats.setsTotal > 0 && (
+            <div className="session-live-stat">
+              <span className="session-live-stat__val">{activeStats.setsWon}-{activeStats.setsLost}</span>
+              <span className="session-live-stat__label">Sets</span>
+            </div>
+          )}
         </div>
 
         {active.matches.length > 0 && (
@@ -238,51 +313,104 @@ export default function SessionMode() {
         )}
 
         <div className="session-log">
-          <p className="session-log__intro">Who did you just fight?</p>
-          <input
-            className="session-log__search"
-            type="text"
-            placeholder="Search opponent..."
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-          />
-          <div className="session-log__grid">
-            {searchResults.map(c => (
-              <div key={c.id} className="session-log__card">
-                <div className="session-log__card-top">
-                  {c.forms[0]?.image ? (
-                    <img className="session-log__card-img" src={c.forms[0].image} alt="" />
-                  ) : (
-                    <div className="session-log__card-ph" style={{ background: c.color }}>{c.name[0]}</div>
-                  )}
-                  <span className="session-log__card-name">{c.name}</span>
-                </div>
-                <div className="session-log__card-btns">
-                  <button className="session-log__btn session-log__btn--w" type="button" onClick={() => logMatch(c.id, 'w')}>W</button>
-                  <button className="session-log__btn session-log__btn--l" type="button" onClick={() => logMatch(c.id, 'l')}>L</button>
-                </div>
-              </div>
-            ))}
+          <div className="session-log__head">
+            <p className="session-log__intro">Who did you just fight?</p>
+            <div className="session-modes">
+              <button
+                className={'session-mode' + (logMode === 'single' ? ' session-mode--active' : '')}
+                type="button"
+                onClick={() => { setLogMode('single'); setOpenSet(null) }}
+              >Single</button>
+              <button
+                className={'session-mode' + (logMode === 'set' ? ' session-mode--active' : '')}
+                type="button"
+                onClick={() => setLogMode('set')}
+              >Best of 3</button>
+            </div>
           </div>
+
+          {openSet ? (
+            <SetPanel
+              enemy={charactersById[openSet.enemyId]}
+              games={openSet.games}
+              score={setScore(openSet.games)}
+              decided={setDecided(openSet.games)}
+              onGame={addSetGame}
+              onUndo={undoSetGame}
+              onSave={() => commitSet(openSet.enemyId, openSet.games)}
+              onCancel={() => setOpenSet(null)}
+            />
+          ) : (
+            <>
+              <input
+                className="session-log__search"
+                type="text"
+                placeholder="Search opponent..."
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+              />
+              <div className="session-log__grid">
+                {searchResults.map(c => (
+                  <div key={c.id} className="session-log__card">
+                    <div className="session-log__card-top">
+                      {c.forms[0]?.image ? (
+                        <img className="session-log__card-img" src={c.forms[0].image} alt="" />
+                      ) : (
+                        <div className="session-log__card-ph" style={{ background: c.color }}>{c.name[0]}</div>
+                      )}
+                      <span className="session-log__card-name">{c.name}</span>
+                    </div>
+                    {logMode === 'set' ? (
+                      <button
+                        className="session-log__set-btn"
+                        type="button"
+                        onClick={() => setOpenSet({ enemyId: c.id, games: [] })}
+                      >Log Set</button>
+                    ) : (
+                      <div className="session-log__card-btns">
+                        <button className="session-log__btn session-log__btn--w" type="button" onClick={() => logMatch(c.id, 'w')}>W</button>
+                        <button className="session-log__btn session-log__btn--l" type="button" onClick={() => logMatch(c.id, 'l')}>L</button>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
 
         {active.matches.length > 0 && (
           <div className="session-recent">
             <h3 className="session-recent__title">This Session</h3>
             <div className="session-recent__list">
-              {[...active.matches].reverse().map((m, i) => {
-                const char = charactersById[m.enemyId]
+              {[...groupEntries(active.matches)].reverse().map((e, i) => {
+                const char = charactersById[e.enemyId]
                 if (!char) return null
+                const isSet = e.type === 'set'
+                const score = isSet ? setScore(e.games.map(g => g.result)) : null
+                const outcome = isSet ? (score.w > score.l ? 'w' : 'l') : e.result
                 return (
-                  <div key={i} className={'session-recent__entry session-recent__entry--' + m.result}>
+                  <div key={i} className={'session-recent__entry session-recent__entry--' + outcome}>
                     {char.forms[0]?.image ? (
                       <img className="session-recent__img" src={char.forms[0].image} alt="" />
                     ) : (
                       <div className="session-recent__ph" style={{ background: char.color }}>{char.name[0]}</div>
                     )}
                     <span className="session-recent__name">{char.name}</span>
-                    <span className={'session-recent__result session-recent__result--' + m.result}>
-                      {m.result === 'w' ? 'W' : 'L'}
+                    {isSet && (
+                      <>
+                        <span className="session-recent__set-tag">SET</span>
+                        <span className="session-recent__games">
+                          {e.games.map((g, gi) => (
+                            <span key={gi} className={'session-recent__game session-recent__game--' + g.result}>
+                              {g.result === 'w' ? 'W' : 'L'}
+                            </span>
+                          ))}
+                        </span>
+                      </>
+                    )}
+                    <span className={'session-recent__result session-recent__result--' + outcome}>
+                      {isSet ? `${score.w}-${score.l}` : (e.result === 'w' ? 'W' : 'L')}
                     </span>
                   </div>
                 )
@@ -349,6 +477,68 @@ export default function SessionMode() {
   )
 }
 
+function SetPanel({ enemy, games, score, decided, onGame, onUndo, onSave, onCancel }) {
+  if (!enemy) return null
+  return (
+    <div className="setpanel">
+      <div className="setpanel__head">
+        {enemy.forms[0]?.image ? (
+          <img className="setpanel__img" src={enemy.forms[0].image} alt="" />
+        ) : (
+          <div className="setpanel__ph" style={{ background: enemy.color }}>{enemy.name[0]}</div>
+        )}
+        <div className="setpanel__id">
+          <span className="setpanel__label">Set vs</span>
+          <span className="setpanel__name">{enemy.name}</span>
+        </div>
+        <span className={'setpanel__score' + (score.w > score.l ? ' setpanel__score--w' : score.l > score.w ? ' setpanel__score--l' : '')}>
+          {score.w}-{score.l}
+        </span>
+      </div>
+
+      <div className="setpanel__games">
+        {[0, 1, 2].map(i => {
+          const g = games[i]
+          return (
+            <div key={i} className={'setpanel__game' + (g ? ' setpanel__game--' + g : '')}>
+              <span className="setpanel__game-no">Game {i + 1}</span>
+              <span className="setpanel__game-res">{g ? (g === 'w' ? 'WIN' : 'LOSS') : '—'}</span>
+            </div>
+          )
+        })}
+      </div>
+
+      {!decided ? (
+        <div className="setpanel__btns">
+          <button className="setpanel__btn setpanel__btn--w" type="button" onClick={() => onGame('w')}>
+            Won Game {games.length + 1}
+          </button>
+          <button className="setpanel__btn setpanel__btn--l" type="button" onClick={() => onGame('l')}>
+            Lost Game {games.length + 1}
+          </button>
+        </div>
+      ) : (
+        <p className="setpanel__done">
+          Set {score.w > score.l ? 'won' : 'lost'} {score.w}-{score.l}. Save it to add {games.length} match{games.length === 1 ? '' : 'es'} to your record.
+        </p>
+      )}
+
+      <div className="setpanel__actions">
+        <button className="setpanel__action" type="button" onClick={onCancel}>Cancel</button>
+        {games.length > 0 && (
+          <button className="setpanel__action" type="button" onClick={onUndo}>Undo last</button>
+        )}
+        <button
+          className="setpanel__action setpanel__action--save"
+          type="button"
+          onClick={onSave}
+          disabled={games.length === 0}
+        >Save Set</button>
+      </div>
+    </div>
+  )
+}
+
 function SessionSummary({ session, stats }) {
   return (
     <div className="session-summary">
@@ -381,6 +571,20 @@ function SessionSummary({ session, stats }) {
           <span className="session-summary__stat-val session-summary__stat-val--bad">{stats.worstStreak}</span>
           <span className="session-summary__stat-label">Worst Streak</span>
         </div>
+        {stats.setsTotal > 0 && (
+          <>
+            <div className="session-summary__stat">
+              <span className="session-summary__stat-val">{stats.setsWon}-{stats.setsLost}</span>
+              <span className="session-summary__stat-label">Sets</span>
+            </div>
+            <div className="session-summary__stat">
+              <span className={'session-summary__stat-val' + (stats.setWinRate >= 50 ? ' session-summary__stat-val--good' : ' session-summary__stat-val--bad')}>
+                {stats.setWinRate}%
+              </span>
+              <span className="session-summary__stat-label">Set Win Rate</span>
+            </div>
+          </>
+        )}
       </div>
 
       <div className="session-summary__momentum">

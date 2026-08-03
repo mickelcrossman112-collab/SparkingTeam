@@ -5,6 +5,7 @@ import {
   loadRecords, saveRecords, loadHistory, saveHistory, loadSessions,
   allMatches, masteryFor, MASTERY_TIERS,
 } from '../utils/matchLog.js'
+import ActivityHeatmap from './ActivityHeatmap.jsx'
 
 function formatTime(ts) {
   const d = new Date(ts)
@@ -289,6 +290,7 @@ export default function FighterJournal() {
         <button className={'journal-tab' + (tab === 'matchups' ? ' journal-tab--active' : '')} type="button" onClick={() => setTab('matchups')}>Matchups</button>
         <button className={'journal-tab' + (tab === 'mastery' ? ' journal-tab--active' : '')} type="button" onClick={() => setTab('mastery')}>Mastery</button>
         <button className={'journal-tab' + (tab === 'usage' ? ' journal-tab--active' : '')} type="button" onClick={() => setTab('usage')}>Usage</button>
+        <button className={'journal-tab' + (tab === 'activity' ? ' journal-tab--active' : '')} type="button" onClick={() => setTab('activity')}>Activity</button>
         <button className={'journal-tab' + (tab === 'log' ? ' journal-tab--active' : '')} type="button" onClick={() => setTab('log')}>Quick Log</button>
         <button className={'journal-tab' + (tab === 'history' ? ' journal-tab--active' : '')} type="button" onClick={() => setTab('history')}>History</button>
       </div>
@@ -611,6 +613,16 @@ export default function FighterJournal() {
                 </p>
               )}
             </>
+          )}
+        </div>
+      )}
+
+      {tab === 'activity' && (
+        <div className="journal-content">
+          {matches.length === 0 ? (
+            <div className="journal-empty"><p>No matches logged yet — your activity grid fills in as you play.</p></div>
+          ) : (
+            <ActivityHeatmap matches={matches} />
           )}
         </div>
       )}
